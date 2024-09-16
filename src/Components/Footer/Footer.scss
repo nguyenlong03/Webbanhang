@@ -1,0 +1,27 @@
+.Footer-contaner{
+     
+    width: 100%;
+    height: 500px;
+    font-size: 20px;
+    margin-left: 60px;
+    .footer-header{
+         display: flex;
+         gap: 50px;
+    }
+    .footer-bottom{
+        display: flex;
+        gap: 400px;
+        padding-top: 20px;
+        .footer-folower{
+            border: 1px solid black;
+            .icon{
+                font-size: 23px;
+                display: flex;
+                gap:10px;
+    
+            }
+        }
+        
+    }
+
+}
