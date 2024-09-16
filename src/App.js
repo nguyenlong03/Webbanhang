@@ -1,10 +1,9 @@
-import logo from './logo.svg';
-import Header from './components/Header';
+import Login from './components/login/Login';
 
 function App() {
   return (
     <div>
-      <Header/>
+      <Login/>
     </div>
   );
 }
