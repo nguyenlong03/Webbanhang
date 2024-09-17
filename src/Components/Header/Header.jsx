@@ -4,6 +4,7 @@ import "./Header.scss";
 import { CiSearch } from "react-icons/ci";
 import { MdShoppingCart } from "react-icons/md";
 import { IoIosLogOut } from "react-icons/io";
+import { NavLink } from "react-router-dom";
 
 const Header = () => {
   const [menu, setmenu] = useState("Home");
@@ -16,12 +17,12 @@ const Header = () => {
       />
       <div className="header-list">
         <ul className="list-navbar">
-          <li className={`navbar-item ${menu=== "Home"? "active":""}`} onClick={()=>setmenu("Home")}>Home</li>
-          <li className={`navbar-item ${menu=== "T-shirt"? "active":""}`} onClick={()=>setmenu("T-shirt")}>T-shirt</li>
-          <li className={`navbar-item ${menu=== "Dress"? "active":""}`} onClick={()=>setmenu("Dress")}>Dress</li>
-          <li className={`navbar-item ${menu=== "Poloshirt"? "active":""}`} onClick={()=>setmenu('Poloshirt')}>Poloshirt</li>
-          <li className={`navbar-item ${menu=== "Trouser"? "active":""}`} onClick={()=>setmenu('Trouser')}> Trouser</li>
-          <li className={`navbar-item ${menu=== "TrouserShort"? "active":""}`} onClick={()=>setmenu('TrouserShort')}>TrouserShort</li>
+          <NavLink to="/home" className={`navbar-item ${menu=== "Home"? "active":""}`} onClick={()=>setmenu("Home")}>Home</NavLink>
+          <NavLink to="/t-shirt" className={`navbar-item ${menu=== "T-shirt"? "active":""}`} onClick={()=>setmenu("T-shirt")}>T-shirt</NavLink>
+          <NavLink to="/dress" className={`navbar-item ${menu=== "Dress"? "active":""}`} onClick={()=>setmenu("Dress")}>Dress</NavLink>
+          <NavLink to="/poloshirt" className={`navbar-item ${menu=== "Poloshirt"? "active":""}`} onClick={()=>setmenu('Poloshirt')}>Poloshirt</NavLink>
+          <NavLink to="/trouser" className={`navbar-item ${menu=== "Trouser"? "active":""}`} onClick={()=>setmenu('Trouser')}> Trouser</NavLink>
+          <NavLink to="/trousershort" className={`navbar-item ${menu=== "TrouserShort"? "active":""}`} onClick={()=>setmenu('TrouserShort')}>TrouserShort</NavLink>
         </ul>
       </div>
       <div className="list-input">

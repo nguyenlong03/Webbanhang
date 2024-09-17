@@ -45,21 +45,21 @@ const Footer = () => {
             Youtube:{" "}
             <a
               href="https://www.youtube.com/ "
-              className="text-black text-decoration-none"
+              className="text-danger text-decoration-none"
             >
               youtube.com
             </a>
           </p>
-          <p className="text-item text-danger">
+          <p className="text-item ">
             Tiktok:{" "}
-            <a href="" className="text-black text-decoration-none">
+            <a href="" className=" text-decoration-none text-danger">
               {" "}
               Tiktok.com
             </a>
           </p>
           <p className="text-item">
             Facebook:
-            <a href="" className="text-black text-decoration-none">
+            <a href="" className="text-danger text-decoration-none">
               {" "}
               Facebook.com
             </a>
