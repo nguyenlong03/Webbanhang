@@ -1,6 +1,5 @@
-
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from "react";
+import ReactDOM from "react-dom/client";
 
 import App from "./App";
 import "bootstrap/dist/css/bootstrap.css";
@@ -12,8 +11,7 @@ import TShirt from "./Pages/T-shirt/T-shirt";
 import Trouser from "./Pages/Trouser/Trouser";
 import Trousershort from "./Pages/TrouserShorts/Trousershort";
 import Login from "./Pages/Login/Login";
-import Register from './Pages/Register/Register';
-
+import Register from "./Pages/Register/Register";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
