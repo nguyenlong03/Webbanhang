@@ -34,9 +34,9 @@ const Header = () => {
         <div className="icon1">2</div>
       </div>
       <div className="d-flex justify-content-center align-items-center gap-1">
-        <button type="button" class="btn btn-success">
+        <NavLink to="/login" type="button" class="btn btn-primary ">
           login
-        </button>
+        </NavLink>
         <button type="button" class="btn btn-danger">
         <IoIosLogOut/>
         </button>

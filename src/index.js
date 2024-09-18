@@ -9,6 +9,7 @@ import Poloshirt from "./Pages/Poloshirt/Poloshirt";
 import TShirt from "./Pages/T-shirt/T-shirt";
 import Trouser from "./Pages/Trouser/Trouser";
 import Trousershort from "./Pages/TrouserShorts/Trousershort";
+import Login from "./Pages/Login/Login";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -23,6 +24,7 @@ root.render(
           <Route path="trouser" element={<Trouser />} />
           <Route path="trouserShort" element={<Trousershort />} />
         </Route>
+        <Route path="login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
