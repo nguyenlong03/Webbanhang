@@ -1,21 +1,22 @@
 import  {useState} from 'react'
 import './Register.scss'
-import { FaGoogle } from "react-icons/fa"
-import { FaFacebookF } from "react-icons/fa"
+import { FaGoogle,FaFacebookF } from "react-icons/fa"
+
 
 function Register() {
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [email, setEmail] = useState("")  
     const [password, setPassword] = useState("")
-    const [againPassword, setAgainPassword] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("")
     
     const handleRegister = async() => {
 
         
     }
 
-    return <form class="form">
+    return <div className="container">
+        <form class="form">
         <h1>Register </h1>
         <p>Signup now and get full access to our app. </p>
         <div class="flex-row">
@@ -63,9 +64,8 @@ function Register() {
           </button>
         </div>
     </form>
-        
-
-       
+    </div>
+            
 }
 
 export default Register
