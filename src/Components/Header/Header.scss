@@ -1,0 +1,87 @@
+.Header-container {
+  // position: fixed;
+  font-family: "Myfont";
+  font-weight: 300;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  background-color: #01012e;
+  justify-content: space-between;
+  color: white;
+  font-size: 20px;
+  padding: 0 40px;
+  &:hover {
+    cursor: pointer;
+  }
+  .img-header {
+  width: 200px;
+  overflow: hidden;
+
+  }
+  .header-list {
+    display: flex;
+    .list-navbar {
+      gap: 40px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      list-style: none;
+      justify-content: center;
+      align-items: center;
+      .navbar-item{
+        text-decoration: none;
+        &.active{
+          color: rgb(255, 136, 0);
+          border-bottom: 2px solid orange;
+        }
+          
+      }
+    }
+  }
+  .list-input {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    .icon1{
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background-color: red;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 322px;
+        margin-bottom: 30px;
+
+    }
+    .input-item {
+      width: 272px;
+      padding: 5px 10px ;
+      border: none;
+      outline: none;    
+      border-radius:10px ;     
+      
+    
+    }
+    .icon {
+      position: absolute;
+      color: black;
+      font-size: 30px;
+      margin-left: 173px;
+      line-height: 20px;
+    }
+  }
+  .long{
+    text-decoration: none;
+    width: 44px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: aqua;
+    border-radius: 5px;
+  }
+}
