@@ -4,9 +4,9 @@
     display: flex;
     justify-content: center; 
     align-items: center;     
-    height: 100vh;    
-    text-align: center;      
+    height: 100vh;          
     .form {
+        text-align: center;
         max-width: 500px;
         padding: 30px;
         border-radius: 20px;
@@ -19,7 +19,6 @@
             font-weight: 600;
             letter-spacing: -1px;
             position: relative;
-            text-align: center;
             padding-left: 30px;
             color: $primary-color;
         
@@ -43,7 +42,6 @@
         p {
             font-size: 14.5px;
             color: $secondary-text-color;
-            text-align: center;
           }
         
         a {
@@ -144,6 +142,7 @@
             flex-direction: row;
             justify-content: space-between;
             gap: 15px;
+            margin-top: 20px;
             button {
               width: 100%;
               padding: 15px;
@@ -160,6 +159,9 @@
                 margin-right: 15px;
                 margin-top: 10px;
               }
+            }
+            span {
+                margin-top: 10px;
             }
           }
         }

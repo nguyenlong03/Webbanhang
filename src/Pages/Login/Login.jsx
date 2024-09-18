@@ -23,7 +23,7 @@ function Login() {
       <p>Signup now and get full access to our app. </p>     
       <div className='flex-col'>
         <label>
-          <input type="email" placeholder="" required=""/>
+          <input type="email" placeholder="" required/>
           <span>Email</span>
         </label> 
 
