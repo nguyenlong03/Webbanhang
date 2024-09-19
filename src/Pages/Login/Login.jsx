@@ -1,37 +1,49 @@
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./Login.scss";
 import { FaGoogle, FaFacebookF, FaEyeSlash, FaEye } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import AutherAPi from "../../sevies/userlogin/userlogin";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState("false");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
-    console.log("Login");
     e.preventDefault();
+    setError("");
+
     try {
       const response = await AutherAPi.login(email, password);
-      console.log("Login successful:", response.data);
-      localStorage.setItem("token", response.data.token);
+      console.log(response);
+      if (response && response.errCode === 0) {
+        localStorage.setItem("token", response.accessToken);
+        toast.success("Đăng nhập thành công!");
+        setTimeout(() => {
+          navigate("/home");
+        }, 4000);
+      } else {
+        toast.error("Đăng nhập thất bại");
+      }
     } catch (error) {
-      setError("Login failed. Please check your credentials.");
+      toast.error("Đăng nhập thất bại. Vui lòng kiểm tra thông tin.");
       console.error("Login error:", error);
     }
   };
 
   const handleShowPassword = () => {
-    setShowPassword(showPassword === "false" ? "true" : "false");
+    setShowPassword(!showPassword);
   };
 
   return (
     <div className="container">
-      <form class="form">
-        <h1>Login </h1>
-        <p>Signup now and get full access to our app. </p>
+      <form className="form" onSubmit={handleLogin}>
+        <h1>Login</h1>
+        <p>Signup now and get full access to our app.</p>
         <div className="flex-col">
           <label>
             <input
@@ -47,7 +59,7 @@ function Login() {
 
           <label>
             <input
-              type={showPassword === "true" ? "text" : "password"}
+              type={showPassword ? "text" : "password"}
               placeholder=""
               required
               value={password}
@@ -55,7 +67,7 @@ function Login() {
             />
             <span>Password</span>
             <i onClick={handleShowPassword} className="password-icon">
-              {showPassword === "true" ? <FaEye /> : <FaEyeSlash />}
+              {showPassword ? <FaEye /> : <FaEyeSlash />}
             </i>
           </label>
 
@@ -63,9 +75,10 @@ function Login() {
             Bạn quên mật khẩu? <a href="">Nhấn vào đây!</a>
           </span>
 
-          <button class="submit" onClick={handleLogin}>
+          <button className="submit" type="submit">
             Login
           </button>
+          {error && <p className="error-message">{error}</p>}
         </div>
         <div className="login">
           <button>
@@ -79,13 +92,14 @@ function Login() {
             <i>
               <FaFacebookF />
             </i>
-            Đăng nhập với Google
+            Đăng nhập với Facebook
           </button>
         </div>
         <span>
           Đăng ký ngay <NavLink to="/register">tại đây</NavLink> !
         </span>
       </form>
+      <ToastContainer />
     </div>
   )
 }

@@ -15,29 +15,27 @@
         color: $text-color;
         border: 1px solid $form-border-color;
         h1 {
-            font-size: 28px;
-            font-weight: 600;
-            letter-spacing: -1px;
-            position: relative;
-            padding-left: 30px;
-            color: $primary-color;
-        
-            &::before, &::after {
-              position: absolute;
-              content: "";
-              height: 16px;
-              width: 16px;
-              border-radius: 50%;
-              left: 0px;
-              background-color: $primary-color;
-            }
-        
-            &::after {
-              width: 18px;
-              height: 18px;
-              animation: pulse 1s linear infinite;
-            }
+          font-size: 28px;
+          font-weight: 600;
+          letter-spacing: -1px;
+          position: relative;
+          padding-left: 40px; 
+          color: $primary-color;
+          &::before, &::after {
+            position: absolute;
+            content: "";
+            border-radius: 50%;
+            left: 10px; 
+            background-color: $primary-color;
+            height: 18px;
+            width: 18px;
+            top: 50%;
+            left: 0;
+        }
+          &::after {
+            animation: pulse 1s linear infinite;
           }
+        }
         
         p {
             font-size: 14.5px;

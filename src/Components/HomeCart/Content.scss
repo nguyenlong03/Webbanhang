@@ -2,18 +2,23 @@
   font-family: 'Myfont';
   font-weight: 600;
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
+  justify-content: flex-start;
+  margin-left: 30px;
+  margin-top: 60px;
+  
   .card {
     --accent-color: #ffd426;
     position: relative;
-    max-width: 25%;
     background: white;
     border-radius: 1rem;
-    padding: 0.3rem;
+    width: calc(25% - 30px);
+    margin: 5px;
+    margin-top: 20px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 50px 30px -20px;
     transition: all 0.5s ease-in-out;
     margin-top: 30px;
-    margin-left: 10px;
     display: flex;
     flex-direction: column;
   
@@ -21,7 +26,8 @@
       position: relative;
       border-radius: 0.7rem;
       margin-bottom: 1rem;
-      height: 80%;
+      height: 350px;
+      padding: 5px;
   
       img {
         width: 100%;
@@ -29,44 +35,20 @@
         object-fit: cover;
         border-radius: inherit;
       }
-  
-      
     }
     .price {
-        font-size: 2rem;
+        font-size: 1.5rem;
         font-weight: 600;
         color: #000;
         margin-top: -10px;
+        margin-left: 14px;
     }
   
-    .favorite {
-      position: absolute;
-      width: 19px;
-      height: 19px;
-      top: 5px;
-      cursor: pointer;
-  
-      input {
-        position: absolute;
-        opacity: 0;
-        width: 0;
-        height: 0;
-  
-        &:checked ~ svg {
-          animation: bouncing 0.5s;
-          fill: rgb(255, 95, 95);
-          filter: drop-shadow(0px 3px 1px rgba(53, 53, 53, 0.14));
-        }
-      }
-  
-      svg {
-        fill: #a8a8a8;
-      }
-    }
   
     .content {
       padding: 0px 0.8rem;
       margin-bottom: 1rem;
+      height: 200px;
   
       .brand {
         font-weight: 900;
@@ -78,137 +60,21 @@
         color: #666666;
         font-size: 0.7rem;
         margin-bottom: 1rem;
-      }
-  
-      .color-size-container {
-        display: flex;
-        justify-content: space-between;
-        text-transform: uppercase;
-        font-size: 0.7rem;
-        font-weight: 700;
-        color: #a8a8a8;
-        gap: 2rem;
-        margin-bottom: 1.5rem;
-  
-        > * {
-          flex: 1;
-        }
-  
-        .colors {
-          .colors-container {
-            list-style-type: none;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 0.3rem;
-            font-size: 0.5rem;
-            margin-top: 0.2rem;
-  
-            .color {
-              height: 14px;
-              position: relative;
-  
-              &:hover .color-name {
-                display: block;
-              }
-  
-              a {
-                display: inline-block;
-                height: 100%;
-                aspect-ratio: 1;
-                border: 3px solid black;
-                border-radius: 50%;
-              }
-  
-              .color-name {
-                display: none;
-                position: absolute;
-                bottom: 125%;
-                left: 50%;
-                transform: translateX(-50%);
-                z-index: 99;
-                background: black;
-                padding: 0.2rem 1rem;
-                border-radius: 1rem;
-                text-align: center;
-              }
-  
-              &:nth-child(1) a {
-                border-color: #ffd426;
-              }
-  
-              &:nth-child(2) a {
-                background: #144076;
-              }
-  
-              &:nth-child(3) a {
-                border-color: #00b9ff;
-              }
-  
-              &:nth-child(4) a {
-                border-color: #ff6ba1;
-              }
-  
-              &.active {
-                border-color: black;
-              }
-            }
-          }
-        }
-  
-        .sizes {
-          .size-container {
-            list-style-type: none;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 0.2rem;
-  
-            .size {
-              height: 14px;
-  
-              .size-radio {
-                cursor: pointer;
-  
-                input {
-                  display: none;
-  
-                  &:checked ~ .name {
-                    background: var(--accent-color);
-                    border-radius: 2rem 2rem 1.5rem 1.5rem;
-                    color: white;
-                  }
-                }
-  
-                .name {
-                  display: grid;
-                  place-content: center;
-                  height: 100%;
-                  aspect-ratio: 1.2/1;
-                  text-decoration: none;
-                  color: #484848;
-                  font-size: 0.5rem;
-                  text-align: center;
-                }
-              }
-            }
-          }
-        }
+        font-size: 1.5rem;
       }
   
       .rating {
-        color: #a8a8a8;
-        font-size: 0.6rem;
-        font-weight: 700;
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-  
+        justify-content: flex-start; 
+        width: 40%;
+        margin-left: 14px;
+        margin-bottom: 14px; 
+        
         svg {
-          height: 12px;
-        }
+          width: 8px; 
+          height: 8px; 
+        } 
       }
     }
   
@@ -238,6 +104,7 @@
         display: grid;
         place-content: center;
         width: 50px;
+        font-size: 30px;
   
         svg {
           width: 15px;
