@@ -1,33 +1,52 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Login.scss";
 import { FaGoogle, FaFacebookF, FaEyeSlash, FaEye } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router-dom";
 import AutherAPi from "../../sevies/userlogin/userlogin";
+import { Navigate } from "react-router-dom";
 
-function Login() {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      alert("đã đăng nhập");
+      navigate("/home");
+    }
+  }, [navigate]);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
-
     try {
       const response = await AutherAPi.login(email, password);
       console.log(response);
       if (response && response.errCode === 0) {
         localStorage.setItem("token", response.accessToken);
-        toast.success("Đăng nhập thành công!");
+        localStorage.setItem("userName", response.userName);
+        localStorage.setItem("avatar", response.avatar);
+        toast("Đăng nhập thành công!", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         setTimeout(() => {
           navigate("/home");
-        }, 4000);
+        }, 2000);
       } else {
-        toast.error("Đăng nhập thất bại");
+        toast.error(response.errMessage);
       }
     } catch (error) {
       toast.error("Đăng nhập thất bại. Vui lòng kiểm tra thông tin.");
@@ -56,8 +75,7 @@ function Login() {
             <span>Email</span>
           </label>
 
-
-          <label>
+          <label className="password-container">
             <input
               type={showPassword ? "text" : "password"}
               placeholder=""
@@ -101,7 +119,7 @@ function Login() {
       </form>
       <ToastContainer />
     </div>
-  )
-}
+  );
+};
 
 export default Login;
