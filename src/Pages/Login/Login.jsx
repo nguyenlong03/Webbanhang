@@ -2,13 +2,26 @@ import { useState } from "react";
 import "./Login.scss";
 import { FaGoogle, FaFacebookF, FaEyeSlash, FaEye } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
+import AutherAPi from "../../sevies/userlogin/userlogin";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState("false");
+  const [error, setError] = useState("");
 
-  const handleLogin = async () => {};
+  const handleLogin = async (e) => {
+    console.log("Login");
+    e.preventDefault();
+    try {
+      const response = await AutherAPi.login(email, password);
+      console.log("Login successful:", response.data);
+      localStorage.setItem("token", response.data.token);
+    } catch (error) {
+      setError("Login failed. Please check your credentials.");
+      console.error("Login error:", error);
+    }
+  };
 
   const handleShowPassword = () => {
     setShowPassword(showPassword === "false" ? "true" : "false");
@@ -21,7 +34,13 @@ function Login() {
         <p>Signup now and get full access to our app. </p>
         <div className="flex-col">
           <label>
-            <input type="email" placeholder="" required="" />
+            <input
+              type="email"
+              placeholder=""
+              required=""
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
             <span>Email</span>
           </label>
 
