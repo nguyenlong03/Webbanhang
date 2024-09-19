@@ -1,9 +1,12 @@
-.card {
-    font-family: 'Myfont';
-    font-weight: 600;
+.list-cart {
+  font-family: 'Myfont';
+  font-weight: 600;
+  display: flex;
+  flex-direction: row;
+  .card {
     --accent-color: #ffd426;
     position: relative;
-    width: 240px;
+    max-width: 25%;
     background: white;
     border-radius: 1rem;
     padding: 0.3rem;
@@ -266,3 +269,5 @@
     }
   }
   
+}
+

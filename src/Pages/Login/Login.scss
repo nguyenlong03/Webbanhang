@@ -44,23 +44,17 @@
             color: $secondary-text-color;
           }
         
-        a {
-            color: $primary-color;
-            &:hover {
-                text-decoration: underline royalblue;
-            }
-        }
-        
         .flex-col {
             display: flex;
             flex-direction: column;
             width: 100%;
             gap: 15px;
             margin-top: 20px;
+            
           }
         label {
-            position: relative;
             display: block;
+            position: relative;
             input {
               background-color: $input-bg-color;
               color: $text-color;
@@ -93,35 +87,20 @@
                 font-weight: 600;
               }
             }
-          }
-          .password-container {
-            position: relative; 
-            display: flex;
-            align-items: center;
-            input {
-                width: 100%;
-                padding-right: 40px; 
-                background-color: $input-bg-color;
-                color: $text-color;
-                padding: 20px 5px 5px 10px;
-                border: 1px solid $input-border-color;
-                border-radius: 10px;
-            }
-              
             .password-icon {
-                position: absolute;
-                right: 10px; 
-                top: 40%;
-                transform: translateY(-50%); 
-                font-size: 1.2rem;
-                color: rgba(255, 255, 255, 0.7);
-                cursor: pointer;
-                :hover {
-                    color: $hover-bg-color; 
-                  }
-              }
+              position: absolute;
+              right: 10px; 
+              top: 40%;
+              transform: translateY(-50%); 
+              font-size: 1.2rem;
+              color: rgba(255, 255, 255, 0.7);
+              cursor: pointer;
+              :hover {
+                  color: $hover-bg-color; 
+                }
+            }
           }
-        
+                  
         .submit {
             border: none;
             outline: none;

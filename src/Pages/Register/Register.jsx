@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./Register.scss";
 import { FaGoogle, FaFacebookF } from "react-icons/fa";
-//import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 function Register() {
   const [firstName, setFirstName] = useState("");
@@ -10,7 +10,9 @@ function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleRegister = async () => {};
+  const handleRegister = async () => {
+
+  };
 
   return (
     <div className="container">
@@ -47,10 +49,10 @@ function Register() {
             Register
           </button>
           <p>
-            Bạn đã có tài khoản? <a href="#">Sign In</a>{" "}
+            Bạn đã có tài khoản? <NavLink to={"login"}>Sign In</NavLink>
           </p>
         </div>
-        <div className="login">
+        <div className="loginWith">
           <button>
             <i>
               <FaGoogle />

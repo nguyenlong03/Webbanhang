@@ -9,6 +9,7 @@
   height: $arrow-height !important;
   background-color: $arrow-bg-color !important;
   opacity: $arrow-opacity;
+  border: 1px solid transparent !important;
 
   &::before {
     font-size: $arrow-icon-size !important;

@@ -1,7 +1,7 @@
 import axios from "axios";
-
+console.log("Backend URL:", process.env.REACT_APP_BACKEND_URL);
 const Axioscustom = axios.create({
-  baseURL: "https://jsonplaceholder.typicode.com/",
+  baseURL: process.env.REACT_APP_BACKEND_URL,
   headers: {
     "Content-Type": "application/json",
   },

@@ -2,7 +2,8 @@ import './Content.scss'
 
 
 function HomeCart () {
-    return <div class="card">
+    return <div className="list-cart">
+    <div class="card">
         <div class="image-container">
             <img src="https://assets.adidas.com/images/w_600,f_auto,q_auto/bd571d048d374277b2c8a827007dcd9b_9366/Ao_khoac_the_thao_SST_DJen_CW1256_01_laydown.jpg" alt="" />        
         </div>
@@ -79,6 +80,7 @@ function HomeCart () {
     
             </button>
         </div>
+    </div>
     </div>
 }
 
