@@ -3,7 +3,7 @@ import Axioscustom from "../axioscustom/Axioscustom";
 const ProductsApi = {
   getALL(params) {
     const url = "/api/products?type=all&page=1";
-    console.log(`Request URL: ${Axioscustom.defaults.baseURL}${url}`); // In ra URL đầy đủ
+    console.log(`Request URL: ${Axioscustom.defaults.baseURL}${url}`);
     return Axioscustom.get(url, { params });
   },
   get(id) {
