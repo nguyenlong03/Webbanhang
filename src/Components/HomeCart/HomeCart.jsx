@@ -19,11 +19,11 @@ function HomeCart() {
               <h3 className="brand">ADIDAS</h3>
               <p className="product-name">{item.title}</p>
             </div>
-            <div class="rating">
+            <div className="rating">
               <svg
                 viewBox="0 0 99.498 16.286"
                 xmlns="http://www.w3.org/2000/svg"
-                class="svg four-star-svg"
+                className="svg four-star-svg"
               >
                 <path
                   fill="#fc0"

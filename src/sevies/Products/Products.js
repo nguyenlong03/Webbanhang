@@ -3,7 +3,7 @@ import Axioscustom from "../axioscustom/Axioscustom";
 const ProductsApi = {
   getALL(param, page) {
     const url = `/api/products?type=${param}&page=${page}`;
-    console.log("test");
+
     return Axioscustom.get(url, { param, page });
   },
   get(id) {
