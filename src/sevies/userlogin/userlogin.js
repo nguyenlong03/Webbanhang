@@ -2,7 +2,7 @@ import Axioscustom from "../axioscustom/Axioscustom";
 
 const AutherAPi = {
   login(email, password) {
-    const url = "/api/register";
+    const url = "/api/login";
     return Axioscustom.post(url, { email, password });
   },
 
