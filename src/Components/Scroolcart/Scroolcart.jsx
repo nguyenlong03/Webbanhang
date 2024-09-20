@@ -58,11 +58,11 @@ function SwipeToSlide() {
             {data && data.map((item) => (
             <div className="product" key={item.id}>
                 <div className="image-product">
-                    {item.url_img ? <img src={item.url_img} alt={item.title} /> : <p>No Image</p>}
+                  <img src={item.url_img} alt=""/>
                 </div>
-                <p className="price">{item.price ? `${item.price}đ` : 'N/A'}</p>
+                <p className="price">{item.price}</p>
                 <div className="content">
-                    <p className="product-name">{item.title || 'No Title'}</p>
+                    <p className="product-name">{item.title}</p>
                 </div>
             </div>
             ))}
