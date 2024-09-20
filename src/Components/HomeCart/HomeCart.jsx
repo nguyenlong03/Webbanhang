@@ -2,18 +2,10 @@ import "./Content.scss";
 import ProductsApi from "../../sevies/Products/Products";
 import { useState, useEffect } from "react";
 import { TiShoppingCart } from "react-icons/ti";
+import ProductSevier from "../../sevies/ProductSevier";
 
 function HomeCart() {
-  const [data, setdata] = useState([]);
-  useEffect(() => {
-    const fetchAPI = async () => {
-      const repont = await ProductsApi.getALL();
-      console.log(repont.products);
-      setdata(repont.products);
-    };
-    fetchAPI();
-  }, []);
-
+  const { data } = ProductSevier("all", 1);
   return (
     <div className="list-cart">
       {data &&
