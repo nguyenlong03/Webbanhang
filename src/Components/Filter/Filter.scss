@@ -8,13 +8,14 @@
     .nav-navbar {
         display: flex;
         flex-direction: row;
-        gap: 10px;
         .filter-item {
             font-size: 18px;
             font-weight: bold;
             padding: 10px;
+            margin-left: 10px;
             list-style: none;
             border: 1px solid #333;
+            border-radius: 5px;
             &:hover {
                 cursor: pointer;
                 background-color: aquamarine;

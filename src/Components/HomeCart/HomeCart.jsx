@@ -1,4 +1,4 @@
-import './Content.scss';
+import './HomeCart.scss';
 import ProductsApi from '../../sevies/Products/Products';
 import { useState, useEffect } from 'react';
 import { TiShoppingCart } from "react-icons/ti";
@@ -15,7 +15,8 @@ function HomeCart () {
     }, []);
 
     return (
-        <div className="list-cart">
+       <div className="container-cart">
+            <div className="list-cart">
             {data && data.map((item, index) => (
                 <div className="card" key={index}>
                     <div className="image-container">
@@ -46,6 +47,7 @@ function HomeCart () {
                 </div>
             ))}
         </div>
+       </div>
     );
 }
 
