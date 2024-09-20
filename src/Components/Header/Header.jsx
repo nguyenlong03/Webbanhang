@@ -45,7 +45,7 @@ const Header = () => {
       <div className="header-list">
         <ul className="list-navbar">
           <NavLink
-            to="/home"
+            to="/"
             className={`navbar-item ${menu === "Home" ? "active" : ""}`}
             onClick={() => setMenu("Home")}
           >
