@@ -22,7 +22,7 @@ function HomeCart() {
             <div className="image-container">
               <img src={item.url_img} alt="" />
             </div>
-            <p className="price">{item.price}đ</p>
+            <p className="price">{item.price.toLocaleString("vi-VN")}</p>
             <div className="content">
               <h3 className="brand">ADIDAS</h3>
               <p className="product-name">{item.title}</p>
