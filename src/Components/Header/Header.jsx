@@ -4,17 +4,25 @@ import "./Header.scss";
 import { CiSearch } from "react-icons/ci";
 import { MdShoppingCart } from "react-icons/md";
 import { IoIosLogOut } from "react-icons/io";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const [userName, setUserName] = useState(localStorage.getItem("userName"));
+  const [avatar, setAvatar] = useState(localStorage.getItem("avatar"));
   const handole = () => {
-    const token = localStorage.getItem("token");
     if (token) {
       const confirmed = window.confirm(
         "Bạn có chắc chắn muốn đăng xuất không?"
       );
       if (confirmed) {
         localStorage.removeItem("token");
+        localStorage.removeItem("token");
+        localStorage.removeItem("userName");
+        localStorage.removeItem("avatar");
+        setUserName(null);
+        setAvatar(null);
         toast.success(" Logout thành công!", {
           position: "top-right",
           autoClose: 3000,
@@ -24,8 +32,8 @@ const Header = () => {
           draggable: true,
           progress: undefined,
           theme: "light",
-
         });
+        navigate("/login");
       } else {
         toast.success("Logout bị hủy!", {
           position: "top-right",
@@ -119,9 +127,14 @@ const Header = () => {
         <div className="icon1">2</div>
       </div>
       <div className="d-flex justify-content-center align-items-center gap-1 ">
-        <NavLink to="/login" type="button" className="long">
-          login
-        </NavLink>
+      {userName ? (
+          <div className="user-info">
+            <img src={avatar || "default-avatar.jpg"} alt="Avatar" className="avatar" />
+            <span>{userName}</span>
+          </div>
+        ) : (
+          <NavLink to="/login" className="btn btn-primary">Login</NavLink>
+        )}
         <button type="button" className="btn btn-danger" onClick={handole}>
           <IoIosLogOut />
         </button>
