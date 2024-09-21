@@ -40,19 +40,19 @@ const SimpleSlider = () => {
   return (
       <div className="slide-container">
         <Slider {...settings}>
-          <div className="img-item ">
-           
-          <img src="https://image.dienthoaivui.com.vn/x,webp,q90/https://dashboard.dienthoaivui.com.vn/uploads/dashboard/editor_upload/hinh-nen-may-tinh-4k-17.jpg" alt="anh 1" />
+          <div className="slide-item">  
+            <img className="slide" src="https://thoitrang02.123web.com.vn/wp-content/uploads/2022/06/salepc_1655525482-1536x544.png" alt="anh 1"/>
           </div>
 
-          <div className="img-item ">
-         
-          <img src="https://image.dienthoaivui.com.vn/x,webp,q90/https://dashboard.dienthoaivui.com.vn/uploads/dashboard/editor_upload/hinh-nen-may-tinh-4k-17.jpg" alt="anh 1" />
+          <div className="slide-item">
+            <img className="slide" src="https://thoitrang02.123web.com.vn/wp-content/uploads/2022/04/IbPDHBYY-1200x400-1.png" alt="anh 2" />
           </div>
 
-          <div className="img-item ">
-         
-          <img src="https://image.dienthoaivui.com.vn/x,webp,q90/https://dashboard.dienthoaivui.com.vn/uploads/dashboard/editor_upload/hinh-nen-may-tinh-4k-17.jpg" alt="anh 1" />
+          <div className="slide-item">
+            <img className="slide" src="https://thoitrang02.123web.com.vn/wp-content/uploads/2022/06/banner-fashion-1536x625.gif" alt="anh 3" />
+          </div>
+          <div className="slide-item">
+            <img className="slide" src="https://thoitrang02.123web.com.vn/wp-content/uploads/2022/04/1200x400-1200x400-6.png" alt="anh 4" />
           </div>
         </Slider>
     </div>

@@ -2,8 +2,6 @@ import "./App.scss";
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
 import { Outlet } from "react-router-dom";
-import { useEffect, useState } from "react";
-import ProductsApi from "./sevies/Products/Products.js";
 function App() {
   return (
     <div className="App">
