@@ -1,21 +1,40 @@
 import ProductsApi from "./Products/Products";
 import { useState, useEffect } from "react";
-// làm API chung cho phần sản phẩm gồm 6 sản phẩm homecart .....
-// nếu page không tồn tại thì cố định là page 1
-const ProductSevier = (param, page) => {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    const fetchAPI = async () => {
-      try {
-        const response = await ProductsApi.getALL(param, page);
-        setData(response.products);
-      } catch (error) {
-        console.log("404", error);
-      }
-    };
-    fetchAPI();
-  }, []);
 
-  return { data };
+const ProductService = (param, page = 1) => {
+  const [data, setData] = useState(() => {
+    // Kiểm tra nếu đã có dữ liệu trong sessionStorage thì dùng nó
+    const savedData = sessionStorage.getItem("productsData");
+    return savedData ? JSON.parse(savedData) : [];
+  });
+  const [loading, setLoading] = useState(data.length === 0); // Nếu có dữ liệu thì không cần loading
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (data.length === 0) {
+      const fetchAPI = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+          const response = await ProductsApi.getALL(param, page);
+          setData(response.products);
+          sessionStorage.setItem(
+            "productsData",
+            JSON.stringify(response.products)
+          );
+        } catch (error) {
+          console.error("404 or other error:", error);
+          setError("Không thể tải dữ liệu");
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchAPI();
+    }
+  }, [param, page, data.length]);
+
+  return { data, loading, error };
 };
-export default ProductSevier;
+
+export default ProductService;

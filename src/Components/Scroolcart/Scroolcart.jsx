@@ -4,28 +4,27 @@ import "slick-carousel/slick/slick-theme.css";
 import "./Scroolcart.scss";
 import ProductSevier from "../../sevies/ProductSevier";
 
-
 function SampleNextArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-      <div
-        className={className}
-        style={{ ...style, display: "block", background: "red" }}
-        onClick={onClick}
-      />
-    );
-  }
-  
-  function SamplePrevArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-      <div
-        className={className}
-        style={{ ...style, display: "block", background: "green" }}
-        onClick={onClick}
-      />
-    );
-  }
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={className}
+      style={{ ...style, display: "block", background: "red" }}
+      onClick={onClick}
+    />
+  );
+}
+
+function SamplePrevArrow(props) {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={className}
+      style={{ ...style, display: "block", background: "green" }}
+      onClick={onClick}
+    />
+  );
+}
 function SwipeToSlide() {
   const settings = {
     className: "center",
@@ -34,32 +33,31 @@ function SwipeToSlide() {
     slidesToScroll: 1,
     swipeToSlide: true,
     nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />
+    prevArrow: <SamplePrevArrow />,
   };
 
-  const {data} = ProductSevier('all', 1); 
-
+  const { data } = ProductSevier("new", 1);
   return (
     <div className="products-container">
-        <h1>Sản phẩm mới nhất</h1>
-        <div className="products-list">
-            <Slider {...settings}>
-            {data && data.map((item) => (
-            <div className="product" key={item.id}>
+      <h1>Sản phẩm mới nhất</h1>
+      <div className="products-list">
+        <Slider {...settings}>
+          {data &&
+            data.map((item) => (
+              <div className="product" key={item.id}>
                 <div className="image-product">
-                  <img src={item.url_img} alt=""/>
+                  <img src={item.url_img} alt="" />
                 </div>
-                <p className="price">{item.price.toLocaleString("Vi-VN")}<span>₫</span></p> 
+                <p className="price">{item.price}</p>
                 <div className="content">
-                    <p className="product-name">{item.name}</p>
+                  <p className="product-name">{item.name}</p>
                 </div>
-            </div>
+              </div>
             ))}
-            </Slider>
-        </div>
+        </Slider>
+      </div>
     </div>
   );
-  
 }
 
 export default SwipeToSlide;

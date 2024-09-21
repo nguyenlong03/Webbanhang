@@ -1,22 +1,27 @@
-//import ProductSevier from "../../sevies/ProductSevier";
+import React from "react";
+import { useParams } from "react-router-dom";
+import ProductSevier from "../../sevies/ProductSevier";
 import './ProductDetail.scss';
 
 function ProductDetail() {
-   
-    //const {data} = ProductSevier('all', 1);
+    const { id } = useParams();
+    const { data } = ProductSevier("all", 1);
+    const product = data.find((item) => item.id === parseInt(id));
+    if (!product) return <div>Không tìm thấy sản phẩm.</div>;
+
     return <div className="productDetail-container">  
         <div className="image-container">
             <div className='btn-img'>
-                <button className='active'><img src="https://product.hstatic.net/200000174405/product/gl0483-1_4e757a50a97644af982fe572a53912b2_master.jpg" alt="" /></button>
+                <button className='active'><img src={product.url_img} alt="" /></button>
             </div>
             <div className='img'>
-                <img src='https://product.hstatic.net/200000174405/product/gl0483-1_4e757a50a97644af982fe572a53912b2_master.jpg' alt=""/>
+                <img src={product.url_img} alt=""/>
             </div>
         </div> 
         <div className="detail">
             <div className="content">
-                <p className="product-name">áo</p>
-                <p className="price">200<span>₫</span></p>
+                <p className="product-name">{product.name}</p>
+                <p className="price">{product.price.toLocaleString("VI-VN")}<span>₫</span></p>
                 <p className="description">dây là áo dẹp</p>
             </div>
             <div className="size-color">
