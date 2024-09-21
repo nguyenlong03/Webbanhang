@@ -34,6 +34,9 @@
   z-index: 1;
   background-color: $arrow-bg-color !important;
   border: 1px solid transparent !important;
+  width: 30px !important;
+  height: 28px !important;
+  border-radius: 50%;
   &::before {
     font-size: $arrow-icon-size !important;
     color: $arrow-icon-color !important;

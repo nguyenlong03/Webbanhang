@@ -1,9 +1,8 @@
 import Slider from "react-slick";
-import ProductsApi from '../../sevies/Products/Products';
-import { useState, useEffect } from 'react';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./Scroolcart.scss";
+import ProductSevier from "../../sevies/ProductSevier";
 
 
 function SampleNextArrow(props) {
@@ -38,17 +37,7 @@ function SwipeToSlide() {
     prevArrow: <SamplePrevArrow />
   };
 
-  const [data, setData] = useState([]); 
-    useEffect(() => {
-      const fetchAPI = async () => {
-          const res = await ProductsApi.getALL();
-          console.log("Product data:", res.products); 
-          if (res && res.products) {
-              setData(res.products);
-          }
-      };
-      fetchAPI();
-  }, []);
+  const {data} = ProductSevier('all', 1); 
 
   return (
     <div className="products-container">
@@ -60,9 +49,9 @@ function SwipeToSlide() {
                 <div className="image-product">
                   <img src={item.url_img} alt=""/>
                 </div>
-                <p className="price">{item.price}</p>
+                <p className="price">{item.price.toLocaleString("Vi-VN")}<span>₫</span></p> 
                 <div className="content">
-                    <p className="product-name">{item.title}</p>
+                    <p className="product-name">{item.name}</p>
                 </div>
             </div>
             ))}
