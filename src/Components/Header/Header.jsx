@@ -118,7 +118,7 @@ const Header = () => {
         <MdShoppingCart fontSize={"30px"} />
         <div className="icon1">2</div>
       </div>
-      <div className="d-flex justify-content-center align-items-center gap-1">
+      <div className="d-flex justify-content-center align-items-center gap-1 ">
         <NavLink to="/login" type="button" className="long">
           login
         </NavLink>

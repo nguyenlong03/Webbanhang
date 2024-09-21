@@ -25,7 +25,6 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
-
     try {
       const response = await AutherAPi.login(email, password);
       console.log(response);
