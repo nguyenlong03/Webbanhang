@@ -1,15 +1,13 @@
 import './HomeCart.scss';
 import { TiShoppingCart } from "react-icons/ti";
 import ProductSevier from "../../sevies/ProductSevier";
-import { useNavigate } from 'react-router-dom';
+
 
 function HomeCart () {
     const {data} = ProductSevier('all', 1); 
-    const navigate = useNavigate(); 
+    
 
-    const handleCartClick = () => {
-        navigate('/product-detail'); 
-    };
+   
     
     return (
        <div className="container-cart">
@@ -27,7 +25,6 @@ function HomeCart () {
                     <div className="button-container">
                         <button 
                             className="buy-button button"
-                            onClick={handleCartClick}
                         >Buy Now</button>
                         <button className="cart-button button">
                             <i><TiShoppingCart /></i>

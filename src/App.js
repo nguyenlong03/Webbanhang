@@ -3,9 +3,7 @@ import "./App.scss";
 // import Footer from "./Components/Footer/Footer";
 // import { Outlet } from "react-router-dom";
 import ProductDetail from "./Components/ProductDetail/ProductDetail";
-
 function App() {
-
   return (
       <div className="App">
         {/* <div className="app-header">
@@ -18,7 +16,7 @@ function App() {
         <div className="app-footer">
           <Footer />
         </div> */}
-       < ProductDetail/>
+        <ProductDetail />
     </div>
   );
 }
