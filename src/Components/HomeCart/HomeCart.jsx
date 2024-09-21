@@ -2,6 +2,7 @@ import './HomeCart.scss';
 import ProductsApi from '../../sevies/Products/Products';
 import { useState, useEffect } from 'react';
 import { TiShoppingCart } from "react-icons/ti";
+import ProductSevier from "../../sevies/ProductSevier";
 
 function HomeCart () {
     const [data, setdata] = useState([]); 

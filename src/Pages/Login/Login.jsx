@@ -17,14 +17,15 @@ const Login = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      alert("đã đăng nhập");
-      navigate("/home");
+      navigate("/");
+      return;
     }
   }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
+
     try {
       const response = await AutherAPi.login(email, password);
       console.log(response);
@@ -32,8 +33,8 @@ const Login = () => {
         localStorage.setItem("token", response.accessToken);
         localStorage.setItem("userName", response.userName);
         localStorage.setItem("avatar", response.avatar);
-        toast("Đăng nhập thành công!", {
-          position: "top-center",
+        toast.success("🦄 Đăng nhập thành công!", {
+          position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -43,7 +44,7 @@ const Login = () => {
           theme: "light",
         });
         setTimeout(() => {
-          navigate("/home");
+          navigate("/");
         }, 2000);
       } else {
         toast.error(response.errMessage);
@@ -57,6 +58,9 @@ const Login = () => {
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+  if (localStorage.getItem("token")) {
+    return null; // Hoặc bạn có thể trả về một loader nếu cần
+  }
 
   return (
     <div className="container">
@@ -75,8 +79,7 @@ const Login = () => {
             <span>Email</span>
           </label>
 
-
-          <label>
+          <label className="password-container">
             <input
               type={showPassword ? "text" : "password"}
               placeholder=""
@@ -120,6 +123,7 @@ const Login = () => {
       </form>
       <ToastContainer />
     </div>
-  )
-}
+  );
+};
+
 export default Login;

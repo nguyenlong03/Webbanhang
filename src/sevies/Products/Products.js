@@ -1,10 +1,10 @@
 import Axioscustom from "../axioscustom/Axioscustom";
 
 const ProductsApi = {
-  getALL(params) {
-    const url = "/api/products?type=all&page=1";
-    console.log(`Request URL: ${Axioscustom.defaults.baseURL}${url}`);
-    return Axioscustom.get(url, { params });
+  getALL(param, page) {
+    const url = `/api/products?type=${param}&page=${page}`;
+
+    return Axioscustom.get(url, { param, page });
   },
   get(id) {
     const url = `"/api/products?type=all&page=1"/${id}`;

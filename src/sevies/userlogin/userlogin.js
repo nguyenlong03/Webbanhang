@@ -6,9 +6,15 @@ const AutherAPi = {
     return Axioscustom.post(url, { email, password });
   },
 
-  register(email, password) {
+  register(email, password, firstName, lastName, confirmPassword) {
     const url = "/api/register";
-    return Axioscustom.post(url, { email, password });
+    return Axioscustom.post(url, {
+      email,
+      password,
+      firstName,
+      lastName,
+      confirmPassword,
+    });
   },
 };
 export default AutherAPi;

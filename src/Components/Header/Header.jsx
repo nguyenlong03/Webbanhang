@@ -5,21 +5,31 @@ import { CiSearch } from "react-icons/ci";
 import { MdShoppingCart } from "react-icons/md";
 import { IoIosLogOut } from "react-icons/io";
 import { NavLink } from "react-router-dom";
-import { Navigate } from "react-router-dom";
 
 const Header = () => {
-  
-  
-  const handollogin=()=>{
-    
-    
- 
-  }
-  const handole =()=>{
-    localStorage.removeItem("token")
-    toast("Logout thành công!", {
-          position: "top-center",
-          autoClose: 2000,
+  const handole = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const confirmed = window.confirm(
+        "Bạn có chắc chắn muốn đăng xuất không?"
+      );
+      if (confirmed) {
+        localStorage.removeItem("token");
+        toast.success(" Logout thành công!", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+
+        });
+      } else {
+        toast.success("Logout bị hủy!", {
+          position: "top-right",
+          autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -27,10 +37,22 @@ const Header = () => {
           progress: undefined,
           theme: "light",
         });
-    
-  }
+      }
+    } else {
+      toast.error(" Bạn chưa đăng nhập!", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
   const [menu, setMenu] = useState(localStorage.getItem("menu") || "Home");
-  
+
   useEffect(() => {
     localStorage.setItem("menu", menu);
   }, [menu]);
@@ -45,7 +67,7 @@ const Header = () => {
       <div className="header-list">
         <ul className="list-navbar">
           <NavLink
-            to="/home"
+            to="/"
             className={`navbar-item ${menu === "Home" ? "active" : ""}`}
             onClick={() => setMenu("Home")}
           >
@@ -97,11 +119,11 @@ const Header = () => {
         <div className="icon1">2</div>
       </div>
       <div className="d-flex justify-content-center align-items-center gap-1">
-        <NavLink to="/login" type="button" className="long" >
+        <NavLink to="/login" type="button" className="long">
           login
         </NavLink>
         <button type="button" className="btn btn-danger" onClick={handole}>
-          <IoIosLogOut  />
+          <IoIosLogOut />
         </button>
       </div>
       <ToastContainer />

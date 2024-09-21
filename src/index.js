@@ -15,20 +15,18 @@ import Register from "./Pages/Register/Register";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route path="home" element={<Home />} />
-          <Route path="dress" element={<Dress />} />
-          <Route path="poloshirt" element={<Poloshirt />} />
-          <Route path="t-shirt" element={<TShirt />} />
-          <Route path="trouser" element={<Trouser />} />
-          <Route path="trouserShort" element={<Trousershort />} />
-        </Route>
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
-      </Routes>
-    </BrowserRouter>
-  </React.StrictMode>
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<App />}>
+        <Route index element={<Home />} />
+        <Route path="dress" element={<Dress />} />
+        <Route path="poloshirt" element={<Poloshirt />} />
+        <Route path="t-shirt" element={<TShirt />} />
+        <Route path="trouser" element={<Trouser />} />
+        <Route path="trouserShort" element={<Trousershort />} />
+      </Route>
+      <Route path="login" element={<Login />} />
+      <Route path="register" element={<Register />} />
+    </Routes>
+  </BrowserRouter>
 );
