@@ -3,13 +3,14 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./Scroolcart.scss";
 import ProductSevier from "../../sevies/ProductSevier";
+import { useNavigate } from "react-router-dom";
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
   return (
     <div
       className={className}
-      style={{ ...style, display: "block", background: "red" }}
+      style={{ ...style}}
       onClick={onClick}
     />
   );
@@ -20,7 +21,7 @@ function SamplePrevArrow(props) {
   return (
     <div
       className={className}
-      style={{ ...style, display: "block", background: "green" }}
+      style={{ ...style}}
       onClick={onClick}
     />
   );
@@ -31,11 +32,17 @@ function SwipeToSlide() {
     infinite: true,
     slidesToShow: 4,
     slidesToScroll: 1,
+    autoPlay: true,
+    autoplaySpeed: 500,
+    autoplaySpeed: 3000,
     swipeToSlide: true,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
   };
-
+  const navigate = useNavigate();
+  const handoleChitietsanpham = (id) => {
+    navigate(`/product/${id}`);
+  };
   const { data } = ProductSevier("new", 1);
   return (
     <div className="products-container">
@@ -44,11 +51,13 @@ function SwipeToSlide() {
         <Slider {...settings}>
           {data &&
             data.map((item) => (
-              <div className="product" key={item.id}>
+              <div className="product" key={item.id}
+                onClick={() => handoleChitietsanpham(item.id)}
+              >
                 <div className="image-product">
                   <img src={item.url_img} alt="" />
                 </div>
-                <p className="price">{item.price}</p>
+                <p className="price">{item.price.toLocaleString('vi-VN')}<span>₫</span></p>
                 <div className="content">
                   <p className="product-name">{item.name}</p>
                 </div>

@@ -109,11 +109,15 @@
   width: 30px !important;
   height: 28px !important;
   border-radius: 50%;
+  transition: background-color 0.3s ease;
 
   &::before {
     color: $arrow-icon-color !important;
     font-weight: 900;
     opacity: $arrow-icon-opacity;
+  }
+  :hover{
+    transform: scale(1.1);  
   }
 }
 
