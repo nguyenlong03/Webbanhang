@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./Login.scss";
 import { FaGoogle, FaFacebookF, FaEyeSlash, FaEye } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router-dom";
-import AutherAPi from "../../sevies/userlogin/userlogin";
+import AutherAPi from "../../services/userlogin/userlogin";
 
 const Login = () => {
   const [email, setEmail] = useState("");

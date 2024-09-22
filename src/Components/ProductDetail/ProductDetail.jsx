@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import ProductSevier from "../../sevies/ProductSevier";
-import ChitietSanPham from "../../sevies/chitietsanpham";
+import ProductSevier from "../../services/ProductSevier";
+import ChitietSanPham from "../../services/chitietsanpham";
 import "./ProductDetail.scss";
 
 function ProductDetail() {
   const { id } = useParams();
   const { data } = ProductSevier("new", 1);
-  // console.log("checkdata cure productsevier", data);
-  const data1 = ChitietSanPham();
-  console.log("check data chi tiết sản phẩm", data1.url_img);
+  const data1 = ChitietSanPham(parseInt(id));
+  console.log("check data chi tiết sản phẩm", data1);
   const product = data.find((item) => item.id === parseInt(id));
-
   if (!product) return <div>Không tìm thấy sản phẩm.</div>;
 
   return (

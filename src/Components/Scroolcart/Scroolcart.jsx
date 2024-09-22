@@ -2,7 +2,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./Scroolcart.scss";
-import ProductSevier from "../../sevies/ProductSevier";
+import ProductSevier from "../../services/ProductSevier";
 import { useNavigate } from "react-router-dom";
 
 function SampleNextArrow(props) {

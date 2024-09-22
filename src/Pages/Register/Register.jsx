@@ -4,7 +4,7 @@ import { FaGoogle, FaFacebookF } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import AutherAPi from "../../sevies/userlogin/userlogin";
+import AutherAPi from "../../services/userlogin/userlogin";
 
 function Register() {
   const [firstName, setFirstName] = useState("");

@@ -1,6 +1,6 @@
 import "./HomeCart.scss";
 import { TiShoppingCart } from "react-icons/ti";
-import ProductSevier from "../../sevies/ProductSevier";
+import ProductSevier from "../../services/ProductSevier";
 import { useNavigate } from "react-router-dom";
 
 function HomeCart() {

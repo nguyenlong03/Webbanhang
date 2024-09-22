@@ -2,11 +2,11 @@ import Axioscustom from "../axioscustom/Axioscustom";
 
 const Detail = {
   getALL(param) {
-    const url = `/api/product/1`;
+    const url = `/api/product/${param}`;
     return Axioscustom.get(url, { param });
   },
   get(id) {
-    const url = `"/api/products?type=all&page=1"/${id}`;
+    const url = `"/api/product"/${id}`;
     return Axioscustom.get(url);
   },
   add(data) {
