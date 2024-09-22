@@ -7,6 +7,7 @@ function HomeCart() {
   const Navigate = useNavigate();
   const handoleChitietsanpham = (id) => {
     Navigate(`/product/${id}`);
+    window.scrollTo(0, 0);
   };
   const { data } = ProductSevier("all", 1);
   return (

@@ -28,7 +28,6 @@ root.render(
         <Route path="trouser" element={<Trouser />} />
         <Route path="trouserShort" element={<Trousershort />} />
       </Route>
-
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
     </Routes>
