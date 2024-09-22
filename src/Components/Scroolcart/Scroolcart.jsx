@@ -3,6 +3,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./Scroolcart.scss";
 import ProductSevier from "../../sevies/ProductSevier";
+import { useNavigate } from "react-router-dom";
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -25,6 +26,7 @@ function SamplePrevArrow(props) {
     />
   );
 }
+
 function SwipeToSlide() {
   const settings = {
     className: "center",
@@ -34,6 +36,11 @@ function SwipeToSlide() {
     swipeToSlide: true,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
+  };
+  const Navigate = useNavigate();
+  const handoleChitietsanpham1 = (id) => {
+    Navigate(`/product/${id}`);
+    window.scroll(0, 0);
   };
 
   const { data } = ProductSevier("new", 1);
@@ -50,7 +57,12 @@ function SwipeToSlide() {
                 </div>
                 <p className="price">{item.price}</p>
                 <div className="content">
-                  <p className="product-name">{item.name}</p>
+                  <p
+                    className="product-name"
+                    onClick={() => handoleChitietsanpham1(item.id)}
+                  >
+                    {item.name}
+                  </p>
                 </div>
               </div>
             ))}

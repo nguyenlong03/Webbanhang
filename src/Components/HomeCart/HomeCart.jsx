@@ -9,7 +9,8 @@ function HomeCart() {
     Navigate(`/product/${id}`);
     window.scrollTo(0, 0);
   };
-  const { data } = ProductSevier("all", 1);
+  const { data } = ProductSevier("new", 1);
+  console.log("checkdata", data);
   return (
     <div className="container-cart">
       <div className="list-cart">

@@ -1,12 +1,10 @@
 import React from "react";
-
 import { FaFacebookF } from "react-icons/fa";
 import { FiInstagram } from "react-icons/fi";
 import { FaPhone } from "react-icons/fa";
 import { FaTiktok } from "react-icons/fa";
 import { IoMdMailUnread } from "react-icons/io";
 import { FaYoutube } from "react-icons/fa";
-
 import "./Footer.scss";
 
 const Footer = () => {

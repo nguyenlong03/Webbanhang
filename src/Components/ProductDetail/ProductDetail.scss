@@ -20,11 +20,19 @@
         .btn-img {
             width: 100px;
             height: 100px;
-            img {
+            .btn-imgitem{
+                border-right: 2px solid white;
+                border-bottom: 2px solid white;
+                width: 50%;
+                height: 100px;
+                
+            }
+            .btn-imgone{
                 width: 100%;
-                height: 100%;
+                height: 200px;
                 object-fit: cover;
             }
+            
         }
         .img {
             width: 100%;
@@ -32,7 +40,7 @@
             border: 1px solid #ece9e9;
             border-radius: 10px;
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
-            img{
+            .anh{
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
