@@ -26,6 +26,7 @@ function SamplePrevArrow(props) {
     />
   );
 }
+
 function SwipeToSlide() {
   const settings = {
     className: "center",
@@ -39,10 +40,12 @@ function SwipeToSlide() {
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
   };
-  const navigate = useNavigate();
-  const handoleChitietsanpham = (id) => {
-    navigate(`/product/${id}`);
+  const Navigate = useNavigate();
+  const handoleChitietsanpham1 = (id) => {
+    Navigate(`/product/${id}`);
+    window.scroll(0, 0);
   };
+
   const { data } = ProductSevier("new", 1);
   return (
     <div className="products-container">
@@ -52,14 +55,19 @@ function SwipeToSlide() {
           {data &&
             data.map((item) => (
               <div className="product" key={item.id}
-                onClick={() => handoleChitietsanpham(item.id)}
+
               >
                 <div className="image-product">
                   <img src={item.url_img} alt="" />
                 </div>
                 <p className="price">{item.price.toLocaleString('vi-VN')}<span>₫</span></p>
                 <div className="content">
-                  <p className="product-name">{item.name}</p>
+                  <p
+                    className="product-name"
+                    onClick={() => handoleChitietsanpham1(item.id)}
+                  >
+                    {item.name}
+                  </p>
                 </div>
               </div>
             ))}

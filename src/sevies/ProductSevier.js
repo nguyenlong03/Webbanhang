@@ -1,6 +1,6 @@
 import ProductsApi from "./Products/Products";
 import { useState, useEffect } from "react";
-
+// api dùng chung cho producs cart
 const ProductService = (param, page = 1) => {
   const [data, setData] = useState(() => {
     // Kiểm tra nếu đã có dữ liệu trong sessionStorage thì dùng nó
@@ -17,7 +17,9 @@ const ProductService = (param, page = 1) => {
         setError(null);
         try {
           const response = await ProductsApi.getALL(param, page);
+
           setData(response.products);
+
           sessionStorage.setItem(
             "productsData",
             JSON.stringify(response.products)

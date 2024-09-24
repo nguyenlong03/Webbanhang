@@ -4,18 +4,26 @@ import "./Header.scss";
 import { CiSearch } from "react-icons/ci";
 import { MdShoppingCart } from "react-icons/md";
 import { IoIosLogOut } from "react-icons/io";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Header = () => {
-  const handole = () => {
-    const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const [userName, setUserName] = useState(localStorage.getItem("userName"));
+  const [avatar, setAvatar] = useState(localStorage.getItem("avatar"));
+
+  const handleLogout = () => {
     if (token) {
       const confirmed = window.confirm(
         "Bạn có chắc chắn muốn đăng xuất không?"
       );
       if (confirmed) {
         localStorage.removeItem("token");
-        toast.success(" Logout thành công!", {
+        localStorage.removeItem("userName");
+        localStorage.removeItem("avatar");
+        setUserName(null);
+        setAvatar(null);
+        toast.success("Logout thành công!", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -24,8 +32,11 @@ const Header = () => {
           draggable: true,
           progress: undefined,
           theme: "light",
-
         });
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
+       
       } else {
         toast.success("Logout bị hủy!", {
           position: "top-right",
@@ -39,7 +50,7 @@ const Header = () => {
         });
       }
     } else {
-      toast.error(" Bạn chưa đăng nhập!", {
+      toast.error("Bạn chưa đăng nhập!", {
         position: "top-right",
         autoClose: 1000,
         hideProgressBar: false,
@@ -51,6 +62,7 @@ const Header = () => {
       });
     }
   };
+
   const [menu, setMenu] = useState(localStorage.getItem("menu") || "Home");
 
   useEffect(() => {
@@ -116,15 +128,21 @@ const Header = () => {
           <CiSearch />
         </div>
         <MdShoppingCart fontSize={"30px"} />
-        <div className="icon1">2</div>
+            {/* thông báo có giỏ hàng */}
+        <div className="icon11"></div>    
       </div>
-      <div className="d-flex justify-content-center align-items-center gap-1">
-        <NavLink to="/login" type="button" className="long">
-          login
-        </NavLink>
-        <button type="button" className="btn btn-danger" onClick={handole}>
-          <IoIosLogOut />
-        </button>
+      <div className="d-flex justify-content-center align-items-center gap-1 ">
+        {userName ? (
+          <div className="user-info">
+            <img src={avatar || "default-avatar.jpg"} alt="Avatar" className="avatar" />
+            <span className="user">{userName}</span>
+            <button type="button" className="btn btn-danger" onClick={handleLogout}>
+              <IoIosLogOut />
+            </button>
+          </div>
+        ) : (
+          <NavLink to="/login" className="btn btn-primary">Login</NavLink>
+        )}
       </div>
       <ToastContainer />
     </div>
