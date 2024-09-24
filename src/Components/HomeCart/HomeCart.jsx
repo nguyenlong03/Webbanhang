@@ -11,6 +11,7 @@ function HomeCart() {
   };
   const { data } = ProductSevier("new", 1);
   console.log("checkdata", data);
+  
   return (
     <div className="container-cart">
       <div className="list-cart">
