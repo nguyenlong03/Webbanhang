@@ -16,10 +16,12 @@
             list-style: none;
             border: 1px solid #333;
             border-radius: 5px;
+            transition: transform 0.3s ease;
             &:hover {
                 cursor: pointer;
                 background-color: aquamarine;
                 border: none;
+                transform: scale(1.1);
                 box-shadow: 0 0 5px 5px hsla(0, 1%, 26%, 0.384);
             }
         }

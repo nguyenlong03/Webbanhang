@@ -10,7 +10,7 @@ function SampleNextArrow(props) {
   return (
     <div
       className={className}
-      style={{ ...style, display: "block", background: "red" }}
+      style={{ ...style}}
       onClick={onClick}
     />
   );
@@ -21,7 +21,7 @@ function SamplePrevArrow(props) {
   return (
     <div
       className={className}
-      style={{ ...style, display: "block", background: "green" }}
+      style={{ ...style}}
       onClick={onClick}
     />
   );
@@ -33,6 +33,9 @@ function SwipeToSlide() {
     infinite: true,
     slidesToShow: 4,
     slidesToScroll: 1,
+    autoPlay: true,
+    autoplaySpeed: 500,
+    autoplaySpeed: 3000,
     swipeToSlide: true,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
@@ -51,11 +54,13 @@ function SwipeToSlide() {
         <Slider {...settings}>
           {data &&
             data.map((item) => (
-              <div className="product" key={item.id}>
+              <div className="product" key={item.id}
+
+              >
                 <div className="image-product">
                   <img src={item.url_img} alt="" />
                 </div>
-                <p className="price">{item.price}</p>
+                <p className="price">{item.price.toLocaleString('vi-VN')}<span>₫</span></p>
                 <div className="content">
                   <p
                     className="product-name"

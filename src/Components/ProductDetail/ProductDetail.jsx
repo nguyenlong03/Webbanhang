@@ -8,24 +8,46 @@ function ProductDetail() {
   const { id } = useParams();
   const { data } = ProductSevier("new", 1);
   const data1 = ChitietSanPham(parseInt(id));
-  console.log("check data chi tiết sản phẩm", data1);
+  const [selectedimage, setSelectedImage] = useState("");
+  console.log("check data chi tiết sản phẩm", data1.url_img);
   const product = data.find((item) => item.id === parseInt(id));
+
+  useEffect(() => {
+    if (Array.isArray(data1.url_img) && data1.url_img.length > 0) {
+      setSelectedImage(data1.url_img[0]);
+    } else if (data1.url_img) {
+      setSelectedImage(data1.url_img);
+    } else if (product) {
+      setSelectedImage(product.url_img);
+    }
+  }, [data1.url_img, product]);
+
+  const handleSelectedImage = (img) => {
+    setSelectedImage(img);
+  };
+
   if (!product) return <div>Không tìm thấy sản phẩm.</div>;
 
   return (
     <div className="productDetail-container">
       <div className="image-container">
-        <div className="btn-img">
+        <div className="toggle">
           {Array.isArray(data1.url_img) ? (
             data1.url_img.map((item, index) => (
-              <img src={item} alt="" key={index} className="btn-imgitem" />
+              <button
+                className="toggle-img"
+                key={index}
+                onClick={() => handleSelectedImage(item)}
+              >
+                <img src={item} alt="" className="img-item" />
+              </button>
             ))
           ) : (
-            <img src={data1.url_img} alt="" className="btn-imgone" />
+            <img src={data1.url_img} alt="ảnh" className="img-item" />
           )}
         </div>
         <div className="img">
-          <img src={product.url_img} alt={product.name} className="anh" />
+          <img src={selectedimage || data1.url_img} alt={product.name} />
         </div>
       </div>
       <div className="detail">
@@ -35,9 +57,9 @@ function ProductDetail() {
             {product.price.toLocaleString("VI-VN")}
             <span>₫</span>
           </p>
-          <p className="description">Dây là áo dẹp</p>
+          <p className="description">{product.description}</p>
         </div>
-        <div className="size-color">
+        <div className="size-quantity">
           <div className="size">
             <label htmlFor="size">Size:</label>
             <select id="size">
@@ -48,13 +70,9 @@ function ProductDetail() {
               <option value="2XL">2XL</option>
             </select>
           </div>
-          <div className="color">
-            <label htmlFor="color">Color:</label>
-            <select id="color">
-              <option value="red">Red</option>
-              <option value="blue">Blue</option>
-              <option value="green">Green</option>
-            </select>
+          <div className="quantity">
+            <label htmlFor="quantity">Số lượng</label>
+            <input id="quantity" type="number" min={1}></input>
           </div>
         </div>
         <div className="btn-detail">
