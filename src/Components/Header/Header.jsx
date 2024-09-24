@@ -11,6 +11,12 @@ const Header = () => {
   const token = localStorage.getItem("token");
   const [userName, setUserName] = useState(localStorage.getItem("userName"));
   const [avatar, setAvatar] = useState(localStorage.getItem("avatar"));
+  const [menu, setMenu] = useState(localStorage.getItem("menu") || "Home");
+  const [search, setSearch] = useState("");
+
+  const handoleSeach =(e)=>{
+    console.log(e.target.value)
+  }
 
   const handleLogout = () => {
     if (token) {
@@ -63,7 +69,8 @@ const Header = () => {
     }
   };
 
-  const [menu, setMenu] = useState(localStorage.getItem("menu") || "Home");
+
+ 
 
   useEffect(() => {
     localStorage.setItem("menu", menu);
@@ -123,7 +130,7 @@ const Header = () => {
         </ul>
       </div>
       <div className="list-input">
-        <input className="input-item" type="text" placeholder="Tìm kiếm ..." />
+        <input className="input-item" type="text" placeholder="Tìm kiếm ..." onChange={handoleSeach} />
         <div className="icon">
           <CiSearch />
         </div>
