@@ -1,36 +1,43 @@
 import "./HomeCart.scss";
 import { TiShoppingCart } from "react-icons/ti";
-import useProductService from "../../services/ProductSevier";
+import ProductSevier from "../../services/ProductSevier";
 import { useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function HomeCart() {
-  const [itemsPerPage] = useState(12);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [itemsPerPage] = useState(12); // Số sản phẩm trên mỗi trang
+  const [currentPage, setCurrentPage] = useState(0); // Trang hiện tại
+  const [totalPages, setTotalPages] = useState(0); // Tổng số trang
+  const [data, setData] = useState([]); // Dữ liệu sản phẩm
   const navigate = useNavigate();
 
+  // Hàm xử lý khi click vào sản phẩm
   const handleChitietsanpham = (id) => {
     navigate(`/product/${id}`);
     window.scrollTo(0, 0);
   };
 
-  const { data, loading, error } = useProductService("new", currentPage + 1);
+  // Fetch dữ liệu và thiết lập số trang
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await ProductSevier("new", currentPage + 1);
+      setData(result.data);
+      setTotalPages(Math.ceil(result.data.length / itemsPerPage));
+    };
 
-  const handlePageClick = ({ selected }) => {
-    setCurrentPage(selected);
-  };
+    fetchData();
+  }, [currentPage, itemsPerPage]);
 
-  // Tính tổng số trang
-  const pageCount = Math.ceil(data.length / itemsPerPage);
-
-  // Tính toán các mục hiển thị cho trang hiện tại
+  // Tính toán chỉ số cho dữ liệu của trang hiện tại
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentItems = data.slice(startIndex, endIndex);
 
-  if (loading) return <div>Đang tải dữ liệu...</div>;
-  if (error) return <div>{error}</div>;
+  // Hàm xử lý thay đổi trang
+  const handlePageClick = ({ selected }) => {
+    setCurrentPage(selected);
+  };
 
   return (
     <div className="container-cart">
@@ -83,7 +90,7 @@ function HomeCart() {
         nextLabel="next >"
         onPageChange={handlePageClick}
         pageRangeDisplayed={6}
-        pageCount={pageCount}
+        pageCount={totalPages}
         previousLabel="< previous"
         containerClassName="pagination"
         pageClassName="page-item"

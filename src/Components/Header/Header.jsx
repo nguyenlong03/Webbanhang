@@ -17,6 +17,11 @@ const Header = () => {
   const handoleSeach =(e)=>{
     console.log(e.target.value)
   }
+  const handoleHome =()=>{
+    setMenu("Home")
+    navigate('/')
+   
+  }
 
   const handleLogout = () => {
     if (token) {
@@ -39,10 +44,7 @@ const Header = () => {
           progress: undefined,
           theme: "light",
         });
-        setTimeout(() => {
-          navigate("/login");
-        }, 2000);
-       
+          navigate("/");
       } else {
         toast.success("Logout bị hủy!", {
           position: "top-right",
@@ -82,6 +84,7 @@ const Header = () => {
         className="img-header"
         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdTtK81Da5Yxc8RBdicC3hJO8CiRkQ4UsezA&s"
         alt=""
+        onClick={ handoleHome}
       />
       <div className="header-list">
         <ul className="list-navbar">
