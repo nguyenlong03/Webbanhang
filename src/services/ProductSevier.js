@@ -7,7 +7,7 @@ const ProductService = (param, page = 1) => {
     const savedData = sessionStorage.getItem("productsData");
     return savedData ? JSON.parse(savedData) : [];
   });
-  const [loading, setLoading] = useState(data.length === 0); // Nếu có dữ liệu thì không cần loading
+  const [loading, setLoading] = useState(data.length === 0); 
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -17,9 +17,7 @@ const ProductService = (param, page = 1) => {
         setError(null);
         try {
           const response = await ProductsApi.getALL(param, page);
-
           setData(response.products);
-
           sessionStorage.setItem(
             "productsData",
             JSON.stringify(response.products)

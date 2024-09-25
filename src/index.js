@@ -21,7 +21,6 @@ root.render(
       <Route path="/" element={<App />}>
         <Route index element={<Home />} />
         <Route path="product/:id" element={<ProductDetail />} />
-        {/* <Route path="hotProduct/:id" element={<ProductDetail />} /> */}
         <Route path="dress" element={<Dress />} />
         <Route path="poloshirt" element={<Poloshirt />} />
         <Route path="t-shirt" element={<TShirt />} />

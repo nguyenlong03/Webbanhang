@@ -20,12 +20,13 @@ const Login = () => {
       return;
     }
   }, [navigate]);
-
+  // chức năng login
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
 
     try {
+      // gọi api
       const response = await AutherAPi.login(email, password);
       console.log(response);
       if (response && response.errCode === 0) {

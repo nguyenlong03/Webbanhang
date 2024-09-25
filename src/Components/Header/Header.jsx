@@ -5,6 +5,8 @@ import { CiSearch } from "react-icons/ci";
 import { MdShoppingCart } from "react-icons/md";
 import { IoIosLogOut } from "react-icons/io";
 import { NavLink, useNavigate } from "react-router-dom";
+import Seach from "../../services/Seach/Seach";
+
 
 const Header = () => {
   const navigate = useNavigate();
@@ -12,12 +14,12 @@ const Header = () => {
   const [userName, setUserName] = useState(localStorage.getItem("userName"));
   const [avatar, setAvatar] = useState(localStorage.getItem("avatar"));
   const [menu, setMenu] = useState(localStorage.getItem("menu") || "Home");
-  const [search, setSearch] = useState("");
-
-  const handoleSeach = (e) => {
-    console.log(e.target.value);
-  };
-
+  const [search, setSearch] = useState([]);
+  const [recort, setRecort] = useState([]);
+  const [searchTerm, setSearchTerm] = useState(""); 
+  const [noDataFound, setNoDataFound] = useState(false); 
+  console.log("search", searchTerm);
+ // chức năng logout
   const handleLogout = () => {
     if (token) {
       const confirmed = window.confirm(
@@ -67,14 +69,48 @@ const Header = () => {
       });
     }
   };
-
+// xét menu
   useEffect(() => {
     localStorage.setItem("menu", menu);
-  }, [menu]);
+  }, [menu,recort,search]);
   const handleHonelogo = () => {
     setMenu("Home");
     navigate("/");
   };
+
+  //filter input
+ const handleFilterChange = (e) => {
+  const value = e.target.value.toLowerCase();
+  setSearchTerm(value);
+  fechdata(value);
+}
+useEffect(() => {
+  fechdata()
+  }, []);
+const fechdata = async (keyword) => {
+  if (!keyword) {
+    setRecort([]); // Nếu không có từ khóa, đặt lại danh sách kết quả
+    setNoDataFound(false); // Không có dữ liệu tìm kiếm
+    return;
+  }
+
+  try {
+    const response = await Seach.getALL(keyword); // Gọi API với từ khóa
+    console.log("data", response.products);
+    if (response.products.length > 0) {
+      setRecort(response.products);
+      setNoDataFound(false); // Có dữ liệu tìm kiếm
+    } else {
+      setRecort([]);
+      setNoDataFound(true); // Không có dữ liệu tìm kiếm
+    }
+  } catch (error) {
+    console.log("error", error);
+    setRecort([]);
+    setNoDataFound(true); // Xảy ra lỗi, không có dữ liệu
+  }
+}
+
 
   return (
     <div className="Header-container">
@@ -135,12 +171,15 @@ const Header = () => {
           className="input-item"
           type="text"
           placeholder="Tìm kiếm ..."
-          onChange={handoleSeach}
+          value={searchTerm}
+          onChange={handleFilterChange}
         />
+            
         <div className="icon">
           <CiSearch />
         </div>
         <MdShoppingCart fontSize={"30px"} />
+
         {/* thông báo có giỏ hàng */}
         <div className="icon11"></div>
       </div>
@@ -167,6 +206,22 @@ const Header = () => {
           </NavLink>
         )}
       </div>
+
+      {searchTerm && recort.length > 0 && (
+      <div className="filter-list">
+        {recort.map((item, index) => (
+          <div className="filter-item" key={index}>
+            <img className="filter-img" src={item.url_img} alt="" />
+            <p className="filter-title">{item.name}</p>
+            <span className="filter-price">
+              {item.price}
+              <span className="ml-3">đ</span>
+            </span>
+            <hr color="red" />
+          </div>
+        ))}
+      </div>
+    )}
       <ToastContainer />
     </div>
   );
