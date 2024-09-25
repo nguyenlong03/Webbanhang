@@ -14,9 +14,9 @@ const Header = () => {
   const [menu, setMenu] = useState(localStorage.getItem("menu") || "Home");
   const [search, setSearch] = useState("");
 
-  const handoleSeach =(e)=>{
-    console.log(e.target.value)
-  }
+  const handoleSeach = (e) => {
+    console.log(e.target.value);
+  };
 
   const handleLogout = () => {
     if (token) {
@@ -42,7 +42,6 @@ const Header = () => {
         setTimeout(() => {
           navigate("/login");
         }, 2000);
-       
       } else {
         toast.success("Logout bị hủy!", {
           position: "top-right",
@@ -69,12 +68,13 @@ const Header = () => {
     }
   };
 
-
- 
-
   useEffect(() => {
     localStorage.setItem("menu", menu);
   }, [menu]);
+  const handleHonelogo = () => {
+    setMenu("Home");
+    navigate("/");
+  };
 
   return (
     <div className="Header-container">
@@ -82,6 +82,7 @@ const Header = () => {
         className="img-header"
         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdTtK81Da5Yxc8RBdicC3hJO8CiRkQ4UsezA&s"
         alt=""
+        onClick={handleHonelogo}
       />
       <div className="header-list">
         <ul className="list-navbar">
@@ -130,25 +131,40 @@ const Header = () => {
         </ul>
       </div>
       <div className="list-input">
-        <input className="input-item" type="text" placeholder="Tìm kiếm ..." onChange={handoleSeach} />
+        <input
+          className="input-item"
+          type="text"
+          placeholder="Tìm kiếm ..."
+          onChange={handoleSeach}
+        />
         <div className="icon">
           <CiSearch />
         </div>
         <MdShoppingCart fontSize={"30px"} />
-            {/* thông báo có giỏ hàng */}
-        <div className="icon11"></div>    
+        {/* thông báo có giỏ hàng */}
+        <div className="icon11"></div>
       </div>
       <div className="d-flex justify-content-center align-items-center gap-1 ">
         {userName ? (
           <div className="user-info">
-            <img src={avatar || "default-avatar.jpg"} alt="Avatar" className="avatar" />
+            <img
+              src={avatar || "default-avatar.jpg"}
+              alt="Avatar"
+              className="avatar"
+            />
             <span className="user">{userName}</span>
-            <button type="button" className="btn btn-danger" onClick={handleLogout}>
+            <button
+              type="button"
+              className="btn btn-danger"
+              onClick={handleLogout}
+            >
               <IoIosLogOut />
             </button>
           </div>
         ) : (
-          <NavLink to="/login" className="btn btn-primary">Login</NavLink>
+          <NavLink to="/login" className="btn btn-primary">
+            Login
+          </NavLink>
         )}
       </div>
       <ToastContainer />
