@@ -10,6 +10,7 @@ const useProductService = (param, page) => {
   });
   const [loading, setLoading] = useState(data.length === 0); // Nếu có dữ liệu thì không cần loading
   const [error, setError] = useState(null);
+  const [totalPage, setTotalPage] = useState(0);
 
   useEffect(() => {
     const fetchAPI = async () => {
@@ -18,6 +19,9 @@ const useProductService = (param, page) => {
       try {
         const response = await ProductsApi.getALL(param, page);
         setData(response.products);
+        console.log("checkdata", response);
+        setTotalPage(response.totalPage);
+        console.log("checktotalpage", response.totalPage);
         sessionStorage.setItem(
           "productsData",
           JSON.stringify(response.products)
@@ -33,7 +37,7 @@ const useProductService = (param, page) => {
     fetchAPI();
   }, [param, page]); // Chỉ cần phụ thuộc vào param và page
 
-  return { data, loading, error };
+  return { data, loading, error, totalPage };
 };
 
 export default useProductService;
