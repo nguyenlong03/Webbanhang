@@ -10,8 +10,6 @@ function HomeCart() {
     window.scrollTo(0, 0);
   };
   const { data } = ProductSevier("new", 1);
-  console.log("checkdata", data);
-  
   return (
     <div className="container-cart">
       <div className="list-cart">
@@ -21,7 +19,11 @@ function HomeCart() {
               <div className="image-container">
                 <img src={item.url_img} alt="" />
               </div>
-              <p className="price">{item.price.toLocaleString('vi-VN')}<span>₫</span></p>
+              {console.log("check data chi tiết sản phẩm", item.url_img)}
+              <p className="price">
+                {item.price.toLocaleString("vi-VN")}
+                <span>₫</span>
+              </p>
               <div className="content">
                 <h3 className="brand">ADIDAS</h3>
                 <p className="product-name">{item.name}</p>
@@ -35,7 +37,7 @@ function HomeCart() {
                   Buy Now
                 </button>
                 <button className="cart-button button">
-                  <i>
+                  <i onClick={() => Navigate("/shoppingcart")}>
                     <TiShoppingCart />
                   </i>
                 </button>

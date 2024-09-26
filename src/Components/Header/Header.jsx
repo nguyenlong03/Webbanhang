@@ -83,6 +83,7 @@ const Header = () => {
   const handleFilterChange = (e) => {
     const value = e.target.value.toLowerCase();
     setSearchTerm(value);
+    setShowSearchBox(true);
     if (debounceTimeout.current) {
       clearTimeout(debounceTimeout.current);
     }
