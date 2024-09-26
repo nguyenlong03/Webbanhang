@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "./Header.scss";
 import { CiSearch } from "react-icons/ci";
@@ -7,24 +7,22 @@ import { IoIosLogOut } from "react-icons/io";
 import { NavLink, useNavigate } from "react-router-dom";
 import Seach from "../../services/Seach/Seach";
 
-
 const Header = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [userName, setUserName] = useState(localStorage.getItem("userName"));
   const [avatar, setAvatar] = useState(localStorage.getItem("avatar"));
   const [menu, setMenu] = useState(localStorage.getItem("menu") || "Home");
-  const [search, setSearch] = useState([]);
   const [recort, setRecort] = useState([]);
   const [searchTerm, setSearchTerm] = useState(""); 
-  const [noDataFound, setNoDataFound] = useState(false); 
-  console.log("search", searchTerm);
- // chức năng logout
+  const [noDataFound, setNoDataFound] = useState(false);
+  const [showSearchBox, setShowSearchBox] = useState(true);
+  const debounceTimeout = useRef(null); 
+
+  // chức năng logout
   const handleLogout = () => {
     if (token) {
-      const confirmed = window.confirm(
-        "Bạn có chắc chắn muốn đăng xuất không?"
-      );
+      const confirmed = window.confirm("Bạn có chắc chắn muốn đăng xuất không?");
       if (confirmed) {
         localStorage.removeItem("token");
         localStorage.removeItem("userName");
@@ -69,49 +67,61 @@ const Header = () => {
       });
     }
   };
-// xét menu
+
+  // xét menu
   useEffect(() => {
     localStorage.setItem("menu", menu);
-  }, [menu,recort,search]);
+  }, [menu]);
+
+  // click img logo
   const handleHonelogo = () => {
     setMenu("Home");
     navigate("/");
   };
 
-  //filter input
- const handleFilterChange = (e) => {
-  const value = e.target.value.toLowerCase();
-  setSearchTerm(value);
-  fechdata(value);
-}
-useEffect(() => {
-  fechdata()
-  }, []);
-const fechdata = async (keyword) => {
-  if (!keyword) {
-    setRecort([]); // Nếu không có từ khóa, đặt lại danh sách kết quả
-    setNoDataFound(false); // Không có dữ liệu tìm kiếm
-    return;
-  }
-
-  try {
-    const response = await Seach.getALL(keyword); // Gọi API với từ khóa
-    console.log("data", response.products);
-    if (response.products.length > 0) {
-      setRecort(response.products);
-      setNoDataFound(false); // Có dữ liệu tìm kiếm
-    } else {
-      setRecort([]);
-      setNoDataFound(true); // Không có dữ liệu tìm kiếm
+  // filter input với debounce
+  const handleFilterChange = (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearchTerm(value);
+    if (debounceTimeout.current) {
+      clearTimeout(debounceTimeout.current);
     }
-  } catch (error) {
-    console.log("error", error);
-    setRecort([]);
-    setNoDataFound(true); // Xảy ra lỗi, không có dữ liệu
-  }
-}
+    debounceTimeout.current = setTimeout(() => {
+      fetchData(value);
+    }, 1000); 
+  };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
 
+  // function fetch data
+  const fetchData = async (keyword) => {
+    if (!keyword) {
+      setRecort([]); // Nếu không có từ khóa, đặt lại danh sách kết quả
+      setNoDataFound(false); // Không có dữ liệu tìm kiếm
+      return;
+    }
+
+    try {
+      const response = await Seach.getALL(keyword); // Gọi API với từ khóa
+      console.log("data", response.products);
+      if (response.products.length > 0) {
+        setRecort(response.products);
+        setNoDataFound(false); 
+      } else {
+        setRecort([]);
+        setNoDataFound(true); 
+      }
+    } catch (error) {
+      console.log("error", error);
+      setRecort([]);
+      setNoDataFound(true); 
+    }
+  };
+ const handoleshowhide = () => {
+  setShowSearchBox(false)
+ }
   return (
     <div className="Header-container">
       <img
@@ -174,16 +184,16 @@ const fechdata = async (keyword) => {
           value={searchTerm}
           onChange={handleFilterChange}
         />
-            
+
         <div className="icon">
           <CiSearch />
         </div>
-        <MdShoppingCart fontSize={"30px"} />
+        <MdShoppingCart fontSize={"30px"} onClick={()=>navigate("/shoppingcart")}/>
 
         {/* thông báo có giỏ hàng */}
         <div className="icon11"></div>
       </div>
-      <div className="d-flex justify-content-center align-items-center gap-1 ">
+      <div className="d-flex justify-content-center align-items-center gap-1">
         {userName ? (
           <div className="user-info">
             <img
@@ -207,21 +217,37 @@ const fechdata = async (keyword) => {
         )}
       </div>
 
-      {searchTerm && recort.length > 0 && (
-      <div className="filter-list">
-        {recort.map((item, index) => (
-          <div className="filter-item" key={index}>
-            <img className="filter-img" src={item.url_img} alt="" />
-            <p className="filter-title">{item.name}</p>
-            <span className="filter-price">
-              {item.price}
-              <span className="ml-3">đ</span>
-            </span>
-            <hr color="red" />
-          </div>
-        ))}
-      </div>
-    )}
+      {searchTerm && recort.length > 0&&showSearchBox&& (
+        <div className="filter-list">
+        <button className="btn" onClick={handoleshowhide} >x</button>
+          {recort.map((item, index) => (
+            <div className="filter-item" key={index}>
+              <img className="filter-img" src={item.url_img} alt="" />
+              <p className="filter-title">{item.name}</p>
+              <span className="filter-price">
+                {item.price}
+                <span className="ml-3">đ</span>
+              </span>
+              <hr color="red" />
+            </div>
+          ))}
+      
+        </div>
+      )}
+
+      {searchTerm && recort.length === 0 && noDataFound && (
+        toast.error("Không tìm thấy sản phẩm!", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        })
+      )}
+
       <ToastContainer />
     </div>
   );
