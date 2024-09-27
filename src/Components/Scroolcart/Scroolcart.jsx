@@ -7,24 +7,12 @@ import { useNavigate } from "react-router-dom";
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{ ...style}}
-      onClick={onClick}
-    />
-  );
+  return <div className={className} style={{ ...style }} onClick={onClick} />;
 }
 
 function SamplePrevArrow(props) {
   const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{ ...style}}
-      onClick={onClick}
-    />
-  );
+  return <div className={className} style={{ ...style }} onClick={onClick} />;
 }
 
 function SwipeToSlide() {
@@ -47,6 +35,7 @@ function SwipeToSlide() {
   };
 
   const { data } = ProductSevier("new", 1);
+
   return (
     <div className="products-container">
       <h1>Sản phẩm mới nhất</h1>
@@ -54,13 +43,14 @@ function SwipeToSlide() {
         <Slider {...settings}>
           {data &&
             data.map((item) => (
-              <div className="product" key={item.id}
-
-              >
+              <div className="product" key={item.id}>
                 <div className="image-product">
                   <img src={item.url_img} alt="" />
                 </div>
-                <p className="price">{item.price.toLocaleString('vi-VN')}<span>₫</span></p>
+                <p className="price">
+                  {item.price.toLocaleString("vi-VN")}
+                  <span>₫</span>
+                </p>
                 <div className="content">
                   <p
                     className="product-name"

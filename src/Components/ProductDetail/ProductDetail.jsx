@@ -7,11 +7,8 @@ import "./ProductDetail.scss";
 function ProductDetail() {
   const { id } = useParams();
   const { data } = ProductSevier("new", 1);
-  // console.log("check data size ", data);
   const data1 = ChitietSanPham(parseInt(id));
-  console.log("check data1 size", data1.sizes);
   const [selectedimage, setSelectedImage] = useState("");
-  // console.log("check data chi tiết sản phẩm", data1.url_img);
   const product = data.find((item) => item.id === parseInt(id));
 
   useEffect(() => {

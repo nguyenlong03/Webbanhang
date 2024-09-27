@@ -14,15 +14,17 @@ const Header = () => {
   const [avatar, setAvatar] = useState(localStorage.getItem("avatar"));
   const [menu, setMenu] = useState(localStorage.getItem("menu") || "Home");
   const [recort, setRecort] = useState([]);
-  const [searchTerm, setSearchTerm] = useState(""); 
+  const [searchTerm, setSearchTerm] = useState("");
   const [noDataFound, setNoDataFound] = useState(false);
   const [showSearchBox, setShowSearchBox] = useState(true);
-  const debounceTimeout = useRef(null); 
+  const debounceTimeout = useRef(null);
 
   // chức năng logout
   const handleLogout = () => {
     if (token) {
-      const confirmed = window.confirm("Bạn có chắc chắn muốn đăng xuất không?");
+      const confirmed = window.confirm(
+        "Bạn có chắc chắn muốn đăng xuất không?"
+      );
       if (confirmed) {
         localStorage.removeItem("token");
         localStorage.removeItem("userName");
@@ -40,7 +42,7 @@ const Header = () => {
           theme: "light",
         });
         setTimeout(() => {
-          navigate("/login");
+          navigate("/");
         }, 2000);
       } else {
         toast.success("Logout bị hủy!", {
@@ -89,7 +91,7 @@ const Header = () => {
     }
     debounceTimeout.current = setTimeout(() => {
       fetchData(value);
-    }, 1000); 
+    }, 1000);
   };
 
   useEffect(() => {
@@ -109,20 +111,20 @@ const Header = () => {
       console.log("data", response.products);
       if (response.products.length > 0) {
         setRecort(response.products);
-        setNoDataFound(false); 
+        setNoDataFound(false);
       } else {
         setRecort([]);
-        setNoDataFound(true); 
+        setNoDataFound(true);
       }
     } catch (error) {
       console.log("error", error);
       setRecort([]);
-      setNoDataFound(true); 
+      setNoDataFound(true);
     }
   };
- const handoleshowhide = () => {
-  setShowSearchBox(false)
- }
+  const handoleshowhide = () => {
+    setShowSearchBox(false);
+  };
   return (
     <div className="Header-container">
       <img
@@ -189,7 +191,10 @@ const Header = () => {
         <div className="icon">
           <CiSearch />
         </div>
-        <MdShoppingCart fontSize={"30px"} onClick={()=>navigate("/shoppingcart")}/>
+        <MdShoppingCart
+          fontSize={"30px"}
+          onClick={() => navigate("/shoppingcart")}
+        />
 
         {/* thông báo có giỏ hàng */}
         <div className="icon11"></div>
@@ -218,9 +223,11 @@ const Header = () => {
         )}
       </div>
 
-      {searchTerm && recort.length > 0&&showSearchBox&& (
+      {searchTerm && recort.length > 0 && showSearchBox && (
         <div className="filter-list">
-        <button className="btn" onClick={handoleshowhide} >x</button>
+          <button className="btn" onClick={handoleshowhide}>
+            x
+          </button>
           {recort.map((item, index) => (
             <div className="filter-item" key={index}>
               <img className="filter-img" src={item.url_img} alt="" />
@@ -232,11 +239,12 @@ const Header = () => {
               <hr color="red" />
             </div>
           ))}
-      
         </div>
       )}
 
-      {searchTerm && recort.length === 0 && noDataFound && (
+      {searchTerm &&
+        recort.length === 0 &&
+        noDataFound &&
         toast.error("Không tìm thấy sản phẩm!", {
           position: "top-right",
           autoClose: 1000,
@@ -246,8 +254,7 @@ const Header = () => {
           draggable: true,
           progress: undefined,
           theme: "light",
-        })
-      )}
+        })}
 
       <ToastContainer />
     </div>

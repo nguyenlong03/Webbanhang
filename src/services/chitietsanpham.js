@@ -8,8 +8,7 @@ const ChitietSanPham = (param) => {
     const calldata = async () => {
       try {
         const response = await Detail.getALL(param);
-        // console.log("Kết quả:", response[0].url_img);
-        console.log("Kết quả:", response[0]);
+        console.log("checck ", response[0]);
         setdata1(response[0]);
       } catch (error) {
         console.log("error", error);
