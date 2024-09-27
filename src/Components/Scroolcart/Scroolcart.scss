@@ -9,17 +9,56 @@
     height: 600px;
     width: 100%;
     font-family: 'myfont';
-    h1 {
-      text-align: center;
-    }
+    
     .products-list {
         width: 80%;
+        height: 100%;
         align-items: center;
         padding: 30px;
-        background-color: #8e8eebd0;
+        background-color: #fff;
         border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        .flash-sale-container {
+          height: 10%;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          background-color: #fff;
+          margin-left: 8px;
+          margin-bottom: 20px;
+          border-radius: 10px;
+          .flash-sale {
+            color: #FF5A30;
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            .icon {
+              margin: 0 5px;
+            }
+          }
         
+          .countdown {
+              display: flex;
+              margin-left: 10px;
+          }
+          
+          .time-box {
+              background-color: rgba(0, 0, 0, 0.6);
+              color: rgba(255, 255, 255, 0.8);
+              padding: 5px;
+              margin-left: 5px;
+              font-size: 18px;
+              font-weight: bold;
+              width: 40px;
+              text-align: center;
+              border-radius: 5px;
+          }
+          
+          .time-box:first-child {
+              margin-left: 0;
+          }
+        }
         .product {
             --accent-color: #ffd426;
             position: relative;
@@ -28,8 +67,9 @@
             width: calc(25% - 40px);
             height: 450px;
             gap: 15px;
-            margin-right: 20px;
             padding: 10px;
+            margin-right: 20px;
+            border: 1px solid  rgba(100, 100, 111, 0.2);
             box-shadow: rgba(100, 100, 111, 0.2) 0px 50px 30px -20px;
             transition: all 0.5s ease-in-out;
             display: flex;
@@ -95,12 +135,6 @@
         }
 
     }
-}
-.line {
-  width: 80%;
-  height: 2px;
-  background-color: rgba(117, 108, 108, 0.281);
-  margin-top: 30px;
 }
 
 .slick-prev,

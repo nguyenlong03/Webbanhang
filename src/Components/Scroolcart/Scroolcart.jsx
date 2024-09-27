@@ -4,6 +4,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "./Scroolcart.scss";
 import ProductSevier from "../../services/ProductSevier";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -35,10 +36,57 @@ function SwipeToSlide() {
   };
 
   const { data } = ProductSevier("new", 1);
+
+  const [time, setTime] = useState({
+    hours: 24,
+    minutes: 47,
+    seconds: 34,
+  });
+
+  useEffect(() => {
+    const countdown = setInterval(() => {
+      let { hours, minutes, seconds } = time;
+
+      if (seconds > 0) {
+        seconds--;
+      } else if (minutes > 0) {
+        minutes--;
+        seconds = 59;
+      } else if (hours > 0) {
+        hours--;
+        minutes = 59;
+        seconds = 59;
+      } else {
+        clearInterval(countdown);
+        alert("Flash sale ended!");
+      }
+
+      setTime({ hours, minutes, seconds });
+    }, 1000);
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(countdown);
+  }, [time]);
+
   return (
     <div className="products-container">
-      <h1>Sản phẩm mới nhất</h1>
       <div className="products-list">
+        <div class="flash-sale-container">
+          <span class="flash-sale">
+            FLASH <span class="icon">⚡</span> SALE
+          </span>
+          <div class="countdown">
+            <div class="time-box">
+              <span id="hours">{String(time.hours).padStart(2, "0")}</span>
+            </div>
+            <div class="time-box">
+              <span id="hours">{String(time.minutes).padStart(2, "0")}</span>
+            </div>
+            <div class="time-box">
+              <span id="hours">{String(time.seconds).padStart(2, "0")}</span>
+            </div>
+          </div>
+        </div>
         <Slider {...settings}>
           {data &&
             data.map((item) => (
@@ -62,7 +110,6 @@ function SwipeToSlide() {
             ))}
         </Slider>
       </div>
-      <div className="line"></div>
     </div>
   );
 }

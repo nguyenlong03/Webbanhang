@@ -7,7 +7,6 @@ import "./ProductDetail.scss";
 function ProductDetail() {
   const { id } = useParams();
   const { data } = ProductService("new", 1);
-  console.log("se", data);
   const data1 = ChitietSanPham(parseInt(id));
   const [selectedImage, setSelectedImage] = useState("");
   const [size, setSize] = useState("");
@@ -15,6 +14,15 @@ function ProductDetail() {
   const [availableSizes, setAvailableSizes] = useState([]);
 
   const product = data.find((item) => item.id === parseInt(id));
+
+  const tang = () => {
+    setQuantity((prev) => prev + 1);
+  };
+  const giam = () => {
+    if (quantity > 1) {
+      setQuantity((prev) => prev - 1);
+    }
+  };
 
   useEffect(() => {
     if (Array.isArray(data1.url_img) && data1.url_img.length > 0) {
@@ -46,7 +54,9 @@ function ProductDetail() {
           {Array.isArray(data1.url_img) ? (
             data1.url_img.map((item, index) => (
               <button
-                className="toggle-img"
+                className={`toggle-img ${
+                  selectedImage === item ? "selected" : ""
+                }`}
                 key={index}
                 onClick={() => handleSelectedImage(item)}
               >
@@ -68,34 +78,40 @@ function ProductDetail() {
             {product.price.toLocaleString("vi-VN")}
             <span>₫</span>
           </p>
-          <p className="description">{product.description}</p>
+          <p className="desc">{product?.description}</p>
         </div>
         <div className="size-quantity">
           <div className="size">
             <label htmlFor="size">Size:</label>
-            <select
-              id="size"
-              value={size}
-              onChange={(e) => setSize(e.target.value)}
-            >
-              {availableSizes.map((s) => (
-                <option key={s} value={s}>
+            {availableSizes.map((s) => {
+              return (
+                <button
+                  key={s}
+                  className={`btn-size ${size === s ? "selected" : ""}`}
+                  onClick={() => setSize(s)}
+                >
                   {s}
-                </option>
-              ))}
-            </select>
+                </button>
+              );
+            })}
           </div>
           <div className="quantity">
-            <label htmlFor="quantity">Số lượng</label>
+            <label htmlFor="quantity">Số lượng: </label>
+            <button className="btn-quantity" onClick={giam}>
+              -
+            </button>
             <input
               id="quantity"
-              type="number"
+              type="text"
               min={1}
               value={quantity}
               onChange={(e) =>
                 setQuantity(Math.max(1, parseInt(e.target.value)))
               }
             />
+            <button className="btn-quantity" onClick={tang}>
+              +
+            </button>
           </div>
         </div>
         <div className="btn-detail">

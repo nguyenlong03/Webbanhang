@@ -42,7 +42,7 @@ const Header = () => {
           theme: "light",
         });
         setTimeout(() => {
-          navigate("/login");
+          navigate("/");
         }, 2000);
       } else {
         toast.success("Logout bị hủy!", {
@@ -85,6 +85,7 @@ const Header = () => {
   const handleFilterChange = (e) => {
     const value = e.target.value.toLowerCase();
     setSearchTerm(value);
+    setShowSearchBox(true);
     if (debounceTimeout.current) {
       clearTimeout(debounceTimeout.current);
     }
@@ -111,13 +112,16 @@ const Header = () => {
       if (response.products.length > 0) {
         setRecort(response.products);
         setNoDataFound(false);
+        setNoDataFound(false);
       } else {
         setRecort([]);
+        setNoDataFound(true);
         setNoDataFound(true);
       }
     } catch (error) {
       console.log("error", error);
       setRecort([]);
+      setNoDataFound(true);
       setNoDataFound(true);
     }
   };
@@ -187,7 +191,7 @@ const Header = () => {
           fontSize={"30px"}
           onClick={() => navigate("/shoppingcart")}
         />
-
+        <IoIosNotifications fontSize={"30px"} />
         {/* thông báo có giỏ hàng */}
         <div className="icon11"></div>
       </div>
@@ -220,6 +224,9 @@ const Header = () => {
           <button className="btn" onClick={handoleshowhide}>
             x
           </button>
+          <button className="btn" onClick={handoleshowhide}>
+            x
+          </button>
           {recort.map((item, index) => (
             <div className="filter-item" key={index}>
               <img className="filter-img" src={item.url_img} alt="" />
@@ -247,7 +254,7 @@ const Header = () => {
           progress: undefined,
           theme: "light",
         })}
-      <IoIosNotifications />
+
       <ToastContainer />
     </div>
   );

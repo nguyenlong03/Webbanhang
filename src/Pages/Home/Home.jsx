@@ -1,4 +1,5 @@
 import "./Home.scss";
+import "./Home.scss";
 import React from "react";
 import SimpleSlider from "../../Components/Slide/Slide";
 import SwipeToSlide from "../../Components/Scroolcart/Scroolcart";

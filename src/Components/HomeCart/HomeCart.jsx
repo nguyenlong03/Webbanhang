@@ -5,93 +5,106 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 function HomeCart() {
+  const [filter, setFilter] = useState("new");
   const Navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState("ao");
-  const { data } = ProductService(selectedCategory);
-  console.log("dulieutheoType", data);
+  const { data, loading, error } = ProductService(filter, 1);
 
   const handoleChitietsanpham = (id) => {
     Navigate(`/product/${id}`);
     window.scrollTo(0, 0);
   };
-  const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
-    // Xóa dữ liệu trong sessionStorage để buộc tải lại dữ liệu mới
-    sessionStorage.removeItem("productsData");
+
+  const handleFilterChange = (filterType) => {
+    setFilter(filterType);
   };
+
+  if (loading)
+    return (
+      <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    );
+  if (error) return <p>{error}</p>;
+
   return (
-    <div className="container-cart">
+    <>
+      <div className="line">
+        <hr />
+      </div>
       <div className="filter">
         <h1>Hôm nay mua gì</h1>
-        <nav className="nav-navbar">
-          <button
-            className="filter-item"
-            onClick={() => handleCategoryClick("all")}
-          >
+        <ul className="nav-navbar">
+          <li className="filter-item" onClick={() => handleFilterChange("new")}>
             Toàn bộ
-          </button>
-          <button
-            className="filter-item"
-            onClick={() => handleCategoryClick("ao")}
-          >
+          </li>
+          <li className="filter-item" onClick={() => handleFilterChange("ao")}>
             Áo phông
-          </button>
-          <button
+          </li>
+
+          {/* <li
             className="filter-item"
-            onClick={() => handleCategoryClick("quan")}
+            onClick={() => handleFilterChange("Áo sơ mi")}
           >
             Áo sơ mi
-          </button>
-          <button
-            className="filter-item"
-            onClick={() => handleCategoryClick("vay")}
-          >
+          </li> */}
+          <li className="filter-item" onClick={() => handleFilterChange("vay")}>
             Chân váy
-          </button>
-          <button
+          </li>
+          <li
             className="filter-item"
-            onClick={() => handleCategoryClick("all")}
+            onClick={() => handleFilterChange("quan")}
           >
             Quần short
-          </button>
-          <button
+          </li>
+
+          {/* <li
             className="filter-item"
-            onClick={() => handleCategoryClick("all")}
+            onClick={() => handleFilterChange("Phụ kiện")}
           >
             Phụ kiện
-          </button>
-        </nav>
+          </li> */}
+        </ul>
       </div>
-      <div className="list-cart">
-        {data &&
-          data.map((item, index) => (
-            <div className="card" key={index}>
-              <div className="image-container">
-                <img src={item.url_img} alt="" />
-              </div>
-              <p className="price">{item.price}đ</p>
-              <div className="content">
-                <h3 className="brand">ADIDAS</h3>
-                <p className="product-name">{item.name}</p>
-              </div>
 
-              <div className="button-container">
-                <button
-                  className="buy-button button"
-                  onClick={() => handoleChitietsanpham(item.id)}
-                >
-                  Buy Now
-                </button>
-                <button className="cart-button button">
-                  <i>
-                    <TiShoppingCart />
-                  </i>
-                </button>
+      <div className="container-cart">
+        <div className="list-cart">
+          {data.length > 0 ? (
+            data.map((item, index) => (
+              <div className="card" key={index}>
+                <div className="image-container">
+                  <img src={item.url_img} alt={item.name} />
+                </div>
+
+                <p className="price">
+                  {item.price.toLocaleString("vi-VN")}
+                  <span>₫</span>
+                </p>
+                <div className="content">
+                  <h3 className="brand">ADIDAS</h3>
+                  <p className="product-name">{item.name}</p>
+                </div>
+
+                <div className="button-container">
+                  <button
+                    className="buy-button button"
+                    onClick={() => handoleChitietsanpham(item.id)}
+                  >
+                    Buy Now
+                  </button>
+                  <button className="cart-button button">
+                    <i onClick={() => Navigate("/shoppingcart")}>
+                      <TiShoppingCart />
+                    </i>
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p>Không có sản phẩm nào được tìm thấy.</p>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

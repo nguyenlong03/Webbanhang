@@ -27,21 +27,23 @@
             .toggle-img{
                 width: 100%;
                 height: 100%;
-                object-fit: cover;
                 margin-bottom: 10px;
                 border-radius: 10px;
-                border: 1px solid hwb(0 93% 5%);
-                padding: 5px;
+                border: 1px solid rgba(23, 23, 23, 0.1);
                 .img-item {
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
-                    border-radius: 10px;
+                }
+                &:hover
+                {
+                 transform: scale(1.03);
+                }
+                .selected {
+                  border: 1px solid rgba(23, 23, 23, 0.6);
                 }
             }
-            :hover {
-                transform: scale(1.03);
-            }
+           
         }
         .img {
             width: 85%;
@@ -51,7 +53,7 @@
             img {
                 width: 100%;
                 height: 100%;
-                object-fit: cover;
+                object-fit: fill;
             }
         }
     }
@@ -76,34 +78,56 @@
           font-weight: 600;
         }
   
-        .description {
+        .desc {
           margin-top: 10px;
           font-size: 1.2rem;
-          line-height: 1.5;
+          color: #333;
         }
-        }
+      }
   
-        .size, .quantity {
+      .size, .quantity {
+          margin-top: 10px;
             label {
                 font-size: 1.2rem;
                 font-weight: 600;
                 margin-right: 5px;
-                select, input {
-                    width: 50px;
-                    height: 30px;
-                    padding: 5px;
-                    border-radius: 5px;
-                    text-align: center;
-                }
             }
-        }
-        .size {
-            margin-bottom: 20px;
-        }
+            .btn-size,
+            .btn-quantity {
+              width: 33px;
+              height: 33px;
+              border-radius: 50%;
+              margin: 10px;
+              border: none;
+              outline: none;
+              &:hover,
+              &.selected {
+                cursor: pointer;
+                color: #fff;
+                background-color: rgb(247, 130, 101);
+                transform: scale(1.2);
+              }
+            }
+           
+          }
     
         }
-
-  
+        .quantity {
+          border: none;
+          width: 300px;
+            input {
+              width: 50px;
+              height: 35px;
+              border-radius: 5px;
+              padding: 5px;
+              border: none;
+              outline: none;
+              font-size: 1.2rem;
+              font-weight: 600;
+              text-align: center;
+            }
+          }
+         
         .btn-detail {
             margin-top: 30px;
             border-radius: 10px;
