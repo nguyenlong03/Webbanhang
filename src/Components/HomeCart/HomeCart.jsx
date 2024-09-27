@@ -17,13 +17,6 @@ function HomeCart() {
   const handleFilterChange = (filterType) => {
     setFilter(filterType);
   };
-
-  if (loading)
-    return (
-      <div class="spinner-border text-primary" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
-    );
   if (error) return <p>{error}</p>;
 
   return (
@@ -31,19 +24,12 @@ function HomeCart() {
       <div className="filter">
         <h1>Hôm nay mua gì</h1>
         <ul className="nav-navbar">
-          <li className="filter-item" onClick={() => handleFilterChange("new")}>
+          <li className="filter-item" onClick={() => handleFilterChange("all")}>
             Toàn bộ
           </li>
           <li className="filter-item" onClick={() => handleFilterChange("ao")}>
             Áo phông
           </li>
-
-          {/* <li
-            className="filter-item"
-            onClick={() => handleFilterChange("Áo sơ mi")}
-          >
-            Áo sơ mi
-          </li> */}
           <li className="filter-item" onClick={() => handleFilterChange("vay")}>
             Chân váy
           </li>
@@ -51,27 +37,25 @@ function HomeCart() {
             className="filter-item"
             onClick={() => handleFilterChange("quan")}
           >
-            Quần short
+            Quần
           </li>
-
-          {/* <li
-            className="filter-item"
-            onClick={() => handleFilterChange("Phụ kiện")}
-          >
-            Phụ kiện
-          </li> */}
         </ul>
       </div>
 
       <div className="container-cart">
         <div className="list-cart">
-          {data.length > 0 ? (
+          {loading ? (
+            <div className="load-container">
+              <div class="spinner-border text-info" role="status">
+                <span class="sr-only"></span>
+              </div>
+            </div>
+          ) : data.length > 0 ? (
             data.map((item, index) => (
               <div className="card" key={index}>
                 <div className="image-container">
                   <img src={item.url_img} alt={item.name} />
                 </div>
-
                 <p className="price">
                   {item.price.toLocaleString("vi-VN")}
                   <span>₫</span>

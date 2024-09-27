@@ -6,6 +6,7 @@ import { MdShoppingCart } from "react-icons/md";
 import { IoIosLogOut } from "react-icons/io";
 import { NavLink, useNavigate } from "react-router-dom";
 import Seach from "../../services/Seach/Seach";
+import logo from "../../assets/imgs/images.png";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -127,12 +128,7 @@ const Header = () => {
   };
   return (
     <div className="Header-container">
-      <img
-        className="img-header"
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdTtK81Da5Yxc8RBdicC3hJO8CiRkQ4UsezA&s"
-        alt=""
-        onClick={handleHonelogo}
-      />
+      <img className="img-header" src={logo} alt="" onClick={handleHonelogo} />
       <div className="header-list">
         <ul className="list-navbar">
           <NavLink
@@ -199,7 +195,7 @@ const Header = () => {
         {/* thông báo có giỏ hàng */}
         <div className="icon11"></div>
       </div>
-      <div className="d-flex justify-content-center align-items-center gap-1">
+      <div className="d-flex justify-content-center align-items-center gap-3">
         {userName ? (
           <div className="user-info">
             <img

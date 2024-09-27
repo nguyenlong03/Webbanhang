@@ -33,13 +33,14 @@ function ProductDetail() {
         <div className="toggle">
           {Array.isArray(data1.url_img) ? (
             data1.url_img.map((item, index) => (
-              <button
-                className="toggle-img"
-                key={index}
-                onClick={() => handleSelectedImage(item)}
-              >
-                <img src={item} alt="" className="img-item" />
-              </button>
+              <div key={index} className="toggle-parent">
+                <button
+                  className="toggle-img"
+                  onClick={() => handleSelectedImage(item)}
+                >
+                  <img src={item} alt="" className="img-item" />
+                </button>
+              </div>
             ))
           ) : (
             <img src={data1.url_img} alt="ảnh" className="img-item" />
