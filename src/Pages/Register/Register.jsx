@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./Register.scss";
 import { FaGoogle, FaFacebookF } from "react-icons/fa";
 import { NavLink } from "react-router-dom";

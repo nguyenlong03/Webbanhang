@@ -12,6 +12,7 @@ import Trouser from "./Pages/Trouser/Trouser";
 import Trousershort from "./Pages/TrouserShorts/Trousershort";
 import Login from "./Pages/Login/Login";
 import Register from "./Pages/Register/Register";
+import ForgotPassword from "./Pages/forgotPassword/forgotPassword";
 import ProductDetail from "./Components/ProductDetail/ProductDetail";
 import Shoppingcart from "./Pages/shoppingcart/shoppingcart";
 
@@ -31,6 +32,7 @@ root.render(
       </Route>
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
+      <Route path="forgotPassword" element={<ForgotPassword />} />
     </Routes>
   </BrowserRouter>
 );
