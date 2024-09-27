@@ -96,7 +96,12 @@
 
     }
 }
-
+.line {
+  width: 80%;
+  height: 2px;
+  background-color: rgba(117, 108, 108, 0.281);
+  margin-top: 30px;
+}
 
 .slick-prev,
 .slick-next {

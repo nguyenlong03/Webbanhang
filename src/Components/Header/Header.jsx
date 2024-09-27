@@ -3,7 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "./Header.scss";
 import { CiSearch } from "react-icons/ci";
 import { MdShoppingCart } from "react-icons/md";
-import { IoIosLogOut } from "react-icons/io";
+import { IoIosLogOut, IoIosNotifications } from "react-icons/io";
 import { NavLink, useNavigate } from "react-router-dom";
 import Seach from "../../services/Seach/Seach";
 
@@ -14,15 +14,17 @@ const Header = () => {
   const [avatar, setAvatar] = useState(localStorage.getItem("avatar"));
   const [menu, setMenu] = useState(localStorage.getItem("menu") || "Home");
   const [recort, setRecort] = useState([]);
-  const [searchTerm, setSearchTerm] = useState(""); 
+  const [searchTerm, setSearchTerm] = useState("");
   const [noDataFound, setNoDataFound] = useState(false);
   const [showSearchBox, setShowSearchBox] = useState(true);
-  const debounceTimeout = useRef(null); 
+  const debounceTimeout = useRef(null);
 
   // chức năng logout
   const handleLogout = () => {
     if (token) {
-      const confirmed = window.confirm("Bạn có chắc chắn muốn đăng xuất không?");
+      const confirmed = window.confirm(
+        "Bạn có chắc chắn muốn đăng xuất không?"
+      );
       if (confirmed) {
         localStorage.removeItem("token");
         localStorage.removeItem("userName");
@@ -88,7 +90,7 @@ const Header = () => {
     }
     debounceTimeout.current = setTimeout(() => {
       fetchData(value);
-    }, 1000); 
+    }, 1000);
   };
 
   useEffect(() => {
@@ -108,20 +110,20 @@ const Header = () => {
       console.log("data", response.products);
       if (response.products.length > 0) {
         setRecort(response.products);
-        setNoDataFound(false); 
+        setNoDataFound(false);
       } else {
         setRecort([]);
-        setNoDataFound(true); 
+        setNoDataFound(true);
       }
     } catch (error) {
       console.log("error", error);
       setRecort([]);
-      setNoDataFound(true); 
+      setNoDataFound(true);
     }
   };
- const handoleshowhide = () => {
-  setShowSearchBox(false)
- }
+  const handoleshowhide = () => {
+    setShowSearchBox(false);
+  };
   return (
     <div className="Header-container">
       <img
@@ -144,35 +146,28 @@ const Header = () => {
             className={`navbar-item ${menu === "T-shirt" ? "active" : ""}`}
             onClick={() => setMenu("T-shirt")}
           >
-            T-shirt
+            Hot Sale
           </NavLink>
           <NavLink
             to="/dress"
             className={`navbar-item ${menu === "Dress" ? "active" : ""}`}
             onClick={() => setMenu("Dress")}
           >
-            Dress
+            Products
           </NavLink>
           <NavLink
             to="/poloshirt"
             className={`navbar-item ${menu === "Poloshirt" ? "active" : ""}`}
             onClick={() => setMenu("Poloshirt")}
           >
-            Poloshirt
+            Contact
           </NavLink>
           <NavLink
             to="/trouser"
             className={`navbar-item ${menu === "Trouser" ? "active" : ""}`}
             onClick={() => setMenu("Trouser")}
           >
-            Trouser
-          </NavLink>
-          <NavLink
-            to="/trousershort"
-            className={`navbar-item ${menu === "TrouserShort" ? "active" : ""}`}
-            onClick={() => setMenu("TrouserShort")}
-          >
-            TrouserShort
+            Help
           </NavLink>
         </ul>
       </div>
@@ -188,7 +183,10 @@ const Header = () => {
         <div className="icon">
           <CiSearch />
         </div>
-        <MdShoppingCart fontSize={"30px"} onClick={()=>navigate("/shoppingcart")}/>
+        <MdShoppingCart
+          fontSize={"30px"}
+          onClick={() => navigate("/shoppingcart")}
+        />
 
         {/* thông báo có giỏ hàng */}
         <div className="icon11"></div>
@@ -217,9 +215,11 @@ const Header = () => {
         )}
       </div>
 
-      {searchTerm && recort.length > 0&&showSearchBox&& (
+      {searchTerm && recort.length > 0 && showSearchBox && (
         <div className="filter-list">
-        <button className="btn" onClick={handoleshowhide} >x</button>
+          <button className="btn" onClick={handoleshowhide}>
+            x
+          </button>
           {recort.map((item, index) => (
             <div className="filter-item" key={index}>
               <img className="filter-img" src={item.url_img} alt="" />
@@ -231,11 +231,12 @@ const Header = () => {
               <hr color="red" />
             </div>
           ))}
-      
         </div>
       )}
 
-      {searchTerm && recort.length === 0 && noDataFound && (
+      {searchTerm &&
+        recort.length === 0 &&
+        noDataFound &&
         toast.error("Không tìm thấy sản phẩm!", {
           position: "top-right",
           autoClose: 1000,
@@ -245,9 +246,8 @@ const Header = () => {
           draggable: true,
           progress: undefined,
           theme: "light",
-        })
-      )}
-
+        })}
+      <IoIosNotifications />
       <ToastContainer />
     </div>
   );
