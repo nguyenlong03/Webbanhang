@@ -6,6 +6,7 @@ import { FaTiktok } from "react-icons/fa";
 import { IoMdMailUnread } from "react-icons/io";
 import { FaYoutube } from "react-icons/fa";
 import "./Footer.scss";
+import logobanking from "../../assets/imgs/banklist.jpg";
 
 const Footer = () => {
   return (
@@ -50,14 +51,20 @@ const Footer = () => {
           </p>
           <p className="text-item ">
             Tiktok:{" "}
-            <a href="" className=" text-decoration-none text-danger">
+            <a
+              href=" https://www.tiktok.com/foryou?lang=vi-VN"
+              className=" text-decoration-none text-danger"
+            >
               {" "}
               Tiktok.com
             </a>
           </p>
           <p className="text-item">
             Facebook:
-            <a href="" className="text-danger text-decoration-none">
+            <a
+              href="https://www.facebook.com/"
+              className="text-danger text-decoration-none"
+            >
               {" "}
               Facebook.com
             </a>
@@ -90,12 +97,7 @@ const Footer = () => {
             Danh sách các ngân hàng thanh toán online
           </b>
           <div className="img-ft">
-            <img
-              width={"500px"}
-              height={"50px"}
-              src="https://cafefcdn.com/thumb_w/640/203337114487263232/2021/5/19/photo1621415200386-1621415200585197860103.png"
-              alt=""
-            />
+            <img src={logobanking} alt="" className="" />
           </div>
         </div>
       </div>

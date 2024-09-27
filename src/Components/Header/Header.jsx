@@ -3,7 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "./Header.scss";
 import { CiSearch } from "react-icons/ci";
 import { MdShoppingCart } from "react-icons/md";
-import { IoIosLogOut } from "react-icons/io";
+import { IoIosLogOut, IoIosNotifications } from "react-icons/io";
 import { NavLink, useNavigate } from "react-router-dom";
 import Seach from "../../services/Seach/Seach";
 import logo from "../../assets/imgs/images.png";
@@ -70,6 +70,28 @@ const Header = () => {
       });
     }
   };
+  // cuộn đến vị trí cần cuộn
+  const handleScrollToSale = () => {
+    setMenu("Hot Sale");
+    const SaleElement = document.querySelector(".products-container");
+    if (SaleElement) {
+      SaleElement.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+  const handleScrollToProducts = () => {
+    setMenu("Products");
+    const productsElement = document.querySelector(".container-cart");
+    if (productsElement) {
+      productsElement.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+  const handleScrollToFooter = () => {
+    setMenu("Contact");
+    const footerElement = document.querySelector(".Footer-contaner");
+    if (footerElement) {
+      footerElement.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   // xét menu
   useEffect(() => {
@@ -113,13 +135,16 @@ const Header = () => {
       if (response.products.length > 0) {
         setRecort(response.products);
         setNoDataFound(false);
+        setNoDataFound(false);
       } else {
         setRecort([]);
+        setNoDataFound(true);
         setNoDataFound(true);
       }
     } catch (error) {
       console.log("error", error);
       setRecort([]);
+      setNoDataFound(true);
       setNoDataFound(true);
     }
   };
@@ -131,48 +156,49 @@ const Header = () => {
       <img className="img-header" src={logo} alt="" onClick={handleHonelogo} />
       <div className="header-list">
         <ul className="list-navbar">
-          <NavLink
+          <div
             to="/"
             className={`navbar-item ${menu === "Home" ? "active" : ""}`}
-            onClick={() => setMenu("Home")}
+            onClick={() => {
+              setMenu("Home");
+              navigate("/");
+            }}
           >
             Home
-          </NavLink>
-          <NavLink
-            to="/t-shirt"
-            className={`navbar-item ${menu === "T-shirt" ? "active" : ""}`}
-            onClick={() => setMenu("T-shirt")}
+          </div>
+
+          <div
+            className={`navbar-item ${menu === "Hot Sale" ? "active" : ""}`}
+            onClick={() => handleScrollToSale()}
           >
-            T-shirt
-          </NavLink>
-          <NavLink
-            to="/dress"
-            className={`navbar-item ${menu === "Dress" ? "active" : ""}`}
-            onClick={() => setMenu("Dress")}
+            Hot Sale
+          </div>
+
+          <div
+            className={`navbar-item ${menu === "Products" ? "active" : ""}`}
+            onClick={() => handleScrollToProducts()}
           >
-            Dress
-          </NavLink>
-          <NavLink
-            to="/poloshirt"
-            className={`navbar-item ${menu === "Poloshirt" ? "active" : ""}`}
-            onClick={() => setMenu("Poloshirt")}
+            Products
+          </div>
+
+          <div
+            className={`navbar-item ${menu === "Contact" ? "active" : ""}`}
+            onClick={() => handleScrollToFooter()}
           >
-            Poloshirt
-          </NavLink>
-          <NavLink
-            to="/trouser"
-            className={`navbar-item ${menu === "Trouser" ? "active" : ""}`}
-            onClick={() => setMenu("Trouser")}
+            Contact
+          </div>
+
+          <div
+            to="/Help"
+            className={`navbar-item ${menu === "Help" ? "active" : ""}`}
+            onClick={() => {
+              setMenu("Help");
+
+              navigate("/Help");
+            }}
           >
-            Trouser
-          </NavLink>
-          <NavLink
-            to="/trousershort"
-            className={`navbar-item ${menu === "TrouserShort" ? "active" : ""}`}
-            onClick={() => setMenu("TrouserShort")}
-          >
-            TrouserShort
-          </NavLink>
+            Help
+          </div>
         </ul>
       </div>
       <div className="list-input">
@@ -191,7 +217,7 @@ const Header = () => {
           fontSize={"30px"}
           onClick={() => navigate("/shoppingcart")}
         />
-
+        <IoIosNotifications fontSize={"30px"} />
         {/* thông báo có giỏ hàng */}
         <div className="icon11"></div>
       </div>
@@ -213,14 +239,22 @@ const Header = () => {
             </button>
           </div>
         ) : (
-          <NavLink to="/login" className="btn btn-primary">
-            Login
-          </NavLink>
+          <div className="login-regitster flex">
+            <NavLink to="/login" className="btn btn-primary">
+              Login
+            </NavLink>
+            <div className="btn btn-info" onClick={() => navigate("/register")}>
+              Register
+            </div>
+          </div>
         )}
       </div>
 
       {searchTerm && recort.length > 0 && showSearchBox && (
         <div className="filter-list">
+          <button className="btn" onClick={handoleshowhide}>
+            x
+          </button>
           <button className="btn" onClick={handoleshowhide}>
             x
           </button>

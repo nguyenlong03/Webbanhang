@@ -96,11 +96,11 @@
       align-items: center;
       .navbar-item{
         text-decoration: none;
+        color: #0D6CE2;
         &.active{
           color: rgb(255, 136, 0);
           border-bottom: 2px solid orange;
-        }
-          
+        } 
       }
     }
   }

@@ -21,6 +21,9 @@ function HomeCart() {
 
   return (
     <>
+      <div className="line">
+        <hr />
+      </div>
       <div className="filter">
         <h1>Hôm nay mua gì</h1>
         <ul className="nav-navbar">
