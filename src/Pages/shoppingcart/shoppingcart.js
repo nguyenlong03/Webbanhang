@@ -5,7 +5,6 @@ import { removeFromCart } from "../../redux/cartSlice";
 const Shoppingcart = () => {
   const cart = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
-
   const handleRemove = (id) => {
     dispatch(removeFromCart(id));
   };

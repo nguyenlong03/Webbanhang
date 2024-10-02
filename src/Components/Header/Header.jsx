@@ -94,7 +94,7 @@ const Header = () => {
   };
   const handleScrollToFooter = () => {
     setMenu("Contact");
-    const footerElement = document.querySelector(".Footer-contaner");
+    const footerElement = document.querySelector(".app-footer");
     if (footerElement) {
       footerElement.scrollIntoView({ behavior: "smooth" });
     }
