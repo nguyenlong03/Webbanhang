@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home/Home";
 import Login from "./Pages/Login/Login";
 import Register from "./Pages/Register/Register";
+import ForgotPassword from "./Pages/forgotPassword/forgotPassword";
 import ProductDetail from "./Components/ProductDetail/ProductDetail";
 import Shoppingcart from "./Pages/shoppingcart/shoppingcart";
 import Help from "./Pages/Help/Help";

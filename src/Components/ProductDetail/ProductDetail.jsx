@@ -2,10 +2,21 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ProductService from "../../services/ProductSevier";
 import ChitietSanPham from "../../services/chitietsanpham";
+import Slider from "react-slick";
+import { useNavigate } from "react-router-dom";
 import "./ProductDetail.scss";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/cartSlice";
 
+function SampleNextArrow(props) {
+  const { className, style, onClick } = props;
+  return <div className={className} style={{ ...style }} onClick={onClick} />;
+}
+
+function SamplePrevArrow(props) {
+  const { className, style, onClick } = props;
+  return <div className={className} style={{ ...style }} onClick={onClick} />;
+}
 function ProductDetail() {
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -15,8 +26,23 @@ function ProductDetail() {
   const [size, setSize] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [availableSizes, setAvailableSizes] = useState([]);
+  const [relatedProducts, setRelatedProducts] = useState([]);
+  const Navigate = useNavigate();
+  console.log("desc", data1.description);
+  const product = data.find((item) => item.id === parseInt(id)) || data1;
 
-  const product = data.find((item) => item.id === parseInt(id));
+  const settings = {
+    className: "center",
+    infinite: true,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoPlay: true,
+    autoplaySpeed: 500,
+    autoplaySpeed: 3000,
+    swipeToSlide: true,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+  };
 
   const tang = () => {
     setQuantity((prev) => prev + 1);
@@ -35,28 +61,29 @@ function ProductDetail() {
       } else if (data1.url_img) {
         setSelectedImage(data1.url_img);
       }
-
-      if (Array.isArray(data1.sizes) && data1.sizes.length > 0) {
-        setAvailableSizes(data1.sizes);
-        setSize(data1.sizes[0]);
-      }
-    } else if (product) {
-      if (Array.isArray(product.url_img) && product.url_img.length > 0) {
-        setSelectedImage(product.url_img[0]);
-      } else if (product.url_img) {
-        setSelectedImage(product.url_img);
-      }
-
-      if (Array.isArray(product.sizes) && product.sizes.length > 0) {
-        setAvailableSizes(product.sizes);
-        setSize(product.sizes[0]);
-      }
     }
   }, [data1, product]);
+
+  useEffect(() => {
+    if (Array.isArray(data1.sizes) && data1.sizes.length > 0) {
+      setAvailableSizes(data1.sizes);
+      setSize(data1.sizes[0]);
+    }
+  }, [data1.sizes]);
+
+  useEffect(() => {
+    if (product && data1) {
+      const related = data.filter(
+        (item) => item.category === product.category && item.id !== product.id
+      );
+      setRelatedProducts(related);
+    }
+  }, [product, data1]);
 
   const handleSelectedImage = (img) => {
     setSelectedImage(img);
   };
+  //add redux
   const handleBuyNow = () => {
     const productToAdd = product || data1;
     dispatch(
@@ -67,88 +94,119 @@ function ProductDetail() {
     );
   };
 
-  if (!product && !data1) return <div>Không tìm thấy sản phẩm.</div>;
+  const handoleChitietsanpham1 = (id) => {
+    Navigate(`/product/${id}`);
+    window.scroll(0, 0);
+  };
+  console.log("pro", product);
+  if (!product) return <div>Không tìm thấy sản phẩm.</div>;
 
   return (
-    <div className="productDetail-container">
-      <div className="image-container">
-        <div className="toggle">
-          {Array.isArray(data1?.url_img) ? (
-            data1.url_img.map((item, index) => (
-              <button
-                className={`toggle-img ${
-                  selectedImage === item ? "selected" : ""
-                }`}
-                key={index}
-                onClick={() => handleSelectedImage(item)}
-              >
-                <img src={item} alt="" className="img-item" />
-              </button>
-            ))
-          ) : (
-            <img
-              src={data1?.url_img || product?.url_img}
-              alt="ảnh"
-              className="img-item"
-            />
-          )}
-        </div>
-        <div className="img">
-          <img
-            src={selectedImage || product?.url_img}
-            alt={product?.name || "Product"}
-          />
-        </div>
-      </div>
-      <div className="detail">
-        <div className="content">
-          <p className="product-name">{product?.name || data1?.name}</p>
-          <p className="price">
-            {product?.price || data1?.price}
-            <span>₫</span>
-          </p>
-        </div>
-        <div className="size-quantity">
-          <div className="size">
-            <label htmlFor="size">Size:</label>
-            {availableSizes.map((item, index) => (
-              <button
-                key={index}
-                className={`btn-size ${size === item ? "selected" : ""}`}
-                onClick={() => setSize(item)}
-              >
-                {item}
-              </button>
-            ))}
+    <>
+      <div className="productDetail-container">
+        <div className="image-container">
+          <div className="toggle">
+            {Array.isArray(data1.url_img) ? (
+              data1.url_img.map((item, index) => (
+                <button
+                  className={`toggle-img ${
+                    selectedImage === item ? "selected" : ""
+                  }`}
+                  key={index}
+                  onClick={() => handleSelectedImage(item)}
+                >
+                  <img src={item} alt="" className="img-item" />
+                </button>
+              ))
+            ) : (
+              <img src={data1.url_img} alt="ảnh" className="img-item" />
+            )}
           </div>
-          <div className="quantity">
-            <label htmlFor="quantity">Số lượng: </label>
-            <button className="btn-quantity" onClick={giam}>
-              -
-            </button>
-            <input
-              id="quantity"
-              type="number"
-              min={1}
-              value={quantity}
-              onChange={(e) =>
-                setQuantity(Math.max(1, parseInt(e.target.value) || 1))
-              }
-            />
-            <button className="btn-quantity" onClick={tang}>
-              +
-            </button>
+          <div className="img">
+            <img src={selectedImage || data1.url_img} alt={product.name} />
           </div>
         </div>
-        <div className="btn-detail">
-          <button className="buy" onClick={handleBuyNow}>
-            Buy Now
-          </button>
-          <button className="add-cart">Add Shopping Cart</button>
+        <div className="detail">
+          <div className="content">
+            <p className="product-name">{product.name}</p>
+            <p className="price">
+              {product.price}
+              <span>₫</span>
+            </p>
+            <p className="product-desc">{data1.description}</p>
+          </div>
+          <div className="size-quantity">
+            <div className="size">
+              <label htmlFor="size">Size:</label>
+              {availableSizes.map((s) => {
+                return (
+                  <button
+                    key={s}
+                    className={`btn-size ${size === s ? "selected" : ""}`}
+                    onClick={() => setSize(s)}
+                  >
+                    {s}
+                  </button>
+                );
+              })}
+            </div>
+            <div className="quantity">
+              <label htmlFor="quantity">Số lượng: </label>
+              <button className="btn-quantity" onClick={giam}>
+                -
+              </button>
+              <input
+                id="quantity"
+                type="text"
+                min={1}
+                value={quantity}
+                onChange={(e) =>
+                  setQuantity(Math.max(1, parseInt(e.target.value)))
+                }
+              />
+              <button className="btn-quantity" onClick={tang}>
+                +
+              </button>
+            </div>
+          </div>
+          <div className="btn-detail">
+            <button className="buy">Buy Now</button>
+            <button className="add-cart" onClick={handleBuyNow}>
+              Add Shopping Cart
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+      <div className="products-container">
+        <div className="products-list">
+          <div className="title">
+            <h2>Sản phẩm liên quan</h2>
+          </div>
+          <Slider {...settings}>
+            {relatedProducts &&
+              relatedProducts.map((item) => (
+                <div className="product" key={item.id}>
+                  <div className="image-product">
+                    <img src={item.url_img} alt={item.name} />
+                  </div>
+                  <p className="price">
+                    {item.price.toLocaleString("vi-VN")}
+                    <span>₫</span>
+                  </p>
+                  <div className="content">
+                    <p
+                      className="product-name"
+                      onClick={() => handoleChitietsanpham1(item.id)}
+                    >
+                      {item.name}
+                    </p>
+                  </div>
+                </div>
+              ))}
+          </Slider>
+        </div>
+      </div>
+    </>
   );
 }
-
 export default ProductDetail;

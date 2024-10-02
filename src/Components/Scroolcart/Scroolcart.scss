@@ -44,8 +44,8 @@
           }
           
           .time-box {
-              background-color: rgba(0, 0, 0, 0.6);
-              color: rgba(255, 255, 255, 0.8);
+              background-color: #FF5A30;
+              color: #fff;
               padding: 5px;
               margin-left: 5px;
               font-size: 18px;
@@ -68,9 +68,9 @@
             height: 450px;
             gap: 15px;
             padding: 10px;
-            margin-right: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
             border: 1px solid  rgba(100, 100, 111, 0.2);
-            box-shadow: rgba(100, 100, 111, 0.2) 0px 50px 30px -20px;
             transition: all 0.5s ease-in-out;
             display: flex;
             flex-direction: column;
@@ -112,7 +112,8 @@
               }
             }
             &:hover {
-                transform: scale(1.03);
+                border: none;
+                box-shadow: 0 5px 8px rgba(0, 0, 0, 0.3);
               }
             
               @keyframes bouncing {
