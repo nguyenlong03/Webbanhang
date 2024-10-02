@@ -84,7 +84,7 @@ const Login = () => {
             <input
               type={showPassword ? "text" : "password"}
               placeholder=""
-              required
+              required=""
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />

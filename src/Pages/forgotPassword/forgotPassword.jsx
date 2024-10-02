@@ -22,7 +22,7 @@ const ForgotPassword = () => {
       if (res) {
         setOtpSent(true);
         toast.success(
-          "OTP đã được gửi thành công. Vui lòng kiểm tra email của bạn.",
+          `OTP đã được gửi thành công. Vui lòng kiểm tra email ${email} của bạn.`,
           {
             position: "top-right",
             autoClose: 5000,
@@ -118,6 +118,7 @@ const ForgotPassword = () => {
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
               />
+              <a href="">Lấy lại OTP</a>
             </div>
           )}
         </div>

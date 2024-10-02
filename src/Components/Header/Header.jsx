@@ -187,13 +187,18 @@ const Header = () => {
         <div className="icon">
           <CiSearch />
         </div>
+      </div>
+      <div className="cart">
         <MdShoppingCart
           fontSize={"30px"}
           onClick={() => navigate("/shoppingcart")}
         />
+        <p className="quantity">0</p>
+      </div>
+
+      <div className="notify">
         <IoIosNotifications fontSize={"30px"} />
-        {/* thông báo có giỏ hàng */}
-        <div className="icon11"></div>
+        <p className="quantity">0</p>
       </div>
       <div className="d-flex justify-content-center align-items-center gap-1">
         {userName ? (

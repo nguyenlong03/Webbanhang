@@ -106,7 +106,7 @@
   .list-input {
     position: relative;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     gap: 20px;
     .icon1{
@@ -136,9 +136,26 @@
       position: absolute;
       color: black;
       font-size: 30px;
-      margin-left: 173px;
+      margin-left: 230px;
       line-height: 20px;
      
+    }
+  }
+  .cart,
+  .notify {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    p {
+      font-size: 1rem;
+      background: red;
+      color: #fff;
+      width: 18px;
+      height: 22px;
+      text-align: center;
+      border-radius: 50%;
+      display: none;
     }
   }
   .avatar{

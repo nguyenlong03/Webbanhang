@@ -17,7 +17,7 @@ const AutherAPi = {
     });
   },
   forgotpassword(email, otp, newPassword, confirmPassword) {
-    const url = "/api/forgot-password";
+    const url = "/api/forgotpassword";
     return Axioscustom.post(url, { email, otp, newPassword, confirmPassword });
   }
 };

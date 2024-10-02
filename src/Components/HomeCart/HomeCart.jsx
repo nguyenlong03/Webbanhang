@@ -1,8 +1,8 @@
 import "./HomeCart.scss";
-import { TiShoppingCart } from "react-icons/ti";
 import ProductService from "../../services/ProductSevier";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { TiShoppingCart } from "react-icons/ti";
 
 function HomeCart() {
   const [filter, setFilter] = useState("new");
@@ -34,35 +34,47 @@ function HomeCart() {
       <div className="filter">
         <h1>Hôm nay mua gì</h1>
         <ul className="nav-navbar">
-          <li className="filter-item" onClick={() => handleFilterChange("new")}>
+          <li
+            className={`filter-item ${filter === "new" ? "active" : ""}`}
+            onClick={() => handleFilterChange("new")}
+          >
             Toàn bộ
           </li>
-          <li className="filter-item" onClick={() => handleFilterChange("ao")}>
+          <li
+            className={`filter-item ${filter === "ao" ? "active" : ""}`}
+            onClick={() => handleFilterChange("ao")}
+          >
             Áo phông
           </li>
 
+          {/* Uncomment if needed */}
           {/* <li
-            className="filter-item"
-            onClick={() => handleFilterChange("Áo sơ mi")}
+          className={`filter-item ${filter === "Áo sơ mi" ? "active" : ""}`}
+          onClick={() => handleFilterChange("Áo sơ mi")}
+        >
+          Áo sơ mi
+        </li> */}
+
+          <li
+            className={`filter-item ${filter === "vay" ? "active" : ""}`}
+            onClick={() => handleFilterChange("vay")}
           >
-            Áo sơ mi
-          </li> */}
-          <li className="filter-item" onClick={() => handleFilterChange("vay")}>
             Chân váy
           </li>
           <li
-            className="filter-item"
+            className={`filter-item ${filter === "quan" ? "active" : ""}`}
             onClick={() => handleFilterChange("quan")}
           >
             Quần short
           </li>
 
+          {/* Uncomment if needed */}
           {/* <li
-            className="filter-item"
-            onClick={() => handleFilterChange("Phụ kiện")}
-          >
-            Phụ kiện
-          </li> */}
+          className={`filter-item ${filter === "Phụ kiện" ? "active" : ""}`}
+          onClick={() => handleFilterChange("Phụ kiện")}
+        >
+          Phụ kiện
+        </li> */}
         </ul>
       </div>
 
@@ -70,7 +82,11 @@ function HomeCart() {
         <div className="list-cart">
           {data.length > 0 ? (
             data.map((item, index) => (
-              <div className="card" key={index}>
+              <div
+                className="card"
+                key={index}
+                onClick={() => handoleChitietsanpham(item.id)}
+              >
                 <div className="image-container">
                   <img src={item.url_img} alt={item.name} />
                 </div>
@@ -80,21 +96,11 @@ function HomeCart() {
                   <span>₫</span>
                 </p>
                 <div className="content">
-                  <h3 className="brand">ADIDAS</h3>
                   <p className="product-name">{item.name}</p>
                 </div>
-
-                <div className="button-container">
-                  <button
-                    className="buy-button button"
-                    onClick={() => handoleChitietsanpham(item.id)}
-                  >
-                    Buy Now
-                  </button>
-                  <button className="cart-button button">
-                    <i onClick={() => Navigate("/shoppingcart")}>
-                      <TiShoppingCart />
-                    </i>
+                <div className="add">
+                  <button className="btn-add">
+                    <TiShoppingCart size={20} /> ADD TO CART
                   </button>
                 </div>
               </div>
