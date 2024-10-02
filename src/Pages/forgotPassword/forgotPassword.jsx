@@ -7,7 +7,7 @@ import "./forgotPassword.scss";
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
-  const [newPassword, setNewPassword] = useState("");
+  const [password, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const navigate = useNavigate();
@@ -16,9 +16,9 @@ const ForgotPassword = () => {
     e.preventDefault();
 
     try {
-      const res = await AutherAPi.sendOtp(email);
+      const res = await AutherAPi.forgotpassword(email);
       console.log("checkdata", res);
-      alert("res");
+
       if (res) {
         setOtpSent(true);
         toast.success(
@@ -49,10 +49,10 @@ const ForgotPassword = () => {
       const res = await AutherAPi.resetPassword(
         email,
         otp,
-        newPassword,
+        password,
         confirmPassword
       );
-      if (res) {
+      if (res && res.errCode === 0) {
         toast.success("Đặt lại mật khẩu thành công!", {
           position: "top-right",
           autoClose: 5000,
@@ -130,7 +130,7 @@ const ForgotPassword = () => {
               type="password"
               placeholder="Mật khẩu mới"
               required
-              value={newPassword}
+              value={password}
               onChange={(e) => setNewPassword(e.target.value)}
             />
             <input

@@ -25,6 +25,7 @@ root.render(
         </Route>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="forgotpassword" element={<ForgotPassword />} />
       </Routes>
     </BrowserRouter>
   </Provider>

@@ -96,7 +96,7 @@ const Login = () => {
 
           <span>
             Bạn quên mật khẩu?{" "}
-            <NavLink to={"/resetpassword"}>Nhấn vào đây!</NavLink>
+            <NavLink to={"/forgotpassword"}>Nhấn vào đây!</NavLink>
           </span>
 
           <button className="submit" type="submit">

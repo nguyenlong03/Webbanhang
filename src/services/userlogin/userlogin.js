@@ -16,9 +16,15 @@ const AutherAPi = {
       confirmPassword,
     });
   },
-  forgotpassword(email, otp, newPassword, confirmPassword) {
-    const url = "/api/forgotpassword";
-    return Axioscustom.post(url, { email, otp, newPassword, confirmPassword });
-  }
+
+  forgotpassword(email) {
+    const url = "/api/getOtp";
+    return Axioscustom.post(url, { email });
+  },
+
+  resetPassword(email, otp, password, confirmPassword) {
+    const url = "/api/forgot-password";
+    return Axioscustom.post(url, { email, otp, password, confirmPassword });
+  },
 };
 export default AutherAPi;

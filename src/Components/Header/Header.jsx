@@ -220,18 +220,21 @@ const Header = () => {
           <CiSearch />
         </div>
       </div>
+      <div className="icon-header">
+      
       <div className="cart">
         <MdShoppingCart
-          fontSize={"30px"}
+          
           onClick={() => navigate("/shoppingcart")}
         />
-        <p className="quantity">0</p>
+        {/* <p className="quantity">0</p> */}
+      </div>
+      <div className="notify">
+        <IoIosNotifications />
+        {/* <p className="quantity">0</p> */}
+      </div>
       </div>
 
-      <div className="notify">
-        <IoIosNotifications fontSize={"30px"} />
-        <p className="quantity">0</p>
-      </div>
       <div className="d-flex justify-content-center align-items-center gap-3">
         {userName ? (
           <div className="user-info">
