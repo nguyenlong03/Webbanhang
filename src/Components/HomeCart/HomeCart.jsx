@@ -2,20 +2,21 @@ import "./HomeCart.scss";
 import { TiShoppingCart } from "react-icons/ti";
 import ProductService from "../../services/ProductSevier";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function HomeCart() {
+  // const [menu, setMenu] = useState(localStorage.getItem("menu") || "Toàn bộ");
   const [filter, setFilter] = useState("new");
   const Navigate = useNavigate();
   const { data, loading, error } = ProductService(filter, 1);
+  console.log("data", data);
+  const handleFilterChange = (filterType) => {
+    setFilter(filterType);
+  };
 
   const handoleChitietsanpham = (id) => {
     Navigate(`/product/${id}`);
     window.scrollTo(0, 0);
-  };
-
-  const handleFilterChange = (filterType) => {
-    setFilter(filterType);
   };
   if (error) return <p>{error}</p>;
 
@@ -64,7 +65,7 @@ function HomeCart() {
                   <span>₫</span>
                 </p>
                 <div className="content">
-                  <h3 className="brand">ADIDAS</h3>
+                  {/* <h3 className="brand">3 ANH EM</h3> */}
                   <p className="product-name">{item.name}</p>
                 </div>
 

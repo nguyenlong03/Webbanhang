@@ -70,6 +70,13 @@ const Header = () => {
       });
     }
   };
+
+  const handlechitietsanphamfiter = (id) => {
+    navigate(`/product/${id}`);
+    window.scrollTo(0, 0);
+    setShowSearchBox(false);
+    setSearchTerm("");
+  };
   // cuộn đến vị trí cần cuộn
   const handleScrollToSale = () => {
     setMenu("Hot Sale");
@@ -193,7 +200,6 @@ const Header = () => {
             className={`navbar-item ${menu === "Help" ? "active" : ""}`}
             onClick={() => {
               setMenu("Help");
-
               navigate("/Help");
             }}
           >
@@ -239,29 +245,34 @@ const Header = () => {
             </button>
           </div>
         ) : (
-          <div className="login-regitster flex">
+          <div className="login-regitster d-flex gap-2 w-100px ">
             <NavLink to="/login" className="btn btn-primary">
               Login
             </NavLink>
-            <div className="btn btn-info" onClick={() => navigate("/register")}>
+            <div
+              className="btn btn-primary"
+              onClick={() => navigate("/register")}
+            >
               Register
             </div>
           </div>
         )}
       </div>
-
+      {/* modal ô input */}
       {searchTerm && recort.length > 0 && showSearchBox && (
         <div className="filter-list">
-          <button className="btn" onClick={handoleshowhide}>
-            x
-          </button>
           <button className="btn" onClick={handoleshowhide}>
             x
           </button>
           {recort.map((item, index) => (
             <div className="filter-item" key={index}>
               <img className="filter-img" src={item.url_img} alt="" />
-              <p className="filter-title">{item.name}</p>
+              <p
+                className="filter-title"
+                onClick={() => handlechitietsanphamfiter(item.id)}
+              >
+                {item.name}
+              </p>
               <span className="filter-price">
                 {item.price}
                 <span className="ml-3">đ</span>

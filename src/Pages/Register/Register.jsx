@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./Register.scss";
 import { FaGoogle, FaFacebookF } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
@@ -114,7 +114,7 @@ function Register() {
             Register
           </button>
           <p>
-            Bạn đã có tài khoản? <NavLink to={"login"}>Sign In</NavLink>
+            Bạn đã có tài khoản? <NavLink to={"/login"}>Sign In</NavLink>
           </p>
         </div>
         <div className="loginWith">

@@ -16,7 +16,7 @@ const ProductService = (filter, page) => {
       setError(null); // Đặt lại error nếu trước đó có lỗi
       try {
         const response = await ProductsApi.getALL(filter, page);
-        console.log("response", response.products);
+        console.log("response", response.productsơ);
         setData(response.products || []); // Nếu không có products, trả về mảng rỗng
         sessionStorage.setItem(
           "productsData",

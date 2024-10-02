@@ -56,6 +56,9 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 50px;
+  &:hover {
+    cursor: grab;
+  }
   
   .filter {
     font-family: "myfont";
@@ -67,6 +70,7 @@
         display: flex;
         flex-direction: row;
         .filter-item {
+          
             font-size: 18px;
             font-weight: bold;
             padding: 10px;
@@ -81,6 +85,10 @@
                 border: none;
                 transform: scale(1.1);
                 box-shadow: 0 0 5px 5px hsla(0, 1%, 26%, 0.384);
+            }
+             
+            &.active{
+              background-color: #ffd426;
             }
         }
         a {
