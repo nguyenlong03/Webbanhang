@@ -29,7 +29,7 @@ function ProductDetail() {
   const [availableSizes, setAvailableSizes] = useState([]);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const Navigate = useNavigate();
-  console.log("check data 1 ", data1.sizes);
+  console.log("check data 1 ", data1);
   console.log("check data product", data);
   const product = data.find((item) => item.id === parseInt(id)) || data1;
 
