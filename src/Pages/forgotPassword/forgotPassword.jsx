@@ -18,8 +18,7 @@ const ForgotPassword = () => {
     try {
       const res = await AutherAPi.forgotpassword(email);
       console.log("checkdata", res);
-
-      if (res) {
+      if (res && res.errCode === 0) {
         setOtpSent(true);
         toast.success(
           `OTP đã được gửi thành công. Vui lòng kiểm tra email ${email} của bạn.`,
@@ -39,7 +38,6 @@ const ForgotPassword = () => {
       }
     } catch (error) {
       toast.error("Đã xảy ra lỗi. Vui lòng thử lại sau.");
-      alert("error.message");
     }
   };
 
@@ -104,12 +102,13 @@ const ForgotPassword = () => {
               </button>
             )}
           </div>
+
           {otpSent && (
             <div className="otp">
               <p>Kiểm tra email của bạn</p>
               <span>
                 Chúng tôi đã gửi một mã OTP đến email của bạn. Vui lòng nhập mã
-                5 chữ số dưới đây.
+                6 chữ số dưới đây.
               </span>
               <input
                 type="text"
@@ -118,31 +117,32 @@ const ForgotPassword = () => {
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
               />
-              <a href="">Lấy lại OTP</a>
+              <a href="#1234">Lấy lại OTP</a>
+            </div>
+          )}
+          {otpSent && (
+            <div className="reset-passWord">
+              <p>Vui lòng nhập mật khẩu mới!</p>
+              <input
+                type="password"
+                placeholder="Mật khẩu mới"
+                required
+                value={password}
+                onChange={(e) => setNewPassword(e.target.value)}
+              />
+              <input
+                type="password"
+                placeholder="Xác nhận mật khẩu"
+                required
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+              <button type="submit" class="btn btn-primary">
+                Đặt lại mật khẩu
+              </button>
             </div>
           )}
         </div>
-
-        {otpSent && (
-          <div className="reset-passWord">
-            <p>Vui lòng nhập mật khẩu mới!</p>
-            <input
-              type="password"
-              placeholder="Mật khẩu mới"
-              required
-              value={password}
-              onChange={(e) => setNewPassword(e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="Xác nhận mật khẩu"
-              required
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-            <button type="submit">Đặt lại mật khẩu</button>
-          </div>
-        )}
       </form>
       <ToastContainer />
     </div>

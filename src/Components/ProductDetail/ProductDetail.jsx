@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import "./ProductDetail.scss";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/cartSlice";
+import { toast } from "react-toastify";
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -28,7 +29,8 @@ function ProductDetail() {
   const [availableSizes, setAvailableSizes] = useState([]);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const Navigate = useNavigate();
-  console.log("desc", data1.description);
+  console.log("check data 1 ", data1.sizes);
+  console.log("check data product", data);
   const product = data.find((item) => item.id === parseInt(id)) || data1;
 
   const settings = {
@@ -38,7 +40,6 @@ function ProductDetail() {
     slidesToScroll: 1,
     autoPlay: true,
     autoplaySpeed: 500,
-    autoplaySpeed: 3000,
     swipeToSlide: true,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
@@ -67,7 +68,7 @@ function ProductDetail() {
   useEffect(() => {
     if (Array.isArray(data1.sizes) && data1.sizes.length > 0) {
       setAvailableSizes(data1.sizes);
-      setSize(data1.sizes[0]);
+      setSize(data1.sizes);
     }
   }, [data1.sizes]);
 
@@ -78,20 +79,22 @@ function ProductDetail() {
       );
       setRelatedProducts(related);
     }
-  }, [product, data1]);
+  }, [data, data1, product]);
 
   const handleSelectedImage = (img) => {
     setSelectedImage(img);
   };
   //add redux
-  const handleBuyNow = () => {
+  const handleAddBuyNow = () => {
     const productToAdd = product || data1;
     dispatch(
       addToCart({
         ...productToAdd,
         quantity,
+        price: product.price * quantity,
       })
     );
+    toast.success("Đã thêm vào giỏ hàng");
   };
 
   const handoleChitietsanpham1 = (id) => {
@@ -138,10 +141,10 @@ function ProductDetail() {
           <div className="size-quantity">
             <div className="size">
               <label htmlFor="size">Size:</label>
-              {availableSizes.map((s) => {
+              {availableSizes.map((s, index) => {
                 return (
                   <button
-                    key={s}
+                    key={index}
                     className={`btn-size ${size === s ? "selected" : ""}`}
                     onClick={() => setSize(s)}
                   >
@@ -171,7 +174,7 @@ function ProductDetail() {
           </div>
           <div className="btn-detail">
             <button className="buy">Buy Now</button>
-            <button className="add-cart" onClick={handleBuyNow}>
+            <button className="add-cart" onClick={handleAddBuyNow}>
               Add Shopping Cart
             </button>
           </div>
