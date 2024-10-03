@@ -1,0 +1,65 @@
+.container-help {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    .contact {
+        width: 45%;
+        border-right: 2px solid #333;
+        margin-left: 47px;
+        .contact-info {
+            width: 100%;
+            h4 {
+              font-size: 24px;
+              margin-bottom: 10px;
+            }
+            p {
+              margin: 5px 0;
+              font-size: 16px;
+            }
+          }
+        
+        .form-container {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            .form-help {
+              width: 80%;
+              display: flex;
+              flex-direction: column;
+        
+                input, textarea {
+                    width: 100%;
+                    margin-bottom: 10px;
+                    padding: 10px;
+                    font-size: 14px;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                }
+            
+                button {
+                    background-color: black;
+                    color: white;
+                    padding: 10px;
+                    border: none;
+                    cursor: pointer;
+                    border-radius: 4px;
+                }
+            }
+        }
+    }
+   
+  
+    .map-container {
+        width: 55%;
+        iframe {
+            margin-left: 30px;
+            width: 90%;
+            height: 500px;
+        }
+    }
+    
+}
+  

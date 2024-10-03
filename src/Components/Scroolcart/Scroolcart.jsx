@@ -89,25 +89,34 @@ function SwipeToSlide() {
         </div>
         <Slider {...settings}>
           {data &&
-            data.map((item) => (
-              <div className="product" key={item.id}>
-                <div className="image-product">
-                  <img src={item.url_img} alt="" />
-                </div>
-                <p className="price">
-                  {item.price.toLocaleString("vi-VN")}
-                  <span>₫</span>
-                </p>
-                <div className="content">
-                  <p
-                    className="product-name"
-                    onClick={() => handoleChitietsanpham1(item.id)}
-                  >
-                    {item.name}
+            data
+              .filter((item) => item.discount > 0)
+              .map((item) => (
+                <div className="product" key={item.id}>
+                  <div className="image-product">
+                    <div className="product-discount">
+                      <span>-{item.discount}</span>
+                    </div>
+                    <img src={item.url_img} alt="" />
+                  </div>
+                  <p className="price">
+                    {item.price.toLocaleString("vi-VN")}
+                    <span>₫</span>
                   </p>
+                  <p className="price-new">
+                    {item.discounted_price.toLocaleString("vi-VN")}
+                    <span>₫</span>
+                  </p>
+                  <div className="content">
+                    <p
+                      className="product-name"
+                      onClick={() => handoleChitietsanpham1(item.id)}
+                    >
+                      {item.name}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
         </Slider>
       </div>
     </div>

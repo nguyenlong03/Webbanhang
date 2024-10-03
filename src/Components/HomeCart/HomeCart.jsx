@@ -2,7 +2,6 @@ import "./HomeCart.scss";
 import ProductService from "../../services/ProductSevier";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { TiShoppingCart } from "react-icons/ti";
 
 function HomeCart() {
   const [filter, setFilter] = useState("new");
@@ -97,11 +96,6 @@ function HomeCart() {
                 </p>
                 <div className="content">
                   <p className="product-name">{item.name}</p>
-                </div>
-                <div className="add">
-                  <button className="btn-add">
-                    <TiShoppingCart size={20} /> ADD TO CART
-                  </button>
                 </div>
               </div>
             ))

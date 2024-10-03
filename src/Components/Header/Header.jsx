@@ -6,8 +6,11 @@ import { MdShoppingCart } from "react-icons/md";
 import { IoIosLogOut, IoIosNotifications } from "react-icons/io";
 import { NavLink, useNavigate } from "react-router-dom";
 import Seach from "../../services/Seach/Seach";
+import Notification from "../../Pages/Notify/Notify";
+import { TRUE } from "sass";
 
 const Header = () => {
+  const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [userName, setUserName] = useState(localStorage.getItem("userName"));
@@ -128,6 +131,9 @@ const Header = () => {
   const handoleshowhide = () => {
     setShowSearchBox(false);
   };
+  const handoleshowio = () => {
+    setShowDropdown(!showDropdown);
+  };
   return (
     <div className="Header-container">
       <img
@@ -164,7 +170,7 @@ const Header = () => {
             className={`navbar-item ${menu === "Poloshirt" ? "active" : ""}`}
             onClick={() => setMenu("Poloshirt")}
           >
-            Contact
+            News Fashion
           </NavLink>
           <NavLink
             to="/trouser"
@@ -196,8 +202,10 @@ const Header = () => {
         <p className="quantity">0</p>
       </div>
 
-      <div className="notify">
-        <IoIosNotifications fontSize={"30px"} />
+      <div className="notify-icon">
+        <div className="notify-icon">
+          <IoIosNotifications fontSize={"30px"} onClick={handoleshowio} />
+        </div>
         <p className="quantity">0</p>
       </div>
       <div className="d-flex justify-content-center align-items-center gap-1">
@@ -259,7 +267,7 @@ const Header = () => {
           progress: undefined,
           theme: "light",
         })}
-
+      {showDropdown && <Notification />}
       <ToastContainer />
     </div>
   );

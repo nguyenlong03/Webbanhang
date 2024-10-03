@@ -14,7 +14,8 @@ import Login from "./Pages/Login/Login";
 import Register from "./Pages/Register/Register";
 import ForgotPassword from "./Pages/forgotPassword/forgotPassword";
 import ProductDetail from "./Components/ProductDetail/ProductDetail";
-import Shoppingcart from "./Pages/shoppingcart/shoppingcart";
+import Cart from "./Pages/shoppingcart/shoppingcart";
+import Notification from "./Pages/Notify/Notify";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -28,7 +29,8 @@ root.render(
         <Route path="t-shirt" element={<TShirt />} />
         <Route path="trouser" element={<Trouser />} />
         <Route path="trouserShort" element={<Trousershort />} />
-        <Route path="shoppingcart" element={<Shoppingcart />} />
+        <Route path="shoppingcart" element={<Cart />} />
+        <Route path="notify" element={<Notification />} />
       </Route>
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
