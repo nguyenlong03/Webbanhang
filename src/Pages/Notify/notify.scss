@@ -1,0 +1,109 @@
+
+
+
+
+.notify {
+  position: absolute;
+  z-index: 900;
+  margin-left: 81%;
+  width: 100%;
+  margin-top: 533px;
+
+  .notification-container {
+    width: 400px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    color: #333;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    /* Hiệu ứng trượt từ phải qua trái */
+    animation: slideIn 0.5s ease-out forwards;
+
+    .notification-header {
+      font-size: 20px;
+      margin-bottom: 10px;
+      width: 380px;
+
+      .close-btn {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+      }
+    }
+
+    .notification-body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+
+      .notification-item {
+        display: flex;
+        flex-direction: row;
+        border: 0.3px solid rgba(0, 0, 0, 0.2);
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+        width: 380px;
+        margin-bottom: 15px;
+        padding: 10px;
+        border-radius: 5px;
+
+        .avatar {
+          width: 40px;
+          height: 40px;
+          background-color: #28a745;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-right: 10px;
+
+          .avatar-text {
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+          }
+        }
+
+        .notification-content {
+          width: 300px;
+
+          .notification-user {
+            font-size: 14px;
+            font-weight: bold;
+            margin: 0;
+          }
+
+          .notification-action {
+            font-size: 12px;
+            margin: 0;
+          }
+
+          .notification-time {
+            font-size: 10px;
+            color: #b0b0b0;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(100%); /* Bắt đầu từ bên phải màn hình */
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0); /* Đến vị trí ban đầu */
+    opacity: 1;
+  }
+}

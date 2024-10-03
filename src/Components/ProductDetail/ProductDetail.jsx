@@ -67,8 +67,9 @@ function ProductDetail() {
 
   useEffect(() => {
     if (Array.isArray(data1.sizes) && data1.sizes.length > 0) {
-      setAvailableSizes(data1.sizes);
-      setSize(data1.sizes);
+      const sizeValues = data1.sizes.map((sizeObj) => sizeObj.size);
+      setAvailableSizes(sizeValues);
+      setSize(sizeValues[0]);
     }
   }, [data1.sizes]);
 
@@ -129,20 +130,19 @@ function ProductDetail() {
             <img src={selectedImage || data1.url_img} alt={product.name} />
           </div>
         </div>
-        <div className="detail">
-          <div className="content">
-            <p className="product-name">{product.name}</p>
-            <p className="price">
-              {product.price}
-              <span>₫</span>
-            </p>
-            <p className="product-desc">{data1.description}</p>
-          </div>
-          <div className="size-quantity">
-            <div className="size">
-              <label htmlFor="size">Size:</label>
-              {availableSizes.map((s, index) => {
-                return (
+        <div className="detail-container">
+          <div className="detail">
+            <div className="content">
+              <p className="product-name">{product.name}</p>
+              <p className="price">
+                {product.price.toLocaleString("vi-VN")}
+                <span>₫</span>
+              </p>
+            </div>
+            <div className="size-quantity">
+              <div className="size">
+                <label htmlFor="size">Size:</label>
+                {availableSizes.map((s, index) => (
                   <button
                     key={index}
                     className={`btn-size ${size === s ? "selected" : ""}`}
@@ -150,33 +150,76 @@ function ProductDetail() {
                   >
                     {s}
                   </button>
-                );
-              })}
+                ))}
+              </div>
+              <div className="quantity">
+                <label htmlFor="quantity">Số lượng: </label>
+                <button className="btn-quantity" onClick={giam}>
+                  -
+                </button>
+                <input
+                  id="quantity"
+                  type="text"
+                  min={1}
+                  value={quantity}
+                  onChange={(e) =>
+                    setQuantity(Math.max(1, parseInt(e.target.value)))
+                  }
+                />
+                <button className="btn-quantity" onClick={tang}>
+                  +
+                </button>
+              </div>
             </div>
-            <div className="quantity">
-              <label htmlFor="quantity">Số lượng: </label>
-              <button className="btn-quantity" onClick={giam}>
-                -
-              </button>
-              <input
-                id="quantity"
-                type="text"
-                min={1}
-                value={quantity}
-                onChange={(e) =>
-                  setQuantity(Math.max(1, parseInt(e.target.value)))
-                }
-              />
-              <button className="btn-quantity" onClick={tang}>
-                +
-              </button>
+            <div className="btn-detail">
+              <button className="buy">Buy Now</button>
+              <button className="add-cart">Add Shopping Cart</button>
             </div>
           </div>
-          <div className="btn-detail">
-            <button className="buy">Buy Now</button>
-            <button className="add-cart" onClick={handleAddBuyNow}>
-              Add Shopping Cart
-            </button>
+          <div class="container-des">
+            <div class="benefits">
+              <div class="benefit-item">
+                <span class="benefit-icon">🚚</span>
+                <span class="benefit-text">
+                  Thanh toán khi nhận hàng Được kiểm tra hàng trước
+                </span>
+              </div>
+              <div class="benefit-item">
+                <span class="benefit-icon">🔄</span>
+                <span class="benefit-text">
+                  Đổi hàng 10 ngày Nhấp để xem chính sách
+                </span>
+              </div>
+              <div class="benefit-item">
+                <span class="benefit-icon">🎁</span>
+                <span class="benefit-text">
+                  Miễn phí vận chuyển Đơn hàng từ 498k
+                </span>
+              </div>
+              <div class="benefit-item">
+                <span class="benefit-icon">🏷️</span>
+                <span class="benefit-text">
+                  Mua nhiều giảm sâu Nhấp để xem chi tiết
+                </span>
+              </div>
+            </div>
+
+            <div class="features">
+              <h3>Đặc điểm nổi bật</h3>
+              {data1.description ? (
+                <ul className="feature-list">
+                  {data1.description.split("\r\n").map((line, index) => (
+                    <li key={index} className="feature-item">
+                      {line}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="feature-list">
+                  Không có thông tin mô tả sản phẩm.
+                </p>
+              )}
+            </div>
           </div>
         </div>
       </div>

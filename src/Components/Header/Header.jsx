@@ -6,9 +6,11 @@ import { MdShoppingCart } from "react-icons/md";
 import { IoIosLogOut, IoIosNotifications } from "react-icons/io";
 import { NavLink, useNavigate } from "react-router-dom";
 import Seach from "../../services/Seach/Seach";
+import Notification from "../../Pages/Notify/Notify";
 import logo from "../../assets/imgs/images.png";
 
 const Header = () => {
+  const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [userName, setUserName] = useState(localStorage.getItem("userName"));
@@ -158,8 +160,13 @@ const Header = () => {
   const handoleshowhide = () => {
     setShowSearchBox(false);
   };
+  const handoleshowio = () => {
+      setShowDropdown(!showDropdown);
+  };
   return (
+   
     <div className="Header-container">
+
       <img className="img-header" src={logo} alt="" onClick={handleHonelogo} />
       <div className="header-list">
         <ul className="list-navbar">
@@ -192,16 +199,12 @@ const Header = () => {
             className={`navbar-item ${menu === "Contact" ? "active" : ""}`}
             onClick={() => handleScrollToFooter()}
           >
-            Contact
+            News Fashion
           </div>
-
           <div
-            to="/Help"
-            className={`navbar-item ${menu === "Help" ? "active" : ""}`}
-            onClick={() => {
-              setMenu("Help");
-              navigate("/Help");
-            }}
+            to="/trouser"
+            className={`navbar-item ${menu === "Trouser" ? "active" : ""}`}
+            onClick={() => setMenu("Trouser")}
           >
             Help
           </div>
@@ -229,10 +232,12 @@ const Header = () => {
         />
         {/* <p className="quantity">0</p> */}
       </div>
-      <div className="notify">
-        <IoIosNotifications />
-        {/* <p className="quantity">0</p> */}
-      </div>
+
+      <div className="notify-icon">
+        <div className="notify-icon">
+          <IoIosNotifications fontSize={"30px"} onClick={handoleshowio} />
+        </div>
+        <p className="quantity">0</p>
       </div>
 
       <div className="d-flex justify-content-center align-items-center gap-3">
@@ -305,8 +310,11 @@ const Header = () => {
           theme: "light",
         })}
 
+      {showDropdown && <Notification />}
       <ToastContainer />
     </div>
+    </div>
+   
   );
 };
 
