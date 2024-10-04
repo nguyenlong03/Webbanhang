@@ -8,6 +8,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import Seach from "../../services/Seach/Seach";
 import Notification from "../../Pages/Notify/Notify";
 import logo from "../../assets/imgs/images.png";
+import AddcartAPI from "../../services/AddcartAPI";
 
 const Header = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -161,12 +162,13 @@ const Header = () => {
     setShowSearchBox(false);
   };
   const handoleshowio = () => {
-      setShowDropdown(!showDropdown);
+    setShowDropdown(!showDropdown);
+  };
+  const hanoleShoppingcart = async () => {
+    navigate("/shoppingcart");
   };
   return (
-   
     <div className="Header-container">
-
       <img className="img-header" src={logo} alt="" onClick={handleHonelogo} />
       <div className="header-list">
         <ul className="list-navbar">
@@ -224,97 +226,92 @@ const Header = () => {
         </div>
       </div>
       <div className="icon-header">
-      
-      <div className="cart">
-        <MdShoppingCart
-          
-          onClick={() => navigate("/shoppingcart")}
-        />
-        {/* <p className="quantity">0</p> */}
-      </div>
-
-      <div className="notify-icon">
-        <div className="notify-icon">
-          <IoIosNotifications fontSize={"30px"} onClick={handoleshowio} />
+        <div className="cart">
+          <MdShoppingCart onClick={hanoleShoppingcart} />
+          {/* <p className="quantity">0</p> */}
         </div>
-        <p className="quantity">0</p>
-      </div>
 
-      <div className="d-flex justify-content-center align-items-center gap-3">
-        {userName ? (
-          <div className="user-info">
-            <img
-              src={avatar || "default-avatar.jpg"}
-              alt="Avatar"
-              className="avatar"
-            />
-            <span className="user">{userName}</span>
-            <button
-              type="button"
-              className="btn btn-danger"
-              onClick={handleLogout}
-            >
-              <IoIosLogOut />
-            </button>
+        <div className="notify-icon">
+          <div className="notify-icon">
+            <IoIosNotifications fontSize={"30px"} onClick={handoleshowio} />
           </div>
-        ) : (
-          <div className="login-regitster d-flex gap-2 w-100px ">
-            <NavLink to="/login" className="btn btn-primary">
-              Login
-            </NavLink>
-            <div
-              className="btn btn-primary"
-              onClick={() => navigate("/register")}
-            >
-              Register
+          <p className="quantity">0</p>
+        </div>
+
+        <div className="d-flex justify-content-center align-items-center gap-3">
+          {userName ? (
+            <div className="user-info">
+              <img
+                src={avatar || "default-avatar.jpg"}
+                alt="Avatar"
+                className="avatar"
+              />
+              <span className="user">{userName}</span>
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={handleLogout}
+              >
+                <IoIosLogOut />
+              </button>
             </div>
+          ) : (
+            <div className="login-regitster d-flex gap-2 w-100px ">
+              <NavLink to="/login" className="btn btn-primary">
+                Login
+              </NavLink>
+              <div
+                className="btn btn-primary"
+                onClick={() => navigate("/register")}
+              >
+                Register
+              </div>
+            </div>
+          )}
+        </div>
+        {/* modal ô input */}
+        {searchTerm && recort.length > 0 && showSearchBox && (
+          <div className="filter-list">
+            <button className="btn" onClick={handoleshowhide}>
+              x
+            </button>
+            {recort.map((item, index) => (
+              <div className="filter-item" key={index}>
+                <img className="filter-img" src={item.url_img} alt="" />
+                <p
+                  className="filter-title"
+                  onClick={() => handlechitietsanphamfiter(item.id)}
+                >
+                  {item.name}
+                </p>
+                <span className="filter-price">
+                  {item.price}
+                  <span className="ml-3">đ</span>
+                </span>
+                <hr color="red" />
+              </div>
+            ))}
           </div>
         )}
+
+        {searchTerm &&
+          recort.length === 0 &&
+          noDataFound &&
+          toast.error("Không tìm thấy sản phẩm!", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          })}
+
+        {showDropdown && <Notification />}
+        <ToastContainer />
       </div>
-      {/* modal ô input */}
-      {searchTerm && recort.length > 0 && showSearchBox && (
-        <div className="filter-list">
-          <button className="btn" onClick={handoleshowhide}>
-            x
-          </button>
-          {recort.map((item, index) => (
-            <div className="filter-item" key={index}>
-              <img className="filter-img" src={item.url_img} alt="" />
-              <p
-                className="filter-title"
-                onClick={() => handlechitietsanphamfiter(item.id)}
-              >
-                {item.name}
-              </p>
-              <span className="filter-price">
-                {item.price}
-                <span className="ml-3">đ</span>
-              </span>
-              <hr color="red" />
-            </div>
-          ))}
-        </div>
-      )}
-
-      {searchTerm &&
-        recort.length === 0 &&
-        noDataFound &&
-        toast.error("Không tìm thấy sản phẩm!", {
-          position: "top-right",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        })}
-
-      {showDropdown && <Notification />}
-      <ToastContainer />
     </div>
-    </div>
-   
   );
 };
 

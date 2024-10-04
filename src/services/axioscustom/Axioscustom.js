@@ -10,6 +10,12 @@ const Axioscustom = axios.create({
 Axioscustom.interceptors.request.use(
   function (config) {
     // Do something before request is sent
+    const token =
+      localStorage.getItem("token") || sessionStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    console.log("Request Headers:", config.headers);
     return config;
   },
   function (error) {

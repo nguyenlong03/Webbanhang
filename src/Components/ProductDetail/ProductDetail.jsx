@@ -4,10 +4,11 @@ import ProductService from "../../services/ProductSevier";
 import ChitietSanPham from "../../services/chitietsanpham";
 import Slider from "react-slick";
 import { useNavigate } from "react-router-dom";
-import "./ProductDetail.scss";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/cartSlice";
 import { toast } from "react-toastify";
+import "./ProductDetail.scss";
+import AddcartAPI from "../../services/AddcartAPI";
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -18,21 +19,125 @@ function SamplePrevArrow(props) {
   const { className, style, onClick } = props;
   return <div className={className} style={{ ...style }} onClick={onClick} />;
 }
+
 function ProductDetail() {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { data } = ProductService("new", 1);
-  const data1 = ChitietSanPham(parseInt(id));
+  const { data: products } = ProductService("new", 1);
+  const productDetails = ChitietSanPham(parseInt(id));
   const [selectedImage, setSelectedImage] = useState("");
   const [size, setSize] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [availableSizes, setAvailableSizes] = useState([]);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const Navigate = useNavigate();
-  console.log("check data 1 ", data1);
-  console.log("check data product", data);
-  const product = data.find((item) => item.id === parseInt(id)) || data1;
 
+  const product =
+    products.find((item) => item.id === parseInt(id)) || productDetails;
+
+  useEffect(() => {
+    if (productDetails) {
+      if (
+        Array.isArray(productDetails.url_img) &&
+        productDetails.url_img.length > 0
+      ) {
+        setSelectedImage(productDetails.url_img[0]);
+      } else if (productDetails.url_img) {
+        setSelectedImage(productDetails.url_img);
+      }
+    }
+  }, [productDetails]);
+
+  useEffect(() => {
+    if (productDetails && Array.isArray(productDetails.sizes)) {
+      const sizes = productDetails.sizes.map((sizeObj) => sizeObj.size);
+      setAvailableSizes(sizes);
+      setSize(sizes[0]);
+    }
+  }, [productDetails]);
+
+  useEffect(() => {
+    if (product && productDetails) {
+      const related = products.filter(
+        (item) => item.category === product.category && item.id !== product.id
+      );
+      setRelatedProducts(related);
+    }
+  }, [products, productDetails, product]);
+
+  const handleSelectedImage = (img) => {
+    setSelectedImage(img);
+  };
+
+  const incrementQuantity = () => {
+    setQuantity((prev) => prev + 1);
+  };
+
+  const decrementQuantity = () => {
+    if (quantity > 1) {
+      setQuantity((prev) => prev - 1);
+    }
+  };
+
+  const handleAddToCart = async () => {
+    const token = localStorage.getItem("token");
+    const product = products.find((item) => item.id === parseInt(id));
+    if (!token) {
+      toast.error("Vui lòng đăng nhập để thêm vào giỏ hàng.");
+      return;
+    }
+    try {
+      const response = await AddcartAPI.Addtocart({
+        product_id: product.id,
+        size,
+        quantity,
+      });
+      console.log("check resssss", response);
+      if (response && response.errCode === 0) {
+        toast.success("Thêm vào giỏ hàng thành công!", {
+          autoClose: 1000,
+        });
+        Navigate("/shoppingcart");
+      } else {
+        toast.error(response.errMessage);
+      }
+    } catch (error) {
+      console.error("lọt vào catch:", error);
+    }
+    // data shopcart
+    try {
+      const responseshopcart = await AddcartAPI.Getcart();
+      console.log("check res cart shop", responseshopcart.items);
+      const ress = responseshopcart.items;
+      ress.forEach((item) => {
+        const productToAdd = item.product;
+        const size = item.size;
+        const quantity = item.quantity;
+        const price = item.product.price;
+        if (productToAdd) {
+          dispatch(
+            addToCart({
+              ...productToAdd,
+              size: size,
+              quantity: quantity,
+              price: price,
+            })
+          );
+        }
+      });
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  const handleProductClick = (id) => {
+    Navigate(`/product/${id}`);
+    window.scroll(0, 0);
+  };
+
+  if (!product) return <div>Không tìm thấy sản phẩm.</div>;
+
+  // Slider settings
   const settings = {
     className: "center",
     infinite: true,
@@ -45,73 +150,13 @@ function ProductDetail() {
     prevArrow: <SamplePrevArrow />,
   };
 
-  const tang = () => {
-    setQuantity((prev) => prev + 1);
-  };
-
-  const giam = () => {
-    if (quantity > 1) {
-      setQuantity((prev) => prev - 1);
-    }
-  };
-
-  useEffect(() => {
-    if (data1) {
-      if (Array.isArray(data1.url_img) && data1.url_img.length > 0) {
-        setSelectedImage(data1.url_img[0]);
-      } else if (data1.url_img) {
-        setSelectedImage(data1.url_img);
-      }
-    }
-  }, [data1, product]);
-
-  useEffect(() => {
-    if (Array.isArray(data1.sizes) && data1.sizes.length > 0) {
-      const sizeValues = data1.sizes.map((sizeObj) => sizeObj.size);
-      setAvailableSizes(sizeValues);
-      setSize(sizeValues[0]);
-    }
-  }, [data1.sizes]);
-
-  useEffect(() => {
-    if (product && data1) {
-      const related = data.filter(
-        (item) => item.category === product.category && item.id !== product.id
-      );
-      setRelatedProducts(related);
-    }
-  }, [data, data1, product]);
-
-  const handleSelectedImage = (img) => {
-    setSelectedImage(img);
-  };
-  //add redux
-  const handleAddBuyNow = () => {
-    const productToAdd = product || data1;
-    dispatch(
-      addToCart({
-        ...productToAdd,
-        quantity,
-        price: product.price * quantity,
-      })
-    );
-    toast.success("Đã thêm vào giỏ hàng");
-  };
-
-  const handoleChitietsanpham1 = (id) => {
-    Navigate(`/product/${id}`);
-    window.scroll(0, 0);
-  };
-  console.log("pro", product);
-  if (!product) return <div>Không tìm thấy sản phẩm.</div>;
-
   return (
     <>
       <div className="productDetail-container">
         <div className="image-container">
           <div className="toggle">
-            {Array.isArray(data1.url_img) ? (
-              data1.url_img.map((item, index) => (
+            {Array.isArray(productDetails.url_img) ? (
+              productDetails.url_img.map((item, index) => (
                 <button
                   className={`toggle-img ${
                     selectedImage === item ? "selected" : ""
@@ -123,11 +168,18 @@ function ProductDetail() {
                 </button>
               ))
             ) : (
-              <img src={data1.url_img} alt="ảnh" className="img-item" />
+              <img
+                src={productDetails.url_img}
+                alt="ảnh"
+                className="img-item"
+              />
             )}
           </div>
           <div className="img">
-            <img src={selectedImage || data1.url_img} alt={product.name} />
+            <img
+              src={selectedImage || productDetails.url_img}
+              alt={product.name}
+            />
           </div>
         </div>
         <div className="detail-container">
@@ -154,7 +206,7 @@ function ProductDetail() {
               </div>
               <div className="quantity">
                 <label htmlFor="quantity">Số lượng: </label>
-                <button className="btn-quantity" onClick={giam}>
+                <button className="btn-quantity" onClick={decrementQuantity}>
                   -
                 </button>
                 <input
@@ -166,53 +218,31 @@ function ProductDetail() {
                     setQuantity(Math.max(1, parseInt(e.target.value)))
                   }
                 />
-                <button className="btn-quantity" onClick={tang}>
+                <button className="btn-quantity" onClick={incrementQuantity}>
                   +
                 </button>
               </div>
             </div>
             <div className="btn-detail">
               <button className="buy">Buy Now</button>
-              <button className="add-cart">Add Shopping Cart</button>
+              <button className="add-cart" onClick={handleAddToCart}>
+                Add Shopping Cart
+              </button>
             </div>
           </div>
-          <div class="container-des">
-            <div class="benefits">
-              <div class="benefit-item">
-                <span class="benefit-icon">🚚</span>
-                <span class="benefit-text">
-                  Thanh toán khi nhận hàng Được kiểm tra hàng trước
-                </span>
-              </div>
-              <div class="benefit-item">
-                <span class="benefit-icon">🔄</span>
-                <span class="benefit-text">
-                  Đổi hàng 10 ngày Nhấp để xem chính sách
-                </span>
-              </div>
-              <div class="benefit-item">
-                <span class="benefit-icon">🎁</span>
-                <span class="benefit-text">
-                  Miễn phí vận chuyển Đơn hàng từ 498k
-                </span>
-              </div>
-              <div class="benefit-item">
-                <span class="benefit-icon">🏷️</span>
-                <span class="benefit-text">
-                  Mua nhiều giảm sâu Nhấp để xem chi tiết
-                </span>
-              </div>
-            </div>
-
-            <div class="features">
+          <div className="container-des">
+            <div className="benefits">{/* Add your benefits content */}</div>
+            <div className="features">
               <h3>Đặc điểm nổi bật</h3>
-              {data1.description ? (
+              {productDetails.description ? (
                 <ul className="feature-list">
-                  {data1.description.split("\r\n").map((line, index) => (
-                    <li key={index} className="feature-item">
-                      {line}
-                    </li>
-                  ))}
+                  {productDetails.description
+                    .split("\r\n")
+                    .map((line, index) => (
+                      <li key={index} className="feature-item">
+                        {line}
+                      </li>
+                    ))}
                 </ul>
               ) : (
                 <p className="feature-list">
@@ -242,7 +272,7 @@ function ProductDetail() {
                   <div className="content">
                     <p
                       className="product-name"
-                      onClick={() => handoleChitietsanpham1(item.id)}
+                      onClick={() => handleProductClick(item.id)}
                     >
                       {item.name}
                     </p>
@@ -255,4 +285,5 @@ function ProductDetail() {
     </>
   );
 }
+
 export default ProductDetail;

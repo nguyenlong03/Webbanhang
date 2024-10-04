@@ -17,23 +17,18 @@ const Footer = () => {
           <p className="text-item">Thẻ ưu đãi</p>
           <p className="text-item">Trung tâm bảo hành</p>
           <p className="text-item">Thanh toán và giao hàng</p>
-          <p className="text-item">Dịch vụ sửa chữa và ủi</p>
         </div>
         <div className="footer-text">
           <b className="text-item1">Chính sách Mua hàng và Bảo hành</b>
-          <p className="text-item">Quy định chung</p>
           <p className="text-item">Chính sách bảo mật thông tin</p>
           <p className="text-item">Chính sách vận chuyển</p>
           <p className="text-item">Chính sách bảo hành</p>
-          <p className="text-item">Chính sách đổi trả và hoàn tiền</p>
-          <p className="text-item">Chính sách giá cả và hình thức thanh toán</p>
           <p className="text-item">Chính sách trả góp</p>
         </div>
         <div className="footer-text">
-          <b className="text-item1">Thông tin 247</b>
-          <p className="text-item">giới thiệu 247</p>
+          <b className="text-item1">Thông tin </b>
+          <p className="text-item">giới thiệu </p>
           <p className="text-item">Thông tin liên hệ</p>
-          <p className="text-item">Hệ thống Showroom</p>
           <p className="text-item">Hỏi đáp</p>
         </div>
         <div className="footer-text">
@@ -75,7 +70,6 @@ const Footer = () => {
           <p className="text-item">Thẻ ưu đãi</p>
           <p className="text-item">Trung tâm bảo hành</p>
           <p className="text-item">Thanh toán và giao hàng</p>
-          <p className="text-item">Dịch vụ sửa chữa và ủi</p>
         </div>
       </div>
 
@@ -101,9 +95,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <b className="text-center">
-        © Bản quyền thuộc về Fashion - 123 Web Thiết kế bởi 123WEB.COM.VN
-      </b>
+      <b className="text-center">© 2024 - Bản quyền thuộc về 3 ANH EM</b>
     </div>
   );
 };

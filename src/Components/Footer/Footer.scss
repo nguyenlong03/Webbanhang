@@ -2,12 +2,12 @@
   font-family: "Myfont";
   font-weight: 300  ;
   width: 100%;
-  height: 500px;
+  height: 100%;
   font-size: 20px;
   margin-left: 60px;
   display: flex;
   flex-direction: column;
-  margin-top: 78px;
+  // margin-top: 78px;
   justify-content: center;
   align-items: center;
  
@@ -22,7 +22,7 @@
       font-weight: 600;
     }
     .text-item{
-      margin-top: 10px;
+      // margin-top: 10px;
 
         &:hover{
             color:rgb(20, 20, 177);
@@ -31,11 +31,11 @@
   }
   .footer-bottom {
     display: flex;
-    gap: 400px;
-    padding-top: 20px;
+    gap: 353px;
+    // padding-top: 20px;
     .footer-folower {
       .icon {
-        margin-top: 30px;
+        // margin-top: 30px;
         font-size: 23px;
         display: flex;
         gap: 10px;
@@ -44,14 +44,15 @@
     }
     .footer-banking{
         .img-ft{
-            margin-top: 30px;
+            margin-top: 20px;
+            padding-right: 70px;
         }
     }
   }
   .text-center {
     width: 100%;
     display: flex;
-    margin-top: 100px;
+    margin-top: 30px;
     justify-content: center;
     align-items: center;
     color: #626453;

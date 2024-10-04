@@ -6,11 +6,13 @@ import { useState } from "react";
 function HomeCart() {
   // const [menu, setMenu] = useState(localStorage.getItem("menu") || "Toàn bộ");
   const [filter, setFilter] = useState("new");
+  const [currentPage, setCurrentPage] = useState(1);
   const Navigate = useNavigate();
-  const { data, loading, error } = ProductService(filter, 1);
-  console.log("data", data);
+  const { data, loading, error } = ProductService(filter, currentPage);
+
   const handleFilterChange = (filterType) => {
     setFilter(filterType);
+    setCurrentPage(1);
   };
 
   const handoleChitietsanpham = (id) => {
@@ -40,14 +42,6 @@ function HomeCart() {
             Áo phông
           </li>
 
-          {/* Uncomment if needed */}
-          {/* <li
-          className={`filter-item ${filter === "Áo sơ mi" ? "active" : ""}`}
-          onClick={() => handleFilterChange("Áo sơ mi")}
-        >
-          Áo sơ mi
-        </li> */}
-
           <li
             className={`filter-item ${filter === "vay" ? "active" : ""}`}
             onClick={() => handleFilterChange("vay")}
@@ -60,14 +54,6 @@ function HomeCart() {
           >
             Quần
           </li>
-
-          {/* Uncomment if needed */}
-          {/* <li
-          className={`filter-item ${filter === "Phụ kiện" ? "active" : ""}`}
-          onClick={() => handleFilterChange("Phụ kiện")}
-        >
-          Phụ kiện
-        </li> */}
         </ul>
       </div>
 

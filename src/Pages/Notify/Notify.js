@@ -1,6 +1,5 @@
 import React from "react";
 import "./notify.scss";
-import { useState } from "react";
 
 const Notification = () => {
   return (

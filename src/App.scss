@@ -8,8 +8,12 @@ body {
     background-color: hsl(49, 50%, 94%);
       
 }
+.app-footer{
+    border-top: 1px solid #C7C8C9;
+    height: 400px;
+}
 @font-face {
     font-family: "myfont";
-    src: url(../src/assets/font/RobotoCondensed-Italic-VariableFont_wght.ttf) ;
+    src: url(../src/assets/font/RobotoCondensed-VariableFont_wght.ttf) ;
 
 }
