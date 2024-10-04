@@ -119,6 +119,52 @@
       }  
     } 
   }
+  
+}
+
+.next-prev-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ 
+  .next-page {
+    width: 80%;
+    margin-top: 20px;
+    text-align: center;
+    padding: 10px;
+    border-top: 1px solid #999;
+    span {
+      padding: 10px;
+    }
+    .prev, .next {
+      background-color: #fff;
+      width: 30px;
+      height: 60px;
+      padding: 2px;
+      font-size: 2rem;
+      color: #333;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;  
+      &:hover {
+        color: #60aef8;
+        font-size: 2.5rem;
+      }
+    }
+    .ve-dau,
+    .den-cuoi {
+      width: 150px;
+      height: 40px;
+      border: none;
+      background-color: #fff;
+      color: #333;
+      &:hover {
+        color: #60aef8;
+        transform: scale(1.1);
+      }
+    }
+  }
+  
 }
 
 

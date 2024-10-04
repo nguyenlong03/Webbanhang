@@ -2,25 +2,43 @@ import "./HomeCart.scss";
 import ProductService from "../../services/ProductSevier";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 
 function HomeCart() {
   const [filter, setFilter] = useState("new");
+  const [page, setPage] = useState(1);
   const Navigate = useNavigate();
-  const { data, loading, error } = ProductService(filter, 1);
+  const { data, loading, error } = ProductService(filter, page);
 
-  const handoleChitietsanpham = (id) => {
+  const handleChitietsanpham = (id) => {
     Navigate(`/product/${id}`);
     window.scrollTo(0, 0);
   };
 
   const handleFilterChange = (filterType) => {
     setFilter(filterType);
+    setPage(1);
+  };
+
+  const handleNextPage = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
+
+  const handlePrevPage = () => {
+    setPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+
+  const handleFirstPage = () => {
+    setPage(1);
+  };
+  const handleLastPage = () => {
+    setPage(3);
   };
 
   if (loading)
     return (
-      <div class="spinner-border text-primary" role="status">
-        <span class="sr-only">Loading...</span>
+      <div className="spinner-border text-primary" role="status">
+        <span className="sr-only">Loading...</span>
       </div>
     );
   if (error) return <p>{error}</p>;
@@ -45,15 +63,6 @@ function HomeCart() {
           >
             Áo phông
           </li>
-
-          {/* Uncomment if needed */}
-          {/* <li
-          className={`filter-item ${filter === "Áo sơ mi" ? "active" : ""}`}
-          onClick={() => handleFilterChange("Áo sơ mi")}
-        >
-          Áo sơ mi
-        </li> */}
-
           <li
             className={`filter-item ${filter === "vay" ? "active" : ""}`}
             onClick={() => handleFilterChange("vay")}
@@ -66,14 +75,6 @@ function HomeCart() {
           >
             Quần short
           </li>
-
-          {/* Uncomment if needed */}
-          {/* <li
-          className={`filter-item ${filter === "Phụ kiện" ? "active" : ""}`}
-          onClick={() => handleFilterChange("Phụ kiện")}
-        >
-          Phụ kiện
-        </li> */}
         </ul>
       </div>
 
@@ -84,7 +85,7 @@ function HomeCart() {
               <div
                 className="card"
                 key={index}
-                onClick={() => handoleChitietsanpham(item.id)}
+                onClick={() => handleChitietsanpham(item.id)}
               >
                 <div className="image-container">
                   <img src={item.url_img} alt={item.name} />
@@ -102,6 +103,40 @@ function HomeCart() {
           ) : (
             <p>Không có sản phẩm nào được tìm thấy.</p>
           )}
+        </div>
+      </div>
+
+      <div className="next-prev-container">
+        <div className="next-page">
+          <button
+            className="ve-dau"
+            onClick={handleFirstPage}
+            disabled={page === 1}
+          >
+            Về trang đầu
+          </button>
+          <button
+            className="prev"
+            onClick={handlePrevPage}
+            disabled={page === 1}
+          >
+            <GrFormPrevious />
+          </button>
+          <span>{` ${page}/3`}</span>
+          <button
+            className="next"
+            onClick={handleNextPage}
+            disabled={data.length === 0}
+          >
+            <GrFormNext />
+          </button>
+          <button
+            className="den-cuoi"
+            onClick={handleLastPage}
+            disabled={page === 0}
+          >
+            Đến trang cuối
+          </button>
         </div>
       </div>
     </>

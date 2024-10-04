@@ -3,35 +3,40 @@ import { useState, useEffect } from "react";
 
 const ProductService = (filter, page) => {
   const [data, setData] = useState(() => {
-    // Kiểm tra nếu đã có dữ liệu trong sessionStorage thì dùng nó, ngược lại trả về mảng rỗng
-    const savedData = sessionStorage.getItem("productsData");
+    const key = `productsData-${filter}-${page}`;
+    const savedData = sessionStorage.getItem(key);
     return savedData ? JSON.parse(savedData) : [];
   });
-  const [loading, setLoading] = useState(true); // Đặt loading mặc định là true
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   useEffect(() => {
     const fetchAPI = async () => {
-      setLoading(true); // Đặt lại loading mỗi khi dữ liệu mới được gọi
-      setError(null); // Đặt lại error nếu trước đó có lỗi
+      const key = `productsData-${filter}-${page}`;
+      setLoading(true);
+      setError(null);
+
+      const cachedData = sessionStorage.getItem(key);
+      if (cachedData) {
+        setData(JSON.parse(cachedData));
+        setLoading(false);
+        return;
+      }
+
       try {
         const response = await ProductsApi.getALL(filter, page);
-        console.log("response", response.products);
-        setData(response.products || []); // Nếu không có products, trả về mảng rỗng
-        sessionStorage.setItem(
-          "productsData",
-          JSON.stringify(response.products || [])
-        );
+        const products = response.products || [];
+        setData(products);
+        sessionStorage.setItem(key, JSON.stringify(products)); // Save fetched data
       } catch (error) {
-        console.error("404 or other error:", error);
+        console.error("Error fetching data:", error);
         setError("Không thể tải dữ liệu");
       } finally {
-        setLoading(false); // Dừng trạng thái loading khi kết thúc
+        setLoading(false);
       }
     };
 
     fetchAPI();
-  }, [filter, page]); // Mỗi khi filter hoặc page thay đổi, dữ liệu sẽ được tải lại.
+  }, [filter, page]);
 
   return { data, loading, error };
 };

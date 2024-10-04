@@ -85,6 +85,10 @@ function ProductDetail() {
     Navigate(`/product/${id}`);
     window.scroll(0, 0);
   };
+
+  const handlePayment = () => {
+    Navigate(`/payment`, { state: product.id });
+  };
   console.log("pro", product);
   if (!product) return <div>Không tìm thấy sản phẩm.</div>;
 
@@ -155,7 +159,9 @@ function ProductDetail() {
               </div>
             </div>
             <div className="btn-detail">
-              <button className="buy">Buy Now</button>
+              <button className="buy" onClick={handlePayment}>
+                Buy Now
+              </button>
               <button className="add-cart">Add Shopping Cart</button>
             </div>
           </div>

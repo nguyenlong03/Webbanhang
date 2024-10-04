@@ -16,6 +16,7 @@ import ForgotPassword from "./Pages/forgotPassword/forgotPassword";
 import ProductDetail from "./Components/ProductDetail/ProductDetail";
 import Cart from "./Pages/shoppingcart/shoppingcart";
 import Notification from "./Pages/Notify/Notify";
+import Payment from "./Pages/Pay/Pay";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -35,6 +36,7 @@ root.render(
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
       <Route path="forgotPassword" element={<ForgotPassword />} />
+      <Route path="payment" element={<Payment />} />
     </Routes>
   </BrowserRouter>
 );

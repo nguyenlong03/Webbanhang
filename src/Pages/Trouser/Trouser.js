@@ -9,13 +9,10 @@ const Trouser = () => {
           <div className="contact-info">
             <h4>Ý KIẾN CỦA BẠN VỀ SHOP</h4>
             <p>MST: 0314839029</p>
-            <p>
-              Địa chỉ: Phố Hữu Nghị - Xuân Khanh - Sơn Tây - Hà Nội
-            </p>
+            <p>Địa chỉ: Phố Hữu Nghị - Xuân Khanh - Sơn Tây - Hà Nội</p>
             <p>Hotline: 0123 567 789</p>
             <p>Email: qwerf@gmail.com</p>
             <p>Liên hệ trực tiếp: 0565 694 707</p>
-
           </div>
 
           <div className="form-container">
