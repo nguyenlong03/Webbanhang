@@ -88,13 +88,33 @@ function HomeCart() {
                 onClick={() => handleChitietsanpham(item.id)}
               >
                 <div className="image-container">
+                  {item.discount > 0 && item.discount < 20 && (
+                    <div className="product-discount">
+                      <span>-{item.discount}%</span>
+                    </div>
+                  )}
                   <img src={item.url_img} alt={item.name} />
                 </div>
 
-                <p className="price">
+                <p
+                  className="price"
+                  style={
+                    item.discount > 0
+                      ? { textDecoration: "line-through", opacity: 0.3 }
+                      : { textDecoration: "none", opacity: 1 }
+                  }
+                >
                   {item.price.toLocaleString("vi-VN")}
                   <span>₫</span>
                 </p>
+
+                {item.discount > 0 && (
+                  <p className="price-new">
+                    {item.discounted_price.toLocaleString("vi-VN")}
+                    <span>₫</span>
+                  </p>
+                )}
+
                 <div className="content">
                   <p className="product-name">{item.name}</p>
                 </div>

@@ -96,18 +96,20 @@ function ProductDetail() {
     <>
       <div className="productDetail-container">
         <div className="image-container">
-          <div className="toggle">
+          <div className="toggle-list">
             {Array.isArray(data1.url_img) ? (
               data1.url_img.map((item, index) => (
-                <button
-                  className={`toggle-img ${
-                    selectedImage === item ? "selected" : ""
-                  }`}
-                  key={index}
-                  onClick={() => handleSelectedImage(item)}
-                >
-                  <img src={item} alt="" className="img-item" />
-                </button>
+                <div className="toggle-item">
+                  <button
+                    className={`toggle-img ${
+                      selectedImage === item ? "selected" : ""
+                    }`}
+                    key={index}
+                    onClick={() => handleSelectedImage(item)}
+                  >
+                    <img src={item} alt="" className="img-item" />
+                  </button>
+                </div>
               ))
             ) : (
               <img src={data1.url_img} alt="ảnh" className="img-item" />
@@ -219,25 +221,34 @@ function ProductDetail() {
           </div>
           <Slider {...settings}>
             {relatedProducts &&
-              relatedProducts.map((item) => (
-                <div className="product" key={item.id}>
-                  <div className="image-product">
-                    <img src={item.url_img} alt={item.name} />
-                  </div>
-                  <p className="price">
-                    {item.price.toLocaleString("vi-VN")}
-                    <span>₫</span>
-                  </p>
-                  <div className="content">
-                    <p
-                      className="product-name"
-                      onClick={() => handoleChitietsanpham1(item.id)}
-                    >
-                      {item.name}
+              relatedProducts
+                .filter((item) => item.discount > 0)
+                .map((item) => (
+                  <div className="product" key={item.id}>
+                    <div className="image-product">
+                      <div className="product-discount">
+                        <span>-{item.discount}</span>
+                      </div>
+                      <img src={item.url_img} alt="" />
+                    </div>
+                    <p className="price">
+                      {item.price.toLocaleString("vi-VN")}
+                      <span>₫</span>
                     </p>
+                    <p className="price-new">
+                      {item.discounted_price.toLocaleString("vi-VN")}
+                      <span>₫</span>
+                    </p>
+                    <div className="content">
+                      <p
+                        className="product-name"
+                        onClick={() => handoleChitietsanpham1(item.id)}
+                      >
+                        {item.name}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
           </Slider>
         </div>
       </div>
