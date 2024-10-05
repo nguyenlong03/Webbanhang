@@ -206,7 +206,7 @@ const Header = () => {
           <div
             to="/trouser"
             className={`navbar-item ${menu === "Trouser" ? "active" : ""}`}
-            onClick={() => setMenu("Trouser")}
+            onClick={() => setMenu(navigate("/Trouser"))}
           >
             Help
           </div>

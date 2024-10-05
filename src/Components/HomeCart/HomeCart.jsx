@@ -95,7 +95,7 @@ function HomeCart() {
                 onClick={() => handleChitietsanpham(item.id)}
               >
                 <div className="image-container">
-                  {item.discount > 0 && item.discount < 20 && (
+                  {item.discount > 0 && (
                     <div className="product-discount">
                       <span>-{item.discount}%</span>
                     </div>

@@ -4,11 +4,11 @@ import ProductService from "../../services/ProductSevier";
 import ChitietSanPham from "../../services/chitietsanpham";
 import Slider from "react-slick";
 import { useNavigate } from "react-router-dom";
-import "./ProductDetail.scss";
-import AddcartAPI from "../../services/AddcartAPI";
-import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/cartSlice";
+import { toast } from "react-toastify";
+import "./ProductDetail.scss";
+import AddcartAPI from "../../services/AddcartAPI";
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -21,37 +21,59 @@ function SamplePrevArrow(props) {
 }
 
 function ProductDetail() {
+  const dispatch = useDispatch();
   const { id } = useParams();
-  const { data: products } = ProductService("all", 1);
+  const { data: products } = ProductService("new", 1);
   const productDetails = ChitietSanPham(parseInt(id));
   const [selectedImage, setSelectedImage] = useState("");
   const [size, setSize] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [availableSizes, setAvailableSizes] = useState([]);
   const [relatedProducts, setRelatedProducts] = useState([]);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const Navigate = useNavigate();
 
   const product =
     products.find((item) => item.id === parseInt(id)) || productDetails;
 
-  const settings = {
-    className: "center",
-    infinite: true,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    autoPlay: true,
-    autoplaySpeed: 500,
-    swipeToSlide: true,
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
+  useEffect(() => {
+    if (productDetails) {
+      if (
+        Array.isArray(productDetails.url_img) &&
+        productDetails.url_img.length > 0
+      ) {
+        setSelectedImage(productDetails.url_img[0]);
+      } else if (productDetails.url_img) {
+        setSelectedImage(productDetails.url_img);
+      }
+    }
+  }, [productDetails]);
+
+  useEffect(() => {
+    if (productDetails && Array.isArray(productDetails.sizes)) {
+      const sizes = productDetails.sizes.map((sizeObj) => sizeObj.size);
+      setAvailableSizes(sizes);
+      setSize(sizes[0]);
+    }
+  }, [productDetails]);
+
+  useEffect(() => {
+    if (product && productDetails) {
+      const related = products.filter(
+        (item) => item.category === product.category && item.id !== product.id
+      );
+      setRelatedProducts(related);
+    }
+  }, [products, productDetails, product]);
+
+  const handleSelectedImage = (img) => {
+    setSelectedImage(img);
   };
 
-  const tang = () => {
+  const incrementQuantity = () => {
     setQuantity((prev) => prev + 1);
   };
 
-  const giam = () => {
+  const decrementQuantity = () => {
     if (quantity > 1) {
       setQuantity((prev) => prev - 1);
     }
@@ -59,11 +81,11 @@ function ProductDetail() {
 
   const handleAddToCart = async () => {
     const token = localStorage.getItem("token");
+    const product = products.find((item) => item.id === parseInt(id));
     if (!token) {
       toast.error("Vui lòng đăng nhập để thêm vào giỏ hàng.");
       return;
     }
-
     try {
       const response = await AddcartAPI.Addtocart({
         product_id: product.id,
@@ -75,15 +97,14 @@ function ProductDetail() {
         toast.success("Thêm vào giỏ hàng thành công!", {
           autoClose: 1000,
         });
-        navigate("/shoppingcart");
+        Navigate("/shoppingcart");
       } else {
         toast.error(response.errMessage);
       }
     } catch (error) {
       console.error("lọt vào catch:", error);
     }
-
-    // Update Redux store with the cart items
+    // data shopcart
     try {
       const responseshopcart = await AddcartAPI.Getcart();
       console.log("check res cart shop", responseshopcart.items);
@@ -109,58 +130,47 @@ function ProductDetail() {
     }
   };
 
-  useEffect(() => {
-    if (Array.isArray(product.url_img) && product.url_img.length > 0) {
-      setSelectedImage(product.url_img[0]);
-    } else if (product.url_img) {
-      setSelectedImage(product.url_img);
-    }
-  }, [product]);
-
-  useEffect(() => {
-    if (productDetails && Array.isArray(productDetails.sizes)) {
-      const sizes = productDetails.sizes.map((sizeObj) => sizeObj.size);
-      setAvailableSizes(sizes);
-      setSize(sizes[0]);
-    }
-  }, [productDetails]);
-
-  useEffect(() => {
-    if (product) {
-      const related = products.filter(
-        (item) => item.category === product.category && item.id !== product.id
-      );
-      setRelatedProducts(related);
-    }
-  }, [product, products]);
-
-  const handleSelectedImage = (img) => {
-    setSelectedImage(img);
-  };
-
-  const handleChitietsanpham1 = (id) => {
-    navigate(`/product/${id}`);
+  const handleProductClick = (id) => {
+    Navigate(`/product/${id}`);
     window.scroll(0, 0);
   };
 
   const handlePayment = () => {
-    navigate(`/payment`, { state: product.id });
+    if (product) {
+      Navigate(`/payment`, { state: { product, quantity } });
+    } else {
+      console.error("Không có sản phẩm nào để thanh toán.");
+    }
   };
 
   if (!product) return <div>Không tìm thấy sản phẩm.</div>;
+
+  // Slider settings
+  const settings = {
+    className: "center",
+    infinite: true,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoPlay: true,
+    autoplaySpeed: 500,
+    swipeToSlide: true,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+  };
 
   return (
     <>
       <div className="productDetail-container">
         <div className="image-container">
           <div className="toggle-list">
-            {Array.isArray(product.url_img) ? (
-              product.url_img.map((item, index) => (
-                <div className="toggle-item" key={index}>
+            {Array.isArray(productDetails.url_img) ? (
+              productDetails.url_img.map((item, index) => (
+                <div className="toggle-item">
                   <button
                     className={`toggle-img ${
                       selectedImage === item ? "selected" : ""
                     }`}
+                    key={index}
                     onClick={() => handleSelectedImage(item)}
                   >
                     <img src={item} alt="" className="img-item" />
@@ -168,11 +178,18 @@ function ProductDetail() {
                 </div>
               ))
             ) : (
-              <img src={product.url_img} alt="ảnh" className="img-item" />
+              <img
+                src={productDetails.url_img}
+                alt="ảnh"
+                className="img-item"
+              />
             )}
           </div>
           <div className="img">
-            <img src={selectedImage || product.url_img} alt={product.name} />
+            <img
+              src={selectedImage || productDetails.url_img}
+              alt={product.name}
+            />
           </div>
         </div>
         <div className="detail-container">
@@ -180,7 +197,7 @@ function ProductDetail() {
             <div className="content">
               <p className="product-name">{product.name}</p>
               <p className="price">
-                {product.price}
+                {product.price.toLocaleString("vi-VN")}
                 <span>₫</span>
               </p>
             </div>
@@ -199,7 +216,7 @@ function ProductDetail() {
               </div>
               <div className="quantity">
                 <label htmlFor="quantity">Số lượng: </label>
-                <button className="btn-quantity" onClick={giam}>
+                <button className="btn-quantity" onClick={decrementQuantity}>
                   -
                 </button>
                 <input
@@ -211,7 +228,7 @@ function ProductDetail() {
                     setQuantity(Math.max(1, parseInt(e.target.value)))
                   }
                 />
-                <button className="btn-quantity" onClick={tang}>
+                <button className="btn-quantity" onClick={incrementQuantity}>
                   +
                 </button>
               </div>
@@ -226,42 +243,18 @@ function ProductDetail() {
             </div>
           </div>
           <div className="container-des">
-            <div className="benefits">
-              <div className="benefit-item">
-                <span className="benefit-icon">🚚</span>
-                <span className="benefit-text">
-                  Thanh toán khi nhận hàng Được kiểm tra hàng trước
-                </span>
-              </div>
-              <div className="benefit-item">
-                <span className="benefit-icon">🔄</span>
-                <span className="benefit-text">
-                  Đổi hàng 10 ngày Nhấp để xem chính sách
-                </span>
-              </div>
-              <div className="benefit-item">
-                <span className="benefit-icon">🎁</span>
-                <span className="benefit-text">
-                  Miễn phí vận chuyển Đơn hàng từ 498k
-                </span>
-              </div>
-              <div className="benefit-item">
-                <span className="benefit-icon">🏷️</span>
-                <span className="benefit-text">
-                  Mua nhiều giảm sâu Nhấp để xem chi tiết
-                </span>
-              </div>
-            </div>
-
+            <div className="benefits">{/* Add your benefits content */}</div>
             <div className="features">
               <h3>Đặc điểm nổi bật</h3>
-              {product.description ? (
+              {productDetails.description ? (
                 <ul className="feature-list">
-                  {product.description.split("\r\n").map((line, index) => (
-                    <li key={index} className="feature-item">
-                      {line}
-                    </li>
-                  ))}
+                  {productDetails.description
+                    .split("\r\n")
+                    .map((line, index) => (
+                      <li key={index} className="feature-item">
+                        {line}
+                      </li>
+                    ))}
                 </ul>
               ) : (
                 <p className="feature-list">
@@ -279,34 +272,44 @@ function ProductDetail() {
           </div>
           <Slider {...settings}>
             {relatedProducts &&
-              relatedProducts
-                .filter((item) => item.discount > 0)
-                .map((item) => (
-                  <div className="product" key={item.id}>
-                    <div className="image-product">
+              relatedProducts.map((item) => (
+                <div className="product" key={item.id}>
+                  <div className="image-product">
+                    {item.discount > 0 && (
                       <div className="product-discount">
-                        <span>-{item.discount}</span>
+                        <span>-{item.discount}%</span>
                       </div>
-                      <img src={item.url_img} alt="" />
-                    </div>
-                    <p className="price">
-                      {item.price.toLocaleString("vi-VN")}
-                      <span>₫</span>
-                    </p>
+                    )}
+                    <img src={item.url_img} alt={item.name} />
+                  </div>
+                  <p
+                    className="price"
+                    style={
+                      item.discount > 0
+                        ? { textDecoration: "line-through", opacity: 0.3 }
+                        : { textDecoration: "none", opacity: 1 }
+                    }
+                  >
+                    {item.price.toLocaleString("vi-VN")}
+                    <span>₫</span>
+                  </p>
+
+                  {item.discount > 0 && (
                     <p className="price-new">
                       {item.discounted_price.toLocaleString("vi-VN")}
                       <span>₫</span>
                     </p>
-                    <div className="content">
-                      <p
-                        className="product-name"
-                        onClick={() => handleChitietsanpham1(item.id)}
-                      >
-                        {item.name}
-                      </p>
-                    </div>
+                  )}
+                  <div className="content">
+                    <p
+                      className="product-name"
+                      onClick={() => handleProductClick(item.id)}
+                    >
+                      {item.name}
+                    </p>
                   </div>
-                ))}
+                </div>
+              ))}
           </Slider>
         </div>
       </div>

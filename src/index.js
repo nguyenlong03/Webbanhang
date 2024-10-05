@@ -7,11 +7,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home/Home";
 import Login from "./Pages/Login/Login";
 import Register from "./Pages/Register/Register";
+import Trouser from "./Pages/Trouser/Trouser";
+import PaymentForm from "./Pages/Pay/Pay";
 import ForgotPassword from "./Pages/forgotPassword/forgotPassword";
 import ProductDetail from "./Components/ProductDetail/ProductDetail";
-import Cart from "./Pages/shoppingcart/shoppingcart";
-import Notification from "./Pages/Notify/Notify";
-import Payment from "./Pages/Pay/Pay";
+import Shoppingcart from "./Pages/shoppingcart/shoppingcart";
 import store from "./redux/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -22,13 +22,14 @@ root.render(
         <Route path="/" element={<App />}>
           <Route index element={<Home />} />
           <Route path="product/:id" element={<ProductDetail />} />
-          <Route path="shoppingcart" element={<Cart />} />
-          <Route path="notify" element={<Notification />} />
+          <Route path="shoppingcart" element={<Shoppingcart />} />
+          <Route path="trouser" element={<Trouser />} />
+          <Route path="payment" element={<PaymentForm />} />
         </Route>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="forgotPassword" element={<ForgotPassword />} />
-        <Route path="payment" element={<Payment />} />
+        <Route path="payment" element={<PaymentForm />} />
       </Routes>
     </BrowserRouter>
   </Provider>
