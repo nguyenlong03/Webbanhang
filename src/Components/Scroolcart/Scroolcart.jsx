@@ -71,18 +71,18 @@ function SwipeToSlide() {
   return (
     <div className="products-container">
       <div className="products-list">
-        <div class="flash-sale-container">
-          <span class="flash-sale">
-            FLASH <span class="icon">⚡</span> SALE
+        <div className="flash-sale-container">
+          <span className="flash-sale">
+            FLASH <span className="icon">⚡</span> SALE
           </span>
-          <div class="countdown">
-            <div class="time-box">
+          <div className="countdown">
+            <div className="time-box">
               <span id="hours">{String(time.hours).padStart(2, "0")}</span>
             </div>
-            <div class="time-box">
+            <div className="time-box">
               <span id="hours">{String(time.minutes).padStart(2, "0")}</span>
             </div>
-            <div class="time-box">
+            <div className="time-box">
               <span id="hours">{String(time.seconds).padStart(2, "0")}</span>
             </div>
           </div>

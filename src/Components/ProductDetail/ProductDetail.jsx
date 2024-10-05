@@ -171,35 +171,35 @@ function ProductDetail() {
               <button className="add-cart">Add Shopping Cart</button>
             </div>
           </div>
-          <div class="container-des">
-            <div class="benefits">
-              <div class="benefit-item">
-                <span class="benefit-icon">🚚</span>
-                <span class="benefit-text">
+          <div className="container-des">
+            <div className="benefits">
+              <div className="benefit-item">
+                <span className="benefit-icon">🚚</span>
+                <span className="benefit-text">
                   Thanh toán khi nhận hàng Được kiểm tra hàng trước
                 </span>
               </div>
-              <div class="benefit-item">
-                <span class="benefit-icon">🔄</span>
-                <span class="benefit-text">
+              <div className="benefit-item">
+                <span className="benefit-icon">🔄</span>
+                <span className="benefit-text">
                   Đổi hàng 10 ngày Nhấp để xem chính sách
                 </span>
               </div>
-              <div class="benefit-item">
-                <span class="benefit-icon">🎁</span>
-                <span class="benefit-text">
+              <div className="benefit-item">
+                <span className="benefit-icon">🎁</span>
+                <span className="benefit-text">
                   Miễn phí vận chuyển Đơn hàng từ 498k
                 </span>
               </div>
-              <div class="benefit-item">
-                <span class="benefit-icon">🏷️</span>
-                <span class="benefit-text">
+              <div className="benefit-item">
+                <span className="benefit-icon">🏷️</span>
+                <span className="benefit-text">
                   Mua nhiều giảm sâu Nhấp để xem chi tiết
                 </span>
               </div>
             </div>
 
-            <div class="features">
+            <div className="features">
               <h3>Đặc điểm nổi bật</h3>
               {data1.description ? (
                 <ul className="feature-list">
