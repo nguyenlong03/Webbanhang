@@ -92,6 +92,24 @@
         .price {
           font-size: 1.2rem;
           font-weight: 600;
+          color: #000;
+          margin-top: -10px;
+          margin-left: 14px;
+          text-decoration: line-through;
+          opacity: 0.3;
+          span {
+            margin-left: 5px;
+          }
+        }
+        .price-new {
+          font-size: 1.2rem;
+          font-weight: 600;
+          color: #000;
+          margin-top: -10px;
+          margin-left: 14px;
+          span {
+            margin-left: 5px;
+          }
         }
       }
 
@@ -218,6 +236,7 @@
   }
 }
 .products-container {
+  margin-bottom: 30px;
   .title {
     height: 10%;
     display: flex;

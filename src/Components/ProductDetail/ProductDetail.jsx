@@ -135,6 +135,14 @@ function ProductDetail() {
     window.scroll(0, 0);
   };
 
+  const handlePayment = () => {
+    if (product) {
+      Navigate(`/payment`, { state: { product, quantity } }); // Truyền cả đối tượng sản phẩm
+    } else {
+      console.error("Không có sản phẩm nào để thanh toán.");
+    }
+  };
+
   if (!product) return <div>Không tìm thấy sản phẩm.</div>;
 
   // Slider settings
@@ -154,18 +162,20 @@ function ProductDetail() {
     <>
       <div className="productDetail-container">
         <div className="image-container">
-          <div className="toggle">
+          <div className="toggle-list">
             {Array.isArray(productDetails.url_img) ? (
               productDetails.url_img.map((item, index) => (
-                <button
-                  className={`toggle-img ${
-                    selectedImage === item ? "selected" : ""
-                  }`}
-                  key={index}
-                  onClick={() => handleSelectedImage(item)}
-                >
-                  <img src={item} alt="" className="img-item" />
-                </button>
+                <div className="toggle-item">
+                  <button
+                    className={`toggle-img ${
+                      selectedImage === item ? "selected" : ""
+                    }`}
+                    key={index}
+                    onClick={() => handleSelectedImage(item)}
+                  >
+                    <img src={item} alt="" className="img-item" />
+                  </button>
+                </div>
               ))
             ) : (
               <img
@@ -224,7 +234,9 @@ function ProductDetail() {
               </div>
             </div>
             <div className="btn-detail">
-              <button className="buy">Buy Now</button>
+              <button className="buy" onClick={handlePayment}>
+                Buy Now
+              </button>
               <button className="add-cart" onClick={handleAddToCart}>
                 Add Shopping Cart
               </button>
@@ -263,12 +275,31 @@ function ProductDetail() {
               relatedProducts.map((item) => (
                 <div className="product" key={item.id}>
                   <div className="image-product">
+                    {item.discount > 0 && (
+                      <div className="product-discount">
+                        <span>-{item.discount}%</span>
+                      </div>
+                    )}
                     <img src={item.url_img} alt={item.name} />
                   </div>
-                  <p className="price">
+                  <p
+                    className="price"
+                    style={
+                      item.discount > 0
+                        ? { textDecoration: "line-through", opacity: 0.3 }
+                        : { textDecoration: "none", opacity: 1 }
+                    }
+                  >
                     {item.price.toLocaleString("vi-VN")}
                     <span>₫</span>
                   </p>
+
+                  {item.discount > 0 && (
+                    <p className="price-new">
+                      {item.discounted_price.toLocaleString("vi-VN")}
+                      <span>₫</span>
+                    </p>
+                  )}
                   <div className="content">
                     <p
                       className="product-name"

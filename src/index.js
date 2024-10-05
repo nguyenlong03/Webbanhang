@@ -8,6 +8,7 @@ import Home from "./Pages/Home/Home";
 import Login from "./Pages/Login/Login";
 import Register from "./Pages/Register/Register";
 import Trouser from "./Pages/Trouser/Trouser";
+import PaymentForm from "./Pages/Pay/Pay";
 import ForgotPassword from "./Pages/forgotPassword/forgotPassword";
 import ProductDetail from "./Components/ProductDetail/ProductDetail";
 import Shoppingcart from "./Pages/shoppingcart/shoppingcart";
@@ -22,6 +23,7 @@ root.render(
           <Route path="product/:id" element={<ProductDetail />} />
           <Route path="shoppingcart" element={<Shoppingcart />} />
           <Route path="trouser" element={<Trouser />} />
+          <Route path="payment" element={<PaymentForm />} />
         </Route>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
