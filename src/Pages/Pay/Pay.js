@@ -1,12 +1,18 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import "./pay.scss";
 
 const PaymentForm = () => {
   const [paymentMethod, setPaymentMethod] = useState("");
+  const { state } = useLocation();
+  const { product, quantity } = state || {};
   const handlePaymentChange = (e) => {
     setPaymentMethod(e.target.value);
   };
 
+  if (!product) {
+    return <div>Không có sản phẩm nào được chọn để thanh toán.</div>;
+  }
   return (
     <div className="container-payment">
       <div className="content-payment">
@@ -31,18 +37,18 @@ const PaymentForm = () => {
 
         <div className="order">
           <div className="img">
-            <img src="https://example.com/image1.jpg" alt="Image" />
+            <img src={product?.url_img} alt={product?.name} />
           </div>
           <div className="info">
             <p className="name-pro">
-              <span></span>
+              <span>{product?.name}</span>
             </p>
-            <p className="price"></p>
-          </div>
-          <div className="quantity">
-            <button className="btn-quantity">-</button>
-            <input id="quantity" type="text" min={1} value={1} />
-            <button className="btn-quantity">+</button>
+            <p className="price">{product?.price.toLocaleString("vi-VN")}₫</p>
+            <div className="quantity">
+              <button className="btn-quantity">-</button>
+              <input id="quantity" type="text" min={1} value={quantity} />
+              <button className="btn-quantity">+</button>
+            </div>
           </div>
         </div>
 

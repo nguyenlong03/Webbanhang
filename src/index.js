@@ -5,7 +5,6 @@ import App from "./App";
 import "bootstrap/dist/css/bootstrap.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home/Home";
-import Dress from "./Pages/Dress/Dress";
 import Poloshirt from "./Pages/Poloshirt/Poloshirt";
 import TShirt from "./Pages/T-shirt/T-shirt";
 import Trouser from "./Pages/Trouser/Trouser";
@@ -25,7 +24,6 @@ root.render(
       <Route path="/" element={<App />}>
         <Route index element={<Home />} />
         <Route path="product/:id" element={<ProductDetail />} />
-        <Route path="dress" element={<Dress />} />
         <Route path="poloshirt" element={<Poloshirt />} />
         <Route path="t-shirt" element={<TShirt />} />
         <Route path="trouser" element={<Trouser />} />

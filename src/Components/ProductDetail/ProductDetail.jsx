@@ -87,7 +87,11 @@ function ProductDetail() {
   };
 
   const handlePayment = () => {
-    Navigate(`/payment`, { state: product.id });
+    if (product) {
+      Navigate(`/payment`, { state: { product, quantity } }); // Truyền cả đối tượng sản phẩm
+    } else {
+      console.error("Không có sản phẩm nào để thanh toán.");
+    }
   };
   console.log("pro", product);
   if (!product) return <div>Không tìm thấy sản phẩm.</div>;
