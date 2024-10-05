@@ -9,10 +9,9 @@ import { toast } from "react-toastify";
 const Cart = () => {
   const [quantity, setQuantity] = useState(1);
   const cart = useSelector((state) => state.cart.items);
-  console.log("checkcart long", cart);
+  console.log("cart", cart);
 
   const dispatch = useDispatch();
-
   const tang = () => {
     setQuantity((prev) => prev + 1);
   };
@@ -24,17 +23,18 @@ const Cart = () => {
   };
 
   const handleRemove = async (id) => {
+    console.log("id", id);
     try {
-      const response = await AddcartAPI.Deletecart({ id });
+      const response = await AddcartAPI.Deletecart({ product_id: id });
       console.log("check", response);
       if (response && response.errCode === 0) {
         toast.success("Xóa thành công");
         dispatch(removeFromCart(id));
       } else {
-        toast.error(response.errMessage);
+        toast.error("Lỗi respone");
       }
     } catch (error) {
-      error("Xóa thất bại");
+      toast.error("Xóa thất bại");
     }
   };
 
@@ -58,46 +58,53 @@ const Cart = () => {
                 </tr>
               </thead>
               <tbody>
-                {cart.map((item, index) => (
-                  <tr key={index}>
-                    <td>
-                      <div className="product-info">
-                        <img src={item.url_img} alt={item.name} />
-                        <div>
-                          <p className="product-name">{item.name}</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="quantity">
-                        <button className="decrease-btn" onClick={giam}>
-                          -
-                        </button>
-                        <input
-                          type="number"
-                          min={1}
-                          value={quantity}
-                          onChange={(e) =>
-                            setQuantity(Math.max(1, parseInt(e.target.value)))
-                          }
-                        />
-                        <button className="increase-btn" onClick={tang}>
-                          +
-                        </button>
-                      </div>
-                    </td>
-                    <td>${item.price}</td>
-                    <td>${(item.price * quantity).toFixed(2)}</td>
-                    <td>
-                      <button
-                        className="remove-btn"
-                        onClick={() => handleRemove(item.id)}
-                      >
-                        <FaRegTrashCan />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                {cart.map(
+                  (item, index) => (
+                    console.log("item", item.id),
+                    (
+                      <tr key={index}>
+                        <td>
+                          <div className="product-info">
+                            <img src={item.url_img} alt={item.name} />
+                            <div>
+                              <p className="product-name">{item.name}</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="quantity">
+                            <button className="decrease-btn" onClick={giam}>
+                              -
+                            </button>
+                            <input
+                              type="number"
+                              min={1}
+                              value={quantity}
+                              onChange={(e) =>
+                                setQuantity(
+                                  Math.max(1, parseInt(e.target.value))
+                                )
+                              }
+                            />
+                            <button className="increase-btn" onClick={tang}>
+                              +
+                            </button>
+                          </div>
+                        </td>
+                        <td>${item.price}</td>
+                        <td>${(item.price * quantity).toFixed(2)}</td>
+                        <td>
+                          <button
+                            className="remove-btn"
+                            onClick={() => handleRemove(item.id)}
+                          >
+                            <FaRegTrashCan />
+                          </button>
+                        </td>
+                      </tr>
+                    )
+                  )
+                )}
               </tbody>
             </table>
 

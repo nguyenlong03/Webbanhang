@@ -8,9 +8,9 @@ const AddcartAPI = {
     const url = "/api/get-cart";
     return Axioscustom.get(url, params);
   },
-  Deletecart(id) {
+  Deletecart(params) {
     const url = "/api/delete-cart";
-    return Axioscustom.post(url, id);
+    return Axioscustom.post(url, params);
   },
 };
 export default AddcartAPI;
