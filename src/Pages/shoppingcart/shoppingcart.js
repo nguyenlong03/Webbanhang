@@ -11,11 +11,6 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart.items);
   console.log("checkcart long", cart);
 
-  const caritem = cart.forEach((item) => {
-    const id = item.id;
-  });
-  console.log("checkcart long1", caritem);
-
   const dispatch = useDispatch();
 
   const tang = () => {
@@ -30,7 +25,7 @@ const Cart = () => {
 
   const handleRemove = async (id) => {
     try {
-      const response = await AddcartAPI.Deletecart({ id: cart[0].id });
+      const response = await AddcartAPI.Deletecart({ id });
       console.log("check", response);
       if (response && response.errCode === 0) {
         toast.success("Xóa thành công");
