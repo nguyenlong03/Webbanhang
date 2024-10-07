@@ -10,7 +10,6 @@ function HomeCart() {
   const [page, setPage] = useState(1);
   const Navigate = useNavigate();
   const { data, loading, error } = ProductService(filter, page);
-
   const handleChitietsanpham = (id) => {
     Navigate(`/product/${id}`);
     window.scrollTo(0, 0);
@@ -100,7 +99,7 @@ function HomeCart() {
                       <span>-{item.discount}%</span>
                     </div>
                   )}
-                  <img src={item.url_img} alt={item.name} />
+                  <img src={item.images.url_image} alt={item.name} />
                 </div>
 
                 <p

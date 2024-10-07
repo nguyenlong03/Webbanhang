@@ -8,8 +8,8 @@ const ChitietSanPham = (param) => {
     const calldata = async () => {
       try {
         const response = await Detail.getALL(param);
-        console.log("checck ", response[0]);
-        setdata1(response[0]);
+        console.log("checck data chitiet san pham ", response);
+        setdata1(response);
       } catch (error) {
         console.log("error", error);
       }
