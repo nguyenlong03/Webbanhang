@@ -137,7 +137,7 @@ function ProductDetail() {
 
   const handlePayment = () => {
     if (product) {
-      Navigate(`/payment`, { state: { product, quantity } }); // Truyền cả đối tượng sản phẩm
+      Navigate(`/payment`, { state: { product, quantity } });
     } else {
       console.error("Không có sản phẩm nào để thanh toán.");
     }
@@ -272,8 +272,8 @@ function ProductDetail() {
           </div>
           <Slider {...settings}>
             {relatedProducts &&
-              relatedProducts.map((item) => (
-                <div className="product" key={item.id}>
+              relatedProducts.map((item, index) => (
+                <div className="product" key={index}>
                   <div className="image-product">
                     {item.discount > 0 && (
                       <div className="product-discount">
