@@ -37,7 +37,7 @@ function HomeCart() {
 
   if (loading)
     return (
-      <div className="spinner-border text-primary" role="status">
+      <div className="spinner-border text-primary d- " role="status">
         <span className="sr-only">Loading...</span>
       </div>
     );
