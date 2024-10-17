@@ -24,7 +24,7 @@ const ProductService = (filter, page) => {
 
       try {
         const response = await ProductsApi.getALL(filter, page);
-        const products = response.products || [];
+        const products = response || [];
         setData(products);
         sessionStorage.setItem(key, JSON.stringify(products)); // Save fetched data
       } catch (error) {
