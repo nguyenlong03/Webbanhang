@@ -31,6 +31,8 @@ function ProductDetail() {
   const [availableSizes, setAvailableSizes] = useState([]);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const Navigate = useNavigate();
+  console.log("check productDetails", productDetails);
+  console.log("check products", products);
 
   const product =
     products.find((item) => item.id === parseInt(id)) || productDetails;
@@ -38,12 +40,12 @@ function ProductDetail() {
   useEffect(() => {
     if (productDetails) {
       if (
-        Array.isArray(productDetails.url_img) &&
-        productDetails.url_img.length > 0
+        Array.isArray(productDetails.images) &&
+        productDetails.images.length > 0
       ) {
-        setSelectedImage(productDetails.url_img[0]);
-      } else if (productDetails.url_img) {
-        setSelectedImage(productDetails.url_img);
+        setSelectedImage(productDetails.images[0]);
+      } else if (productDetails.images) {
+        setSelectedImage(productDetails.images);
       }
     }
   }, [productDetails]);
@@ -163,7 +165,7 @@ function ProductDetail() {
       <div className="productDetail-container">
         <div className="image-container">
           <div className="toggle-list">
-            {Array.isArray(productDetails.url_img) ? (
+            {Array.isArray(productDetails.images) ? (
               productDetails.url_img.map((item, index) => (
                 <div className="toggle-item">
                   <button
@@ -178,11 +180,7 @@ function ProductDetail() {
                 </div>
               ))
             ) : (
-              <img
-                src={productDetails.url_img}
-                alt="ảnh"
-                className="img-item"
-              />
+              <img src={productDetails.images} alt="ảnh" className="img-item" />
             )}
           </div>
           <div className="img">
@@ -197,7 +195,7 @@ function ProductDetail() {
             <div className="content">
               <p className="product-name">{product.name}</p>
               <p className="price">
-                {product.price.toLocaleString("vi-VN")}
+                {product.price}
                 <span>₫</span>
               </p>
             </div>

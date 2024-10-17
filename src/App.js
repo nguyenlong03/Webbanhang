@@ -1,13 +1,14 @@
 import "./App.scss";
-import Header from "./Components/Header/Header";
-import Footer from "./Components/Footer/Footer";
-import { Outlet } from "react-router-dom";
+// import Header from "./Components/Header/Header";
+// import Footer from "./Components/Footer/Footer";
+// import { Outlet } from "react-router-dom";
+import PaymentForm from "./Pages/Pay/Pay";
 
 function App() {
   return (
     <>
       <div className="App">
-        <div className="app-header">
+        {/* <div className="app-header">
           <Header />
         </div>
         <div className="app-contents">
@@ -15,7 +16,8 @@ function App() {
         </div>
         <div className="app-footer">
           <Footer />
-        </div>
+        </div> */}
+        <PaymentForm />
       </div>
     </>
   );

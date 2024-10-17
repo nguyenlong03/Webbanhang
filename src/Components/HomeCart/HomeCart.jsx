@@ -6,11 +6,11 @@ import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 
 function HomeCart() {
   // const [menu, setMenu] = useState(localStorage.getItem("menu") || "Toàn bộ");
-  const [filter, setFilter] = useState("new");
+  const [filter, setFilter] = useState("all", 1);
   const [page, setPage] = useState(1);
   const Navigate = useNavigate();
   const { data, loading, error } = ProductService(filter, page);
-
+  console.log("sp", data);
   const handleChitietsanpham = (id) => {
     Navigate(`/product/${id}`);
     window.scrollTo(0, 0);
@@ -100,7 +100,7 @@ function HomeCart() {
                       <span>-{item.discount}%</span>
                     </div>
                   )}
-                  <img src={item.url_img} alt={item.name} />
+                  <img src={item.images.url_image} alt={item.name} />
                 </div>
 
                 <p

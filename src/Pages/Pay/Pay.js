@@ -1,18 +1,26 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
+import GetAddress from "../../services/GetAddress";
 import "./pay.scss";
 
 const PaymentForm = () => {
   const [paymentMethod, setPaymentMethod] = useState("");
   const { state } = useLocation();
   const { product, quantity } = state || {};
+
+  // Sử dụng hook để lấy danh sách địa chỉ
+  const {
+    provinces,
+    districts,
+    wards,
+    setSelectedProvince,
+    setSelectedDistrict,
+  } = GetAddress();
+
   const handlePaymentChange = (e) => {
     setPaymentMethod(e.target.value);
   };
 
-  if (!product) {
-    return <div>Không có sản phẩm nào được chọn để thanh toán.</div>;
-  }
   return (
     <div className="container-payment">
       <div className="content-payment">
@@ -28,7 +36,57 @@ const PaymentForm = () => {
             <input type="tel" placeholder="Số điện thoại" />
           </div>
           <div className="info-user">
-            <input type="text" placeholder="Địa chỉ" />
+            <div className="address-list">
+              <div className="address">
+                {/* Input chọn Tỉnh/Thành Phố */}
+                <input
+                  list="provinces"
+                  id="province"
+                  placeholder="Tỉnh/Thành Phố"
+                  onChange={(e) => setSelectedProvince(e.target.value)}
+                />
+                <datalist id="provinces">
+                  {provinces.map((province, index) => (
+                    <option key={index} value={province.province_name} />
+                  ))}
+                </datalist>
+              </div>
+
+              <div className="address">
+                {/* Input chọn Quận/Huyện */}
+                <input
+                  list="districts"
+                  id="district"
+                  placeholder="Quận/Huyện"
+                  onChange={(e) => setSelectedDistrict(e.target.value)}
+                  disabled={!districts.length} // Vô hiệu hoá nếu chưa chọn tỉnh
+                />
+                <datalist id="districts">
+                  {districts.map((district, index) => (
+                    <option key={index} value={district.district_name} />
+                  ))}
+                </datalist>
+              </div>
+
+              <div className="address">
+                {/* Input chọn Phường/Xã */}
+                <input
+                  list="wards"
+                  id="ward"
+                  placeholder="Phường/Xã/TT"
+                  disabled={!wards.length}
+                />
+                <datalist id="wards">
+                  {wards.map((ward) => (
+                    <option key={ward.id} value={ward.ward_name} />
+                  ))}
+                </datalist>
+              </div>
+            </div>
+          </div>
+
+          <div className="info-user">
+            <input type="text" placeholder="Địa chỉ chi tiết" />
           </div>
           <div className="info-user">
             <textarea placeholder="Ghi chú" rows="3"></textarea>
@@ -46,7 +104,13 @@ const PaymentForm = () => {
             <p className="price">{product?.price.toLocaleString("vi-VN")}₫</p>
             <div className="quantity">
               <button className="btn-quantity">-</button>
-              <input id="quantity" type="text" min={1} value={quantity} />
+              <input
+                id="quantity"
+                type="text"
+                min={1}
+                value={quantity}
+                readOnly
+              />
               <button className="btn-quantity">+</button>
             </div>
           </div>
@@ -96,20 +160,15 @@ const PaymentForm = () => {
           </div>
         </div>
 
-        <div className="warning-message">
-          <p>Bạn vui lòng điền đầy đủ thông tin giao hàng</p>
-        </div>
-
         <div className="order-summary">
           <h3>Đơn hàng (1)</h3>
           <div className="order-item">
-            <span>1077R PIXY STIX</span>
-            <span>200.000₫</span>
+            <span>{product?.name}</span>
+            <span>{(product?.price * quantity).toLocaleString("vi-VN")}₫</span>
           </div>
-          <div className="discount-code">Nhập mã giảm giá</div>
           <div className="order-item">
             <span>Tạm tính</span>
-            <span>200.000₫</span>
+            <span>{(product?.price * quantity).toLocaleString("vi-VN")}₫</span>
           </div>
           <div className="order-item">
             <span>Phí vận chuyển</span>
@@ -117,7 +176,9 @@ const PaymentForm = () => {
           </div>
           <div className="order-item total">
             <span>Tổng cộng</span>
-            <span>230.000₫</span>
+            <span>
+              {(product?.price * quantity + 30000).toLocaleString("vi-VN")}₫
+            </span>
           </div>
         </div>
 

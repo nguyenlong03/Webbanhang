@@ -35,8 +35,6 @@ function SwipeToSlide() {
     window.scroll(0, 0);
   };
 
-  const { data } = ProductSevier("new", 1);
-
   const [time, setTime] = useState({
     hours: 24,
     minutes: 47,
@@ -67,7 +65,10 @@ function SwipeToSlide() {
     // Cleanup interval on component unmount
     return () => clearInterval(countdown);
   }, [time]);
-
+  const { data } = ProductSevier("new", 1);
+  useEffect(() => {
+    console.log("data", data);
+  }, [data]);
   return (
     <div className="products-container">
       <div className="products-list">
@@ -89,22 +90,24 @@ function SwipeToSlide() {
         </div>
         <Slider {...settings}>
           {data &&
-            data
-              .filter((item) => item.discount > 0)
-              .map((item) => (
-                <div className="product" key={item.id}>
+            data.map((item, index) => {
+              {
+                /* console.log("item 3", item.name); */
+              }
+              return (
+                <div className="product" key={index}>
                   <div className="image-product">
                     <div className="product-discount">
                       <span>-{item.discount}%</span>
                     </div>
-                    <img src={item.url_img} alt="" />
+                    <img src={item.images.url_image} alt="" />
                   </div>
                   <p className="price">
-                    {item.price.toLocaleString("vi-VN")}
+                    {item.price}
                     <span>₫</span>
                   </p>
                   <p className="price-new">
-                    {item.discounted_price.toLocaleString("vi-VN")}
+                    {item.discounted_price}
                     <span>₫</span>
                   </p>
                   <div className="content">
@@ -116,7 +119,8 @@ function SwipeToSlide() {
                     </p>
                   </div>
                 </div>
-              ))}
+              );
+            })}
         </Slider>
       </div>
     </div>
