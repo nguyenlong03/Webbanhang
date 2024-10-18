@@ -65,7 +65,7 @@ const Cart = () => {
                       <tr key={index}>
                         <td>
                           <div className="product-info">
-                            <img src={item.url_img} alt={item.name} />
+                            <img src={item.url_image} alt={item.name} />
                             <div>
                               <p className="product-name">{item.name}</p>
                             </div>

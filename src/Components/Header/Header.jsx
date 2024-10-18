@@ -141,8 +141,10 @@ const Header = () => {
 
     try {
       const response = await Seach.getALL(keyword); // Gọi API với từ khóa
-      console.log("data", response.products);
+
       if (response.products.length > 0) {
+        const testdataa = response.products;
+        console.log("testdataa img", testdataa);
         setRecort(response.products);
         setNoDataFound(false);
         setNoDataFound(false);
@@ -275,22 +277,27 @@ const Header = () => {
             <button className="btn" onClick={handoleshowhide}>
               x
             </button>
-            {recort.map((item, index) => (
-              <div className="filter-item" key={index}>
-                <img className="filter-img" src={item.url_img} alt="" />
-                <p
-                  className="filter-title"
-                  onClick={() => handlechitietsanphamfiter(item.id)}
-                >
-                  {item.name}
-                </p>
-                <span className="filter-price">
-                  {item.price}
-                  <span className="ml-3">đ</span>
-                </span>
-                <hr color="red" />
-              </div>
-            ))}
+            {recort.map(
+              (item, index) => (
+                console.log("item", item.names),
+                (
+                  <div className="filter-item" key={index}>
+                    <img className="filter-img" src={item} alt="" />
+                    <p
+                      className="filter-title"
+                      onClick={() => handlechitietsanphamfiter(item.id)}
+                    >
+                      {item.name}
+                    </p>
+                    <span className="filter-price">
+                      {item.price}
+                      <span className="ml-3">đ</span>
+                    </span>
+                    <hr color="red" />
+                  </div>
+                )
+              )
+            )}
           </div>
         )}
 

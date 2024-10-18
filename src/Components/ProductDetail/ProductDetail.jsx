@@ -23,19 +23,18 @@ function SamplePrevArrow(props) {
 function ProductDetail() {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { data: products } = ProductService("new", 1);
+  const { data: products } = ProductService("sale", 1);
   const productDetails = ChitietSanPham(parseInt(id));
   const [selectedImage, setSelectedImage] = useState("");
   const [size, setSize] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [availableSizes, setAvailableSizes] = useState([]);
   const [relatedProducts, setRelatedProducts] = useState([]);
-  const Navigate = useNavigate();
-  console.log("check productDetails", productDetails);
-  console.log("check products", products);
+  const navigate = useNavigate();
 
   const product =
-    products.find((item) => item.id === parseInt(id)) || productDetails;
+    products.products.find((item) => item.id === parseInt(id)) ||
+    productDetails;
 
   useEffect(() => {
     if (productDetails) {
@@ -43,7 +42,7 @@ function ProductDetail() {
         Array.isArray(productDetails.images) &&
         productDetails.images.length > 0
       ) {
-        setSelectedImage(productDetails.images[0]);
+        setSelectedImage(productDetails.images[0].url_image);
       } else if (productDetails.images) {
         setSelectedImage(productDetails.images);
       }
@@ -60,12 +59,12 @@ function ProductDetail() {
 
   useEffect(() => {
     if (product && productDetails) {
-      const related = products.filter(
+      const related = products.products.filter(
         (item) => item.category === product.category && item.id !== product.id
       );
       setRelatedProducts(related);
     }
-  }, [products, productDetails, product]);
+  }, [products.products, productDetails, product]);
 
   const handleSelectedImage = (img) => {
     setSelectedImage(img);
@@ -83,7 +82,6 @@ function ProductDetail() {
 
   const handleAddToCart = async () => {
     const token = localStorage.getItem("token");
-    const product = products.find((item) => item.id === parseInt(id));
     if (!token) {
       toast.error("Vui lòng đăng nhập để thêm vào giỏ hàng.");
       return;
@@ -94,22 +92,21 @@ function ProductDetail() {
         size,
         quantity,
       });
-      console.log("check resssss", response);
       if (response && response.errCode === 0) {
         toast.success("Thêm vào giỏ hàng thành công!", {
           autoClose: 1000,
         });
-        Navigate("/shoppingcart");
+        navigate("/shoppingcart");
       } else {
         toast.error(response.errMessage);
       }
     } catch (error) {
-      console.error("lọt vào catch:", error);
+      console.error("Error:", error);
     }
-    // data shopcart
+
+    // Update Redux store with the cart items
     try {
       const responseshopcart = await AddcartAPI.Getcart();
-      console.log("check res cart shop", responseshopcart.items);
       const ress = responseshopcart.items;
       ress.forEach((item) => {
         const productToAdd = item.product;
@@ -128,18 +125,20 @@ function ProductDetail() {
         }
       });
     } catch (error) {
-      console.log("error", error);
+      console.log("Error:", error);
     }
   };
 
   const handleProductClick = (id) => {
-    Navigate(`/product/${id}`);
+    navigate(`/product/${id}`);
     window.scroll(0, 0);
   };
 
   const handlePayment = () => {
     if (product) {
-      Navigate(`/payment`, { state: { product, quantity } });
+      navigate(`/payment`, {
+        state: { product, quantity, selectedSize: size },
+      });
     } else {
       console.error("Không có sản phẩm nào để thanh toán.");
     }
@@ -166,23 +165,28 @@ function ProductDetail() {
         <div className="image-container">
           <div className="toggle-list">
             {Array.isArray(productDetails.images) ? (
-              productDetails.url_img.map((item, index) => (
-                <div className="toggle-item">
-                  <button
-                    className={`toggle-img ${
-                      selectedImage === item ? "selected" : ""
-                    }`}
-                    key={index}
-                    onClick={() => handleSelectedImage(item)}
-                  >
-                    <img src={item} alt="" className="img-item" />
-                  </button>
-                </div>
-              ))
+              productDetails.images.map(
+                (item, index) => (
+                  console.log("check ảnh", item.url_image),
+                  (
+                    <div className="toggle-item" key={index}>
+                      <button
+                        className={`toggle-img ${
+                          selectedImage === item.url_image ? "selected" : ""
+                        }`}
+                        onClick={() => handleSelectedImage(item.url_image)}
+                      >
+                        <img src={item.url_image} alt="" className="img-item" />
+                      </button>
+                    </div>
+                  )
+                )
+              )
             ) : (
               <img src={productDetails.images} alt="ảnh" className="img-item" />
             )}
           </div>
+
           <div className="img">
             <img
               src={selectedImage || productDetails.url_img}
@@ -193,15 +197,39 @@ function ProductDetail() {
         <div className="detail-container">
           <div className="detail">
             <div className="content">
-              <p className="product-name">{product.name}</p>
-              <p className="price">
-                {product.price}
-                <span>₫</span>
+              <p className="product-name">
+                {product.name}{" "}
+                {product.discount && product.discount > 0 ? (
+                  <div className="product-discount">
+                    <span>Ưu đãi</span>
+                    <span> -{product.discount}%</span>
+                  </div>
+                ) : (
+                  ""
+                )}
               </p>
+              <div className="price-con">
+                <p className="price">
+                  {product.price}
+                  <span>₫</span>
+                </p>
+                {product.discount && product.discount < 0 ? (
+                  <p className="price">
+                    {product.price}
+                    <span>₫</span>
+                  </p>
+                ) : (
+                  <p className="price-new">
+                    {product.discounted_price}
+                    <span>₫</span>
+                  </p>
+                )}
+              </div>
             </div>
             <div className="size-quantity">
               <div className="size">
                 <label htmlFor="size">Size:</label>
+
                 {availableSizes.map((s, index) => (
                   <button
                     key={index}
@@ -288,13 +316,13 @@ function ProductDetail() {
                         : { textDecoration: "none", opacity: 1 }
                     }
                   >
-                    {item.price.toLocaleString("vi-VN")}
+                    {item.price}
                     <span>₫</span>
                   </p>
 
                   {item.discount > 0 && (
                     <p className="price-new">
-                      {item.discounted_price.toLocaleString("vi-VN")}
+                      {item.discounted_price}
                       <span>₫</span>
                     </p>
                   )}

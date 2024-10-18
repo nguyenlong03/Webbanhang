@@ -6,11 +6,16 @@ import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 
 function HomeCart() {
   // const [menu, setMenu] = useState(localStorage.getItem("menu") || "Toàn bộ");
-  const [filter, setFilter] = useState("all", 1);
+  const [filter, setFilter] = useState("all");
+
   const [page, setPage] = useState(1);
   const Navigate = useNavigate();
   const { data, loading, error } = ProductService(filter, page);
-  console.log("sp", data);
+  const data1 = data.products;
+  console.log("check data produc 22", data1);
+
+  console.log("check data produc 11", data.totalPages);
+
   const handleChitietsanpham = (id) => {
     Navigate(`/product/${id}`);
     window.scrollTo(0, 0);
@@ -23,6 +28,9 @@ function HomeCart() {
 
   const handleNextPage = () => {
     setPage((prevPage) => prevPage + 1);
+    if (page === data.totalPages) {
+      setPage(data.totalPages);
+    }
   };
 
   const handlePrevPage = () => {
@@ -33,13 +41,13 @@ function HomeCart() {
     setPage(1);
   };
   const handleLastPage = () => {
-    setPage(3);
+    setPage(data.totalPages);
   };
 
   if (loading)
     return (
-      <div className="spinner-border text-primary" role="status">
-        <span className="sr-only">Loading...</span>
+      <div className="spinner-border text-primary d- " role="status">
+        <span className="sr-only"></span>
       </div>
     );
   if (error) return <p>{error}</p>;
@@ -54,7 +62,7 @@ function HomeCart() {
         <ul className="nav-navbar">
           <li
             className={`filter-item ${filter === "new" ? "active" : ""}`}
-            onClick={() => handleFilterChange("new")}
+            onClick={() => handleFilterChange("all")}
           >
             Toàn bộ
           </li>
@@ -87,8 +95,8 @@ function HomeCart() {
                 <span class="sr-only"></span>
               </div>
             </div>
-          ) : data.length > 0 ? (
-            data.map((item, index) => (
+          ) : data1.length > 0 ? (
+            data1.map((item, index) => (
               <div
                 className="card"
                 key={index}
@@ -100,7 +108,7 @@ function HomeCart() {
                       <span>-{item.discount}%</span>
                     </div>
                   )}
-                  <img src={item.images.url_image} alt={item.name} />
+                  <img src={item.url_image} alt={item.name} />
                 </div>
 
                 <p
@@ -149,7 +157,7 @@ function HomeCart() {
           >
             <GrFormPrevious />
           </button>
-          <span>{` ${page}/3`}</span>
+          <span>{` ${page}/${data.totalPages}`}</span>
           <button
             className="next"
             onClick={handleNextPage}

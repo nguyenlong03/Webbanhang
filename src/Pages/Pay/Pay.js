@@ -1,22 +1,94 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import GetAddress from "../../services/GetAddress";
+import {
+  getProvinces,
+  getDistricts,
+  getWards,
+} from "../../services/AddressAPI";
 import "./pay.scss";
 
 const PaymentForm = () => {
   const [paymentMethod, setPaymentMethod] = useState("");
   const { state } = useLocation();
-  const { product, quantity } = state || {};
-
-  // Sử dụng hook để lấy danh sách địa chỉ
   const {
-    provinces,
-    districts,
-    wards,
-    setSelectedProvince,
-    setSelectedDistrict,
-  } = GetAddress();
+    product,
+    quantity: initialQuantity,
+    selectedSize: initialSize,
+  } = state || {};
+  const [quantity, setQuantity] = useState(initialQuantity || 1);
+  const [selectedSize, setSelectedSize] = useState(initialSize || "");
+  const [provinces, setProvinces] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [wards, setWards] = useState([]);
+  const [selectedProvince, setSelectedProvince] = useState("");
+  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [selectedWard, setSelectedWard] = useState("");
 
+  useEffect(() => {
+    const fetchProvinces = async () => {
+      const data = await getProvinces();
+      setProvinces(data);
+      console.log("tinh", data);
+    };
+    fetchProvinces();
+  }, []);
+
+  useEffect(() => {
+    const fetchDistricts = async () => {
+      if (selectedProvince) {
+        const data = await getDistricts(selectedProvince);
+        console.log("huyen", data);
+        setDistricts(data);
+        setSelectedDistrict("");
+        setWards([]);
+        setSelectedWard("");
+      }
+    };
+    fetchDistricts();
+  }, [selectedProvince]);
+
+  useEffect(() => {
+    const fetchWards = async () => {
+      if (selectedDistrict) {
+        const data = await getWards(selectedDistrict);
+        console.log("xa", data);
+        setWards(data);
+        setSelectedWard("");
+      }
+    };
+    fetchWards();
+  }, [selectedDistrict]);
+
+  const handleDecreaseQuantity = () => {
+    if (quantity > 1) {
+      setQuantity((prev) => prev - 1);
+    }
+  };
+
+  const handleIncreaseQuantity = () => {
+    setQuantity((prev) => prev + 1);
+  };
+
+  const handleProvinceChange = (e) => {
+    const province = provinces.find((p) => p.province_name === e.target.value);
+    if (province) {
+      setSelectedProvince(province.province_id);
+    }
+  };
+
+  const handleDistrictChange = (e) => {
+    const district = districts.find((d) => d.district_name === e.target.value);
+    if (district) {
+      setSelectedDistrict(district.district_id);
+    }
+  };
+
+  const handleWardChange = (e) => {
+    const ward = wards.find((w) => w.ward_name === e.target.value);
+    if (ward) {
+      setSelectedWard(ward.ward_id);
+    }
+  };
   const handlePaymentChange = (e) => {
     setPaymentMethod(e.target.value);
   };
@@ -38,53 +110,53 @@ const PaymentForm = () => {
           <div className="info-user">
             <div className="address-list">
               <div className="address">
-                {/* Input chọn Tỉnh/Thành Phố */}
                 <input
                   list="provinces"
-                  id="province"
                   placeholder="Tỉnh/Thành Phố"
-                  onChange={(e) => setSelectedProvince(e.target.value)}
+                  onChange={handleProvinceChange}
                 />
                 <datalist id="provinces">
-                  {provinces.map((province, index) => (
-                    <option key={index} value={province.province_name} />
+                  {provinces.map((province) => (
+                    <option
+                      key={province.province_id}
+                      value={province.province_name}
+                    />
                   ))}
                 </datalist>
               </div>
 
               <div className="address">
-                {/* Input chọn Quận/Huyện */}
                 <input
                   list="districts"
-                  id="district"
                   placeholder="Quận/Huyện"
-                  onChange={(e) => setSelectedDistrict(e.target.value)}
-                  disabled={!districts.length} // Vô hiệu hoá nếu chưa chọn tỉnh
+                  onChange={handleDistrictChange}
+                  disabled={!selectedProvince}
                 />
                 <datalist id="districts">
-                  {districts.map((district, index) => (
-                    <option key={index} value={district.district_name} />
+                  {districts.map((district) => (
+                    <option
+                      key={district.district_id}
+                      value={district.district_name}
+                    />
                   ))}
                 </datalist>
               </div>
 
               <div className="address">
-                {/* Input chọn Phường/Xã */}
                 <input
                   list="wards"
-                  id="ward"
                   placeholder="Phường/Xã/TT"
-                  disabled={!wards.length}
+                  onChange={handleWardChange}
+                  disabled={!selectedDistrict}
                 />
-                <datalist id="wards">
+                <datalist id="wards" className="dropdown">
                   {wards.map((ward) => (
-                    <option key={ward.id} value={ward.ward_name} />
+                    <option key={ward.ward_id} value={ward.ward_name} />
                   ))}
                 </datalist>
               </div>
             </div>
           </div>
-
           <div className="info-user">
             <input type="text" placeholder="Địa chỉ chi tiết" />
           </div>
@@ -95,15 +167,21 @@ const PaymentForm = () => {
 
         <div className="order">
           <div className="img">
-            <img src={product?.url_img} alt={product?.name} />
+            <img src={product?.url_image} alt={product?.name} />
           </div>
           <div className="info">
             <p className="name-pro">
-              <span>{product?.name}</span>
+              <span>
+                {product?.name} (Size: {selectedSize})
+              </span>
             </p>
-            <p className="price">{product?.price.toLocaleString("vi-VN")}₫</p>
+            <p className="price">
+              {(product?.price * quantity).toLocaleString("vi-VN")}₫
+            </p>
             <div className="quantity">
-              <button className="btn-quantity">-</button>
+              <button className="btn-quantity" onClick={handleDecreaseQuantity}>
+                -
+              </button>
               <input
                 id="quantity"
                 type="text"
@@ -111,7 +189,9 @@ const PaymentForm = () => {
                 value={quantity}
                 readOnly
               />
-              <button className="btn-quantity">+</button>
+              <button className="btn-quantity" onClick={handleIncreaseQuantity}>
+                +
+              </button>
             </div>
           </div>
         </div>

@@ -65,9 +65,11 @@ function SwipeToSlide() {
     // Cleanup interval on component unmount
     return () => clearInterval(countdown);
   }, [time]);
-  const { data } = ProductSevier("new", 1);
+  const { data } = ProductSevier("sale", 1);
+  const data1 = data.products;
+
   useEffect(() => {
-    console.log("data", data);
+    console.log("check data produc 11", data);
   }, [data]);
   return (
     <div className="products-container">
@@ -89,18 +91,15 @@ function SwipeToSlide() {
           </div>
         </div>
         <Slider {...settings}>
-          {data &&
-            data.map((item, index) => {
-              {
-                /* console.log("item 3", item.name); */
-              }
+          {data1 &&
+            data1.map((item, index) => {
               return (
                 <div className="product" key={index}>
                   <div className="image-product">
                     <div className="product-discount">
                       <span>-{item.discount}%</span>
                     </div>
-                    <img src={item.images.url_image} alt="" />
+                    <img src={item.url_image} alt="" />
                   </div>
                   <p className="price">
                     {item.price}
