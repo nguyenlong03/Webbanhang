@@ -146,6 +146,8 @@ const Header = () => {
       const response = await Seach.getALL(keyword); // Gọi API với từ khóa
 
       if (response.products.length > 0) {
+        const testdataa = response.products;
+        console.log("testdataa img", testdataa);
         setRecort(response.products);
         setNoDataFound(false);
         setNoDataFound(false);
@@ -240,7 +242,9 @@ const Header = () => {
           <div className="notify-icon">
             <IoIosNotifications fontSize={"35px"} onClick={handoleshowio} />
           </div>
-          <span className="quantity">0</span>
+          {totalQuantity > 0 && (
+            <span className="quantity">{totalQuantity}</span>
+          )}
         </div>
 
         <div className="d-flex justify-content-center align-items-center gap-3">

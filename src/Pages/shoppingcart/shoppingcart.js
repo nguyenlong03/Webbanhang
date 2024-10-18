@@ -5,8 +5,10 @@ import { removeFromCart } from "../../redux/cartSlice";
 import { FaRegTrashCan } from "react-icons/fa6";
 import AddcartAPI from "../../services/AddcartAPI";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
+  const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   const cart = useSelector((state) => state.cart.items);
   console.log("cart", cart);
@@ -15,7 +17,9 @@ const Cart = () => {
   const tang = () => {
     setQuantity((prev) => prev + 1);
   };
-
+  const handolenexttopayment = () => {
+    navigate("/payment");
+  };
   const giam = () => {
     if (quantity > 1) {
       setQuantity((prev) => prev - 1);
@@ -64,7 +68,7 @@ const Cart = () => {
                       <tr key={index}>
                         <td>
                           <div className="product-info">
-                            <img src={item.url_img} alt={item.name} />
+                            <img src={item.url_image} alt={item.name} />
                             <div>
                               <p className="product-name">{item.name}</p>
                             </div>
@@ -124,7 +128,9 @@ const Cart = () => {
 
             <div className="actions">
               <button className="continue-shopping">Continue Shopping</button>
-              <button className="checkout">Thanh toán</button>
+              <button className="checkout" onClick={handolenexttopayment}>
+                Thanh toán
+              </button>
             </div>
           </>
         )}

@@ -113,7 +113,10 @@
           border-radius: 0.7rem;
         }
       }
-
+      .price,
+      .price-new {
+        margin-left: 10px;
+      }
       .content {
         padding: 0px 0.8rem;
         margin-bottom: 1rem;

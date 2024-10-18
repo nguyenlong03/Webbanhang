@@ -103,6 +103,7 @@ function ProductDetail() {
       toast.error("Vui lòng đăng nhập để thêm vào giỏ hàng.");
       return;
     }
+
     try {
       const response = await AddcartAPI.Addtocart({
         product_id: product.id,
@@ -153,7 +154,9 @@ function ProductDetail() {
 
   const handlePayment = () => {
     if (product) {
-      navigate(`/payment`, { state: { product, quantity } });
+      navigate(`/payment`, {
+        state: { product, quantity, selectedSize: size },
+      });
     } else {
       console.error("Không có sản phẩm nào để thanh toán.");
     }
@@ -212,11 +215,34 @@ function ProductDetail() {
         <div className="detail-container">
           <div className="detail">
             <div className="content">
-              <p className="product-name">{product.name}</p>
-              <p className="price">
-                {product.price}
-                <span>₫</span>
+              <p className="product-name">
+                {product.name}{" "}
+                {product.discount && product.discount > 0 ? (
+                  <div className="product-discount">
+                    <span>Ưu đãi</span>
+                    <span> -{product.discount}%</span>
+                  </div>
+                ) : (
+                  ""
+                )}
               </p>
+              <div className="price-con">
+                <p className="price">
+                  {product.price}
+                  <span>₫</span>
+                </p>
+                {product.discount && product.discount < 0 ? (
+                  <p className="price">
+                    {product.price}
+                    <span>₫</span>
+                  </p>
+                ) : (
+                  <p className="price-new">
+                    {product.discounted_price}
+                    <span>₫</span>
+                  </p>
+                )}
+              </div>
             </div>
             <div className="size-quantity">
               <div className="size">
@@ -290,8 +316,8 @@ function ProductDetail() {
           </div>
           <Slider {...settings}>
             {relatedProducts &&
-              relatedProducts.map((item) => (
-                <div className="product" key={item.id}>
+              relatedProducts.map((item, index) => (
+                <div className="product" key={index}>
                   <div className="image-product">
                     {item.discount > 0 && (
                       <div className="product-discount">
