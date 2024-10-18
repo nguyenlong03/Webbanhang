@@ -48,7 +48,7 @@
       margin-right: 10px;
     }
     .filter-item {
-      width: calc(100% / 5 + 20px);
+      width: 100%;
       display: flex;
       gap: 40px;
       margin-top: 30px;
@@ -148,15 +148,19 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    p {
-      font-size: 1rem;
-      background: red;
-      color: #fff;
-      width: 18px;
-      height: 22px;
-      text-align: center;
-      border-radius: 50%;
-      display: none;
+    position: relative;
+    .quantity {
+      font-size: 10px;
+    background: red;
+    color: #fff;
+    width: 11px;
+    height: 14px;
+    text-align: center;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    overflow: hidden;
     }
   }
 

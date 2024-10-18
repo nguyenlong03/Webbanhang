@@ -9,8 +9,11 @@ import Seach from "../../services/Seach/Seach";
 import Notification from "../../Pages/Notify/Notify";
 import logo from "../../assets/imgs/images.png";
 import AddcartAPI from "../../services/AddcartAPI";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const cart = useSelector((state) => state.cart.items);
+  const totalQuantity = cart.reduce((acc, item) => acc + item.quantity, 0);
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -141,7 +144,7 @@ const Header = () => {
 
     try {
       const response = await Seach.getALL(keyword); // Gọi API với từ khóa
-      console.log("data", response.products);
+
       if (response.products.length > 0) {
         setRecort(response.products);
         setNoDataFound(false);
@@ -228,14 +231,16 @@ const Header = () => {
       <div className="icon-header">
         <div className="cart">
           <MdShoppingCart onClick={hanoleShoppingcart} />
-          {/* <p className="quantity">0</p> */}
+          {totalQuantity > 0 && (
+            <span className="quantity">{totalQuantity}</span>
+          )}
         </div>
 
         <div className="notify-icon">
           <div className="notify-icon">
-            <IoIosNotifications fontSize={"30px"} onClick={handoleshowio} />
+            <IoIosNotifications fontSize={"35px"} onClick={handoleshowio} />
           </div>
-          <p className="quantity">0</p>
+          <span className="quantity">0</span>
         </div>
 
         <div className="d-flex justify-content-center align-items-center gap-3">
@@ -277,7 +282,11 @@ const Header = () => {
             </button>
             {recort.map((item, index) => (
               <div className="filter-item" key={index}>
-                <img className="filter-img" src={item.url_img} alt="" />
+                <img
+                  className="filter-img"
+                  src={item.url_image}
+                  alt={item.name}
+                />
                 <p
                   className="filter-title"
                   onClick={() => handlechitietsanphamfiter(item.id)}

@@ -23,7 +23,6 @@ const Cart = () => {
   };
 
   const handleRemove = async (id) => {
-    console.log("id", id);
     try {
       const response = await AddcartAPI.Deletecart({ product_id: id });
       console.log("check", response);

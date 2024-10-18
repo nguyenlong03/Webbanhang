@@ -30,6 +30,7 @@ function ProductDetail() {
   const [quantity, setQuantity] = useState(1);
   const [availableSizes, setAvailableSizes] = useState([]);
   const [relatedProducts, setRelatedProducts] = useState([]);
+  const [type, setType] = useState("");
   const navigate = useNavigate();
 
   const product =
@@ -56,20 +57,36 @@ function ProductDetail() {
       setSize(sizes[0]);
     }
   }, [productDetails]);
-
+  // fillter sản phẩm liên quan
   useEffect(() => {
     if (product && productDetails) {
-      const related = products.products.filter(
-        (item) => item.category === product.category && item.id !== product.id
-      );
-      setRelatedProducts(related);
+      const relatedProducts = products.products.filter((item) => {
+        const isProductAo = productDetails.name && product.name.includes("Áo");
+        const isProductQuan =
+          productDetails.name && product.name.includes("Quần");
+        const isProductVay =
+          productDetails.name && product.name.includes("Váy");
+
+        if (isProductAo && item.name && item.name.includes("Áo")) {
+          return true;
+        }
+        if (isProductQuan && item.name.includes("Quần")) {
+          return true;
+        }
+        if (isProductVay && item.name.includes("Váy")) {
+          return true;
+        }
+        return false;
+      });
+
+      setRelatedProducts(relatedProducts);
     }
-  }, [products.products, productDetails, product]);
+  }, [product, productDetails, products]);
 
   const handleSelectedImage = (img) => {
     setSelectedImage(img);
   };
-
+  //pha
   const incrementQuantity = () => {
     setQuantity((prev) => prev + 1);
   };
@@ -79,7 +96,7 @@ function ProductDetail() {
       setQuantity((prev) => prev - 1);
     }
   };
-
+  // điều kiện khi thêm vào giỏ hàng
   const handleAddToCart = async () => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -281,7 +298,7 @@ function ProductDetail() {
                         <span>-{item.discount}%</span>
                       </div>
                     )}
-                    <img src={item.url_img} alt={item.name} />
+                    <img src={item.url_image} alt={item.name} />
                   </div>
                   <p
                     className="price"
