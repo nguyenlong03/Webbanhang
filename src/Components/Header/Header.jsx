@@ -8,11 +8,14 @@ import { NavLink, useNavigate } from "react-router-dom";
 import Seach from "../../services/Seach/Seach";
 import Notification from "../../Pages/Notify/Notify";
 import logo from "../../assets/imgs/images.png";
-import AddcartAPI from "../../services/AddcartAPI";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setCart } from "../../redux/cartSlice";
+import { addNotification } from "../../redux/notificationReducer";
+import { clearNotifications } from "../../redux/notificationReducer";
 
 const Header = () => {
   const cart = useSelector((state) => state.cart.items);
+  const notifications = useSelector((state) => state.notification.messages);
   const totalQuantity = cart.reduce((acc, item) => acc + item.quantity, 0);
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
@@ -25,8 +28,8 @@ const Header = () => {
   const [noDataFound, setNoDataFound] = useState(false);
   const [showSearchBox, setShowSearchBox] = useState(true);
   const debounceTimeout = useRef(null);
+  const dispatch = useDispatch();
 
-  // chức năng logout
   const handleLogout = () => {
     if (token) {
       const confirmed = window.confirm(
@@ -83,7 +86,11 @@ const Header = () => {
     setShowSearchBox(false);
     setSearchTerm("");
   };
-  // cuộn đến vị trí cần cuộn
+  const handoleHelp = () => {
+    setMenu("Trouser");
+    navigate("/trouser");
+  };
+
   const handleScrollToSale = () => {
     setMenu("Hot Sale");
     const SaleElement = document.querySelector(".products-container");
@@ -106,18 +113,15 @@ const Header = () => {
     }
   };
 
-  // xét menu
   useEffect(() => {
     localStorage.setItem("menu", menu);
   }, [menu]);
 
-  // click img logo
   const handleHonelogo = () => {
     setMenu("Home");
     navigate("/");
   };
 
-  // filter input với debounce
   const handleFilterChange = (e) => {
     const value = e.target.value.toLowerCase();
     setSearchTerm(value);
@@ -134,32 +138,28 @@ const Header = () => {
     fetchData();
   }, []);
 
-  // function fetch data
   const fetchData = async (keyword) => {
     if (!keyword) {
-      setRecort([]); // Nếu không có từ khóa, đặt lại danh sách kết quả
-      setNoDataFound(false); // Không có dữ liệu tìm kiếm
+      setRecort([]);
+      setNoDataFound(false);
       return;
     }
 
     try {
-      const response = await Seach.getALL(keyword); // Gọi API với từ khóa
+      const response = await Seach.getALL(keyword);
 
       if (response.products.length > 0) {
         const testdataa = response.products;
         console.log("testdataa img", testdataa);
         setRecort(response.products);
         setNoDataFound(false);
-        setNoDataFound(false);
       } else {
         setRecort([]);
-        setNoDataFound(true);
         setNoDataFound(true);
       }
     } catch (error) {
       console.log("error", error);
       setRecort([]);
-      setNoDataFound(true);
       setNoDataFound(true);
     }
   };
@@ -170,8 +170,32 @@ const Header = () => {
     setShowDropdown(!showDropdown);
   };
   const hanoleShoppingcart = async () => {
+    const storedCart = localStorage.getItem("cart");
+    if (storedCart) {
+      dispatch(setCart(JSON.parse(storedCart)));
+    }
     navigate("/shoppingcart");
   };
+
+  // Dispatch a notification when a product is added to the cart
+  useEffect(() => {
+    if (totalQuantity > 0) {
+      dispatch(
+        addNotification({
+          message: "Bạn có sản phẩm trong giỏ hàng",
+          time: new Date().toLocaleTimeString(),
+        })
+      );
+    }
+    if (totalQuantity === 0) {
+      dispatch(
+        clearNotifications({
+          message: "Bạn không có sản phẩm nào trong giỏ hàng",
+        })
+      );
+    }
+  }, [totalQuantity, dispatch]);
+
   return (
     <div className="Header-container">
       <img className="img-header" src={logo} alt="" onClick={handleHonelogo} />
@@ -211,7 +235,7 @@ const Header = () => {
           <div
             to="/trouser"
             className={`navbar-item ${menu === "Trouser" ? "active" : ""}`}
-            onClick={() => setMenu(navigate("/Trouser"))}
+            onClick={handoleHelp}
           >
             Help
           </div>
@@ -230,6 +254,7 @@ const Header = () => {
           <CiSearch />
         </div>
       </div>
+
       <div className="icon-header">
         <div className="cart">
           <MdShoppingCart onClick={hanoleShoppingcart} />
@@ -278,7 +303,6 @@ const Header = () => {
             </div>
           )}
         </div>
-        {/* modal ô input */}
         {searchTerm && recort.length > 0 && showSearchBox && (
           <div className="filter-list">
             <button className="btn" onClick={handoleshowhide}>
@@ -321,7 +345,7 @@ const Header = () => {
             theme: "light",
           })}
 
-        {showDropdown && <Notification />}
+        {showDropdown && <Notification notifications={notifications} />}
         <ToastContainer />
       </div>
     </div>

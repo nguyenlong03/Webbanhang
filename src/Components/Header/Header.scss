@@ -89,7 +89,7 @@
       justify-content: center;
       align-items: center;
       .navbar-item {
-        width: 20%;
+       
         text-decoration: none;
         &.active {
           color: rgb(255, 136, 0);
@@ -151,8 +151,8 @@
     justify-content: center;
     position: relative;
     .quantity {
-      font-size: 10px;
-    background: red;
+    font-size: 10px;
+    background: red;  
     color: #fff;
     width: 11px;
     height: 14px;

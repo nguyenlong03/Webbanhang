@@ -1,7 +1,8 @@
 import React from "react";
 import "./notify.scss";
 
-const Notification = () => {
+const Notification = ({ notifications }) => {
+  console.log("notifications", notifications);
   return (
     <div className="notify">
       <div className="notification-container">
@@ -10,36 +11,17 @@ const Notification = () => {
         </div>
         <div className="notification-body">
           <div className="notification-list">
-            <div className="notification-item">
-              <div className="avatar">
-                <span className="avatar-text">M</span>
+            {notifications.map((notification, index) => (
+              <div className="notification-item" key={index}>
+                <div className="avatar">
+                  <span className="avatar-text">N</span>
+                </div>
+                <div className="notification-content">
+                  <p className="notification-user">{notification.message}</p>
+                  <span className="notification-time">{notification.time}</span>
+                </div>
               </div>
-              <div className="notification-content">
-                <p className="notification-user">Manish Tamang</p>
-                <p className="notification-action">commented on your photo</p>
-                <span className="notification-time">a few seconds ago</span>
-              </div>
-            </div>
-            <div className="notification-item">
-              <div className="avatar">
-                <span className="avatar-text">M</span>
-              </div>
-              <div className="notification-content">
-                <p className="notification-user">Manish Tamang</p>
-                <p className="notification-action">commented on your photo</p>
-                <span className="notification-time">a few seconds ago</span>
-              </div>
-            </div>
-            <div className="notification-item">
-              <div className="avatar">
-                <span className="avatar-text">M</span>
-              </div>
-              <div className="notification-content">
-                <p className="notification-user">Manish Tamang</p>
-                <p className="notification-action">commented on your photo</p>
-                <span className="notification-time">a few seconds ago</span>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

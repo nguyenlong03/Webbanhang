@@ -30,12 +30,12 @@ function ProductDetail() {
   const [quantity, setQuantity] = useState(1);
   const [availableSizes, setAvailableSizes] = useState([]);
   const [relatedProducts, setRelatedProducts] = useState([]);
-  const [type, setType] = useState("");
   const navigate = useNavigate();
 
   const product =
     products.products.find((item) => item.id === parseInt(id)) ||
     productDetails;
+  console.log("check product1121", products);
 
   useEffect(() => {
     if (productDetails) {

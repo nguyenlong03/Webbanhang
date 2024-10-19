@@ -15,6 +15,7 @@ const PaymentForm = () => {
     quantity: initialQuantity,
     selectedSize: initialSize,
   } = state || {};
+
   const [quantity, setQuantity] = useState(initialQuantity || 1);
   const [selectedSize, setSelectedSize] = useState(initialSize || "");
   const [provinces, setProvinces] = useState([]);
@@ -23,6 +24,7 @@ const PaymentForm = () => {
   const [selectedProvince, setSelectedProvince] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [selectedWard, setSelectedWard] = useState("");
+  const { cart } = state || {};
 
   useEffect(() => {
     const fetchProvinces = async () => {
@@ -169,6 +171,7 @@ const PaymentForm = () => {
           <div className="img">
             <img src={product?.url_image} alt={product?.name} />
           </div>
+
           <div className="info">
             <p className="name-pro">
               <span>
