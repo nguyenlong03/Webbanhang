@@ -31,23 +31,29 @@ function HomeCart() {
     if (page === data.totalPages) {
       setPage(data.totalPages);
     }
+    document.querySelector(".filter").scrollIntoView({ behavior: "smooth" });
   };
 
   const handlePrevPage = () => {
     setPage((prevPage) => Math.max(prevPage - 1, 1));
+    document.querySelector(".filter").scrollIntoView({ behavior: "smooth" });
   };
 
   const handleFirstPage = () => {
     setPage(1);
+    document.querySelector(".filter").scrollIntoView({ behavior: "smooth" });
   };
   const handleLastPage = () => {
     setPage(data.totalPages);
+    document.querySelector(".filter").scrollIntoView({ behavior: "smooth" });
   };
 
   if (loading)
     return (
-      <div className="spinner-border text-primary d- " role="status">
-        <span className="sr-only"></span>
+      <div className="loading-container">
+        <div className="spinner-border text-primary" role="status">
+          <span className="sr-only"></span>
+        </div>
       </div>
     );
   if (error) return <p>{error}</p>;

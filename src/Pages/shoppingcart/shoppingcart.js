@@ -5,9 +5,11 @@ import { removeFromCart } from "../../redux/cartSlice";
 import { FaRegTrashCan } from "react-icons/fa6";
 import AddcartAPI from "../../services/AddcartAPI";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const [quantity, setQuantity] = useState(1);
+  const navigate = useNavigate();
   const cart = useSelector((state) => state.cart.items);
   console.log("cart", cart);
 
@@ -21,7 +23,9 @@ const Cart = () => {
       setQuantity((prev) => prev - 1);
     }
   };
-
+  const handlecontinueShopping = () => {
+    navigate("/");
+  };
   const handleRemove = async (id) => {
     console.log("id", id);
     try {
@@ -91,8 +95,8 @@ const Cart = () => {
                             </button>
                           </div>
                         </td>
-                        <td>${item.price}</td>
-                        <td>${(item.price * quantity).toFixed(2)}</td>
+                        <td>{item.price}</td>
+                        <td>{item.price * quantity}</td>
                         <td>
                           <button
                             className="remove-btn"
@@ -124,7 +128,12 @@ const Cart = () => {
             </div>
 
             <div className="actions">
-              <button className="continue-shopping">Continue Shopping</button>
+              <button
+                className="continue-shopping"
+                onClick={handlecontinueShopping}
+              >
+                Continue Shopping
+              </button>
               <button className="checkout">Thanh toán</button>
             </div>
           </>

@@ -13,81 +13,66 @@ const Footer = () => {
     <div className="Footer-contaner">
       <div className="footer-header">
         <div className="footer-text ">
-          <b className="text-item1">Hỗ trợ khách hàng </b>
+          <p className="text-item1">
+            <b>Hỗ trợ khách hàng</b>
+          </p>
           <p className="text-item">Thẻ ưu đãi</p>
           <p className="text-item">Trung tâm bảo hành</p>
           <p className="text-item">Thanh toán và giao hàng</p>
         </div>
         <div className="footer-text">
-          <b className="text-item1">Chính sách Mua hàng và Bảo hành</b>
+          <p className="text-item1">
+            <b>Chính sách Mua hàng và Bảo hành</b>
+          </p>
           <p className="text-item">Chính sách bảo mật thông tin</p>
           <p className="text-item">Chính sách vận chuyển</p>
           <p className="text-item">Chính sách bảo hành</p>
           <p className="text-item">Chính sách trả góp</p>
         </div>
         <div className="footer-text">
-          <b className="text-item1">Thông tin </b>
+          <p className="text-item1">
+            <b>Thông tin </b>
+          </p>
           <p className="text-item">giới thiệu </p>
           <p className="text-item">Thông tin liên hệ</p>
           <p className="text-item">Hỏi đáp</p>
         </div>
         <div className="footer-text">
-          <b className="text-item1">Mẫu Website Fashion </b>
-          <p className="text-item"> Mẫu Web quần áo</p>
-          <p className="text-item">
-            {" "}
-            Youtube:{" "}
-            <a
-              href="https://www.youtube.com/ "
-              className="text-danger text-decoration-none"
-            >
-              youtube.com
-            </a>
-          </p>
-          <p className="text-item ">
-            Tiktok:{" "}
-            <a
-              href=" https://www.tiktok.com/foryou?lang=vi-VN"
-              className=" text-decoration-none text-danger"
-            >
-              {" "}
-              Tiktok.com
-            </a>
-          </p>
-          <p className="text-item">
-            Facebook:
-            <a
-              href="https://www.facebook.com/"
-              className="text-danger text-decoration-none"
-            >
-              {" "}
-              Facebook.com
-            </a>
-          </p>
-        </div>
-        <div className="footer-text">
-          <b className="text-item1">Email liên hệ</b>
-          <p className="text-item">Thẻ ưu đãi</p>
-          <p className="text-item">Trung tâm bảo hành</p>
-          <p className="text-item">Thanh toán và giao hàng</p>
+          <div className="footer-folower">
+            <p className="text-item1">
+              <b>Theo dõi chúng tôi</b>
+            </p>
+            <div className="icon">
+              <div className="item-icon">
+                <FaFacebookF />
+                <a>facebook.com</a>
+              </div>
+              <div className="item-icon">
+                <FiInstagram />
+                <a>instagram.com</a>
+              </div>
+              <div className="item-icon">
+                <FaPhone />
+                <a>0123456789</a>
+              </div>
+              <div className="item-icon">
+                {" "}
+                <FaTiktok />
+                <a>tiktok.com</a>
+              </div>
+              <div className="item-icon">
+                {" "}
+                <FaYoutube />
+                <a>youtube.com</a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
       <div className="footer-bottom">
-        <div className="footer-folower">
-          <b className="text-item1"> Theo dõi chúng tôi</b>
-          <div className="icon">
-            <FaFacebookF />
-            <FiInstagram />
-            <FaPhone />
-            <FaTiktok />
-            <IoMdMailUnread />
-            <FaYoutube />
-          </div>
-        </div>
-
         <div className="footer-banking">
-          <b className="text-item1">
+          <b className="text-item1 bank">
             Danh sách các ngân hàng thanh toán online
           </b>
           <div className="img-ft">

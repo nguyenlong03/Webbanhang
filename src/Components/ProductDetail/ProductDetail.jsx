@@ -209,16 +209,19 @@ function ProductDetail() {
                 )}
               </p>
               <div className="price-con">
-                <p className="price">
+                <p
+                  className="price"
+                  style={
+                    product.discount > 0
+                      ? { textDecoration: "line-through", opacity: 0.3 }
+                      : { textDecoration: "none", opacity: 1 }
+                  }
+                >
                   {product.price}
                   <span>₫</span>
                 </p>
-                {product.discount && product.discount < 0 ? (
-                  <p className="price">
-                    {product.price}
-                    <span>₫</span>
-                  </p>
-                ) : (
+
+                {product.discount > 0 && (
                   <p className="price-new">
                     {product.discounted_price}
                     <span>₫</span>
@@ -306,7 +309,7 @@ function ProductDetail() {
                         <span>-{item.discount}%</span>
                       </div>
                     )}
-                    <img src={item.url_img} alt={item.name} />
+                    <img src={item.images} alt={item.name} />
                   </div>
                   <p
                     className="price"
