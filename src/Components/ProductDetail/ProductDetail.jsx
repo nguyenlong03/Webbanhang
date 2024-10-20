@@ -208,6 +208,7 @@ function ProductDetail() {
                   ""
                 )}
               </p>
+              <p className="product-total"></p>
               <div className="price-con">
                 <p
                   className="price"
@@ -272,7 +273,36 @@ function ProductDetail() {
             </div>
           </div>
           <div className="container-des">
-            <div className="benefits">{/* Add your benefits content */}</div>
+            <div className="benefits">
+              <div className="benefit-item">
+                <i class="fas fa-truck benefit-icon"></i>
+                <div className="benefit-text">
+                  <span>Thanh toán khi nhận hàng</span>
+                  <a href="#">Được kiểm tra hàng trước</a>
+                </div>
+              </div>
+              <div className="benefit-item">
+                <i class="fas fa-sync-alt benefit-icon"></i>
+                <div className="benefit-text">
+                  <span>Đổi hàng 10 ngày</span>
+                  <a href="#">Nhấp để xem chính sách</a>
+                </div>
+              </div>
+              <div className="benefit-item">
+                <i class="fas fa-credit-card benefit-icon"></i>
+                <div className="benefit-text">
+                  <span>Miễn phí vận chuyển</span>
+                  <a href="#">Đơn hàng từ 498k</a>
+                </div>
+              </div>
+              <div className="benefit-item">
+                <i class="fas fa-tags benefit-icon"></i>
+                <div className="benefit-text">
+                  <span>Mua nhiều giảm sâu</span>
+                  <a href="#">Nhấp để xem chi tiết</a>
+                </div>
+              </div>
+            </div>
             <div className="features">
               <h3>Đặc điểm nổi bật</h3>
               {productDetails.description ? (

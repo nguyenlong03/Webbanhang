@@ -12,6 +12,7 @@ import PaymentForm from "./Pages/Pay/Pay";
 import ForgotPassword from "./Pages/forgotPassword/forgotPassword";
 import ProductDetail from "./Components/ProductDetail/ProductDetail";
 import Shoppingcart from "./Pages/shoppingcart/shoppingcart";
+import ChangePassword from "./Pages/ChangePassWord/Changepass";
 import store from "./redux/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -28,6 +29,7 @@ root.render(
         </Route>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="changePassword" element={<ChangePassword />} />
         <Route path="forgotPassword" element={<ForgotPassword />} />
         <Route path="payment" element={<PaymentForm />} />
       </Routes>

@@ -7,11 +7,13 @@ import { IoIosLogOut, IoIosNotifications } from "react-icons/io";
 import { NavLink, useNavigate } from "react-router-dom";
 import Seach from "../../services/Seach/Seach";
 import Notification from "../../Pages/Notify/Notify";
+import ProfileForm from "../../Pages/Profile/Profile";
 import logo from "../../assets/imgs/images.png";
 import AddcartAPI from "../../services/AddcartAPI";
 
 const Header = () => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [userName, setUserName] = useState(localStorage.getItem("userName"));
@@ -169,6 +171,9 @@ const Header = () => {
   const hanoleShoppingcart = async () => {
     navigate("/shoppingcart");
   };
+  const handleProfile = () => {
+    setShowProfile(!showProfile);
+  };
   return (
     <div className="Header-container">
       <img className="img-header" src={logo} alt="" onClick={handleHonelogo} />
@@ -247,6 +252,7 @@ const Header = () => {
                 src={avatar || "default-avatar.jpg"}
                 alt="Avatar"
                 className="avatar"
+                onClick={handleProfile}
               />
               <span className="user">{userName}</span>
               <button
@@ -316,6 +322,7 @@ const Header = () => {
           })}
 
         {showDropdown && <Notification />}
+        {showProfile && <ProfileForm />}
         <ToastContainer />
       </div>
     </div>
